@@ -53,7 +53,9 @@ DEBUG = env('DEBUG')
 ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
 
 # Local apps
-LOCAL_APPS = []
+LOCAL_APPS = [
+    'apps.country'
+]
 
 # Application definition
 
