@@ -5,11 +5,16 @@ description = "GIDD server"
 authors = ["dev <dev.togglecorp.com>"]
 
 [tool.poetry.dependencies]
-python = "^3.10"
+python = "^3.7"
 Django = "^3.2.10"
 django-environ = "^0.8.1"
 psycopg2 = "^2.9.3"
 django-cors-headers = "==3.7.0"
+strawberry-graphql-django = "^0.2.5"
+strawberry-graphql = {extras = ["debug-server"], version = "^0.104.1"}
+djangorestframework = "^3.13.1"
+django-filter = "^21.1"
+drf-nested-routers = "^0.93.4"
 
 [tool.poetry.dev-dependencies]
 pytest-profiling = "*"

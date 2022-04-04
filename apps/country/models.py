@@ -14,7 +14,7 @@ class Country(models.Model):
 
     class Region(models.TextChoices):
         CARIBBEAN = 'caribbean', _('Caribbean')
-        SOUTH_EAST_ASIA = 'south-east-asia', _('South-East Asia')
+        SOUTH_EAST_ASIA = 'south_east_asia', _('South-East Asia')
         SOUTHERN_EUROPE = 'southern_europe', _('Southern Europe')
         EAST_ASIA = 'east_asia', _('East Asia')
         NORTH_AMERICA = 'north_america', _('North America')
@@ -22,7 +22,7 @@ class Country(models.Model):
         LATIN_AMERICA = 'latin_america', _('Latin America')
         WESTERN_AFRICA = 'western_africa', _('Western Africa')
         MICRONESIA = 'micronesia', _('Micronesia')
-        HORN_OR_AFRICA = 'horn_of_africa', _('Horn of Africa')
+        HORN_OF_AFRICA = 'horn_of_africa', _('Horn of Africa')
         NORTH_WEST_AND_CENTRAL_EUROPE = 'north_west_and_central_europe', _('North, West and Central Europe')
         MELANESIA = 'melanesia', _('Melanesia')
         EASTERN_EUROPE = 'eastern_europe', _('Eastern Europe')
@@ -32,12 +32,36 @@ class Country(models.Model):
         NORTHERN = 'northern_africa', _('Northern Africa')
         CENTRAL_ASIA = 'central_asia', _('Central Asia')
         WESTERN_ASIA = 'western_asia', _('Western Asia')
-        SOUTHERN_AFRICA = 'southern-africa', _('Southern Africa')
+        SOUTHERN_AFRICA = 'southern_africa', _('Southern Africa')
+        ASIA = 'asia', _('Asia')
+        SOUTHERN_ASIA = 'southern_asia', _('Southren asia')
+        EUROPE = 'europe', _('Europe')
+        EUROPE_AND_SOUTHERN_ASIA = 'europe_and_central_asia', _('Europe and southern asia')
+        ARFRICA = 'africa', _('Africa')
+        MIDDLE_EAST_AND_NORTH_AFRICA = 'middle_east_and_north_africa', _('Middle east and north africa')
+        OCEANIA = 'oceania', _('oceania')
+        EAST_ASIA_AND_PACIFIC = 'east_asia_and_pacific', _('East asia and pacific')
+        HIGH_INCOME_NON_OECD_MEMBER = 'high_income_non_oecd_member', _('high income non oecd member')
+        SUB_SAHARAN_AFRICA = 'sub_saharan_africa', _('Sub saharan africa')
+        MIDDLE_AFRICA = 'middle_africa', _('middle africa')
+        AMERICAS = 'americas', _('Americas')
+        HIGH_INCOME_OECD_MEMBER = 'high_income_oecd_member', _('high income oecd member')
+        LATIN_AMERICA_AND__THE_CARIBBEAN = 'latin_america_and_the_caribbean', _('latin america and the caribbean')
+        SOUTH_AMERICA = 'south_america', _('South america')
+        AUSTRALIA_AND_NEW_ZEALAND = 'australia_and_new_zealand', _('Australia and new zealand')
+        WESTERN_EUROPE = 'western_europe', _('Western europe')
+        CENTRAL_AMERICA = 'central_america', _('Central america')
+        NORTHEN_AMERICA = 'northern_america', _('northern america')
+        SOUTH_EASTERN_ASIA = 'south_eastern_asia', _('South eastern asia')
+        EASTERN_AFRICA = 'eastern_africa', _('Eastern africa')
+        EASTERN_ASIA = 'eastern_asia', _('Eastern asia')
+        NORTHERN_EUROPE = 'northern_europe', _('Northern europe')
 
     class SubRegion(models.TextChoices):
-        CARIBBEAN = 'south-caucasus', _('South Caucasus')
-        LATIN_AMERICA = 'latin-america', _('Latin America')
-        MIDDLE_EAST = 'middle-east', _('Middle East')
+        CARIBBEAN = 'caribbean', _('Caribbean')
+        LATIN_AMERICA = 'latin_america', _('Latin America')
+        MIDDLE_EAST = 'middle_east', _('Middle East')
+        SOUTH_CAUCASUS = 'south_caucasus', _('South caucasus')
 
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     iso3 = models.CharField(max_length=10, verbose_name=_('Iso3'))
@@ -84,13 +108,6 @@ class Country(models.Model):
     is_country_office_iom = models.BooleanField(
         default=False, verbose_name=_('Is country office iom?')
     )
-    additional_info = models.OneToOneField(
-        'country.CountryAdditionalInfo',
-        on_delete=models.CASCADE,
-        null=True,
-        blank=True,
-        verbose_name=_('Additional info')
-    )
 
     class Meta:
         verbose_name = _('Country')
@@ -99,8 +116,17 @@ class Country(models.Model):
     def __str__(self):
         return self.name
 
+    @property
+    def country_additional_info(self):
+        return self.country_additonal_info
+
 
 class CountryAdditionalInfo(models.Model):
+    country = models.ForeignKey(
+        'country.Country', related_name='country_additonal_info', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    year = models.BigIntegerField(blank=True, null=True)
     total_displacement = models.BigIntegerField(blank=True, null=True)
     total_displacement_since = models.TextField(blank=True, null=True)
     total_displacement_source = models.TextField(blank=True, null=True)
@@ -110,4 +136,75 @@ class CountryAdditionalInfo(models.Model):
         verbose_name_plural = _('CountryAdditional Infos')
 
     def __str__(self):
-        return self.total_displacement_since + self.total_displacement_source
+        return self.total_displacement_since if self.total_displacement_since else str(self.id)
+
+
+class Conflict(models.Model):
+    country = models.ForeignKey(
+        'country.Country', related_name='country_conflict', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    year = models.BigIntegerField()
+    total_displacement = models.BigIntegerField(blank=True, null=True)
+
+    total_displacement_source = models.TextField(blank=True, null=True)
+    new_displacement = models.BigIntegerField(blank=True, null=True)
+    new_displacement_source = models.TextField(blank=True, null=True)
+    returns = models.BigIntegerField(blank=True, null=True)
+    returns_source = models.TextField(blank=True, null=True)
+    local_integration = models.BigIntegerField(blank=True, null=True)
+    local_integration_source = models.TextField(blank=True, null=True)
+    resettlement = models.BigIntegerField(blank=True, null=True)
+    resettlement_source = models.TextField(blank=True, null=True)
+    cross_border_flight = models.BigIntegerField(blank=True, null=True)
+    cross_border_flight_source = models.TextField(blank=True, null=True)
+    children_born_to_idps = models.BigIntegerField(blank=True, null=True)
+    children_born_to_idps_source = models.TextField(blank=True, null=True)
+    idp_deaths = models.BigIntegerField(blank=True, null=True)
+    idp_deaths_source = models.TextField(blank=True, null=True)
+
+    # TODO: Should we change thses fields to DateField?
+    total_displacement_since = models.TextField(blank=True, null=True)
+    new_displacement_since = models.TextField(blank=True, null=True)
+    returns_since = models.TextField(blank=True, null=True)
+    resettlement_since = models.TextField(blank=True, null=True)
+    local_integration_since = models.TextField(blank=True, null=True)
+    cross_border_flight_since = models.TextField(blank=True, null=True)
+    children_born_to_idps_since = models.TextField(blank=True, null=True)
+    idp_deaths_since = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Conflict')
+        verbose_name_plural = _('Conflicts')
+
+    def __str__(self):
+        return str(self.year)
+
+
+class Disaster(models.Model):
+    country = models.ForeignKey(
+        'country.Country', related_name='country_disaster', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    year = models.BigIntegerField()
+    glide_number = models.TextField(blank=True, null=True)
+    event_name = models.TextField(blank=True, null=True)
+    location_text = models.TextField(blank=True, null=True)
+    start_date = models.DateField(blank=True, null=True)
+    start_date_accuracy = models.TextField(blank=True, null=True)
+    end_date = models.DateField(blank=True, null=True)
+    end_date_accuracy = models.TextField(blank=True, null=True)
+    hazard_category = models.TextField(blank=True, null=True)
+    hazard_sub_category = models.TextField(blank=True, null=True)
+    hazard_sub_type = models.TextField(blank=True, null=True)
+    hazard_type = models.TextField(blank=True, null=True)
+    new_displacement = models.BigIntegerField(blank=True, null=True)
+    new_displacement_source = models.TextField(blank=True, null=True)
+    new_displacement_since = models.TextField(blank=True, null=True)
+
+    class Meta:
+        verbose_name = _('Disaster')
+        verbose_name_plural = _('Disasters')
+
+    def __str__(self):
+        return str(self.year)

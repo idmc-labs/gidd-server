@@ -37,11 +37,11 @@ env = environ.Env(
     DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
     DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
     # Old db
-    DB_OLD_NAME=(str, 'gidd_old'),
+    DB_OLD_NAME=(str, 'idmc'),
     DB_OLD_USER=(str, 'allochi'),
     DB_OLD_PWD=(str, 'postgres'),
     DB_OLD_HOST=(str, 'olddb'),
-    DB_OLD_PORT=(int, 5433),
+    DB_OLD_PORT=(int, 5432),
 )
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -54,7 +54,8 @@ ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
 
 # Local apps
 LOCAL_APPS = [
-    'apps.country'
+    'apps.country',
+    'apps.old_gidd',
 ]
 
 # Application definition
@@ -66,9 +67,13 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
+    'rest_framework',
+    'django_filters',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -111,13 +116,27 @@ DATABASES = {
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     },
-    'default_2': {
+    'idmc_platform': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env('DB_OLD_NAME'),
         'USER': env('DB_OLD_USER'),
         'PASSWORD': env('DB_OLD_PWD'),
         'HOST': env('DB_OLD_HOST'),
         'PORT': env('DB_OLD_PORT'),
+        'OPTIONS': {
+            'options': '-c search_path=data_platform'
+        }
+    },
+    'idmc_public': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': env('DB_OLD_NAME'),
+        'USER': env('DB_OLD_USER'),
+        'PASSWORD': env('DB_OLD_PWD'),
+        'HOST': env('DB_OLD_HOST'),
+        'PORT': env('DB_OLD_PORT'),
+        'OPTIONS': {
+            'options': '-c search_path=public'
+        }
     }
 }
 
@@ -162,3 +181,35 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CORS_ALLOW_CREDENTIALS = True
+CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
+CORS_ALLOW_METHODS = (
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+)
+CORS_ALLOW_HEADERS = (
+    'accept',
+    'accept-encoding',
+    'accept-language',
+    'authorization',
+    'content-type',
+    'dnt',
+    'origin',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'sentry-trace',
+)
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 20,
+}

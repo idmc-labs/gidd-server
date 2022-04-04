@@ -1,0 +1,4 @@
+Usage: strawberry export-schema [OPTIONS] SCHEMA
+Try 'strawberry export-schema --help' for help.
+
+Error: module 'config' has no attribute 'schema'

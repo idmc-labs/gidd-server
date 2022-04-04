@@ -14,8 +14,28 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
+from config.graphql import CustomAsyncGraphQLView
+from config.schema import schema
+from rest_framework.routers import DefaultRouter
+from rest_framework_nested.routers import NestedDefaultRouter
+from apps.country.views import (
+    CountryViewSet,
+    ConflictViewSet,
+    DisasterViewSet,
+    CountryAdditionalInfoViewSet
+)
 
+router = DefaultRouter()
+router.register("countries", CountryViewSet, "countries-view")
+country_router = NestedDefaultRouter(router, "countries", lookup="id")
+country_router.register('addtional-info', CountryAdditionalInfoViewSet)
+router.register("conflicts", ConflictViewSet, "conflicts-view")
+router.register("disasters", DisasterViewSet, "diasters-view")
+
+# urls.py
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path("graphql/", CustomAsyncGraphQLView.as_view(schema=schema)),
+    path('api/', include(router.urls)),
 ]
