@@ -3,24 +3,20 @@ import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
 
-from .models import Country, Continent, Region, SubRegion
-# from .serializers import CountrySerializer
-
-
-# PROFILE_FIELDS = ['display_picture', 'organization', 'language', 'email_opt_outs', 'last_active_project']
+from .models import Country, CountryAdditionalInfo
 
 
 class CountryFactory(DjangoModelFactory):
-    name = factory.Faker('test-country')
-    iso3 = fuzzy.FuzzyText(length=15)
-    iso2 = fuzzy.FuzzyText(length=15)
+    name = fuzzy.FuzzyText(length=15)
+    iso3 = fuzzy.FuzzyText(length=5)
+    iso2 = fuzzy.FuzzyText(length=5)
     idmc_names = fuzzy.FuzzyText(length=15)
-    idmc_continent = factory.Faker(Continent.EUROPE)
-    idmc_region = factory.Faker(Region.SOUTH_EAST_ASIA)
-    idmc_sub_region = factory.Faker(SubRegion.CARRIBEAN)
-    wb_region = fuzzy.FuzzyText(length=15)
-    un_population_division_names = fuzzy.FuzzyText(length=15)
-    united_nations_regions = factory.Faker(Region.SOUTH_EAST_ASIA)
+    idmc_continent = Country.Continent.EUROPE.value
+    idmc_region = Country.Region.SOUTH_EAST_ASIA.value
+    idmc_sub_region = Country.SubRegion.CARIBBEAN.value
+    wb_region = Country.Region.SOUTHERN_EUROPE.value
+    un_population_division_names = fuzzy.FuzzyText(length=5)
+    united_nations_region = Country.Region.SOUTH_EAST_ASIA.value
     is_least_developed_country = True
     is_small_island_developing_state = True
     is_idmc_go_2013 = False
@@ -31,32 +27,13 @@ class CountryFactory(DjangoModelFactory):
     class Meta:
         model = Country
 
-    # first_name = factory.Faker('first_name')
-    # last_name = factory.Faker('last_name')
-    # email = factory.Sequence(lambda n: f'{n}@xyz.com')
-    # username = factory.LazyAttribute(lambda user: user.email)
-    # password_text = fuzzy.FuzzyText(length=15)
-    # password = factory.PostGeneration(lambda user, *args, **kwargs: user.set_password(user.password_text))
 
-    # class Meta:
-    #     model = User
+class CountryAdditionalInfoFactory(DjangoModelFactory):
+    country = factory.SubFactory(CountryFactory)
+    year = fuzzy.FuzzyInteger(2000, 2050)
+    total_displacement = fuzzy.FuzzyInteger(100000, 200000)
+    total_displacement_since = fuzzy.FuzzyInteger(10000, 30000)
+    total_displacement_source = fuzzy.FuzzyText(length=15)
 
-    # @classmethod
-    # def _create(cls, model_class, *args, **kwargs):
-    #     password_text = kwargs.pop('password_text')
-    #     profile_data = {
-    #         key: kwargs.pop(key) for key in PROFILE_FIELDS if key in kwargs
-    #     }
-    #     user = super()._create(model_class, *args, **kwargs)
-    #     UserSerializer.update_or_create_profile(user, profile_data)
-    #     user.profile.refresh_from_db()
-    #     user.password_text = password_text
-    #     return user
-
-
-# class FeatureFactory(DjangoModelFactory):
-#     title = factory.PostGeneration(lambda feature, *args, **kwargs: f'Feature {feature.key}')
-#     feature_type = fuzzy.FuzzyChoice(Feature.FeatureType.choices, getter=lambda c: c[0])
-
-#     class Meta:
-#         model = Feature
+    class Meta:
+        model = CountryAdditionalInfo

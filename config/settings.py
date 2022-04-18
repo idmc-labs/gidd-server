@@ -42,6 +42,7 @@ env = environ.Env(
     DB_OLD_PWD=(str, 'postgres'),
     DB_OLD_HOST=(str, 'olddb'),
     DB_OLD_PORT=(int, 5432),
+    ENABLE_MIGRATION=(bool, False)
 )
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -115,30 +116,35 @@ DATABASES = {
         'PASSWORD': env('DB_PWD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
-    },
-    'idmc_platform': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_OLD_NAME'),
-        'USER': env('DB_OLD_USER'),
-        'PASSWORD': env('DB_OLD_PWD'),
-        'HOST': env('DB_OLD_HOST'),
-        'PORT': env('DB_OLD_PORT'),
-        'OPTIONS': {
-            'options': '-c search_path=data_platform'
-        }
-    },
-    'idmc_public': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_OLD_NAME'),
-        'USER': env('DB_OLD_USER'),
-        'PASSWORD': env('DB_OLD_PWD'),
-        'HOST': env('DB_OLD_HOST'),
-        'PORT': env('DB_OLD_PORT'),
-        'OPTIONS': {
-            'options': '-c search_path=public'
-        }
     }
 }
+
+ENABLE_MIGRATION = env('ENABLE_MIGRATION')
+if ENABLE_MIGRATION:
+    DATABASES.update({
+        'idmc_platform': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_OLD_NAME'),
+            'USER': env('DB_OLD_USER'),
+            'PASSWORD': env('DB_OLD_PWD'),
+            'HOST': env('DB_OLD_HOST'),
+            'PORT': env('DB_OLD_PORT'),
+            'OPTIONS': {
+                'options': '-c search_path=data_platform'
+            }
+        },
+        'idmc_public': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': env('DB_OLD_NAME'),
+            'USER': env('DB_OLD_USER'),
+            'PASSWORD': env('DB_OLD_PWD'),
+            'HOST': env('DB_OLD_HOST'),
+            'PORT': env('DB_OLD_PORT'),
+            'OPTIONS': {
+                'options': '-c search_path=public'
+            }
+        }
+    })
 
 
 # Password validation
