@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from utils import year_choices, current_year
 
 
 class Country(models.Model):
@@ -108,6 +109,10 @@ class Country(models.Model):
     is_country_office_iom = models.BooleanField(
         default=False, verbose_name=_('Is country office iom?')
     )
+    # Used in IDMC website
+    background_image = models.FileField(upload_to='countries/', blank=True)
+    title = models.CharField(max_length=255, verbose_name=_('Country title'), blank=True)
+    description = models.TextField(blank=True, verbose_name=_('Country description'))
 
     class Meta:
         verbose_name = _('Country')
@@ -121,6 +126,56 @@ class Country(models.Model):
         return self.country_additonal_info
 
 
+class OverView(models.Model):
+    country = models.ForeignKey(
+        'country.Country', related_name='country_overviews', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    description = models.TextField(blank=True, verbose_name=_('Country description'))
+    year = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
+
+    class Meta:
+        verbose_name = _('Country overview')
+        verbose_name_plural = _('Country overviews')
+
+    def __str__(self):
+        return self.description if self.description else str(self.updated_at)
+
+
+class EssentialLink(models.Model):
+    country = models.ForeignKey(
+        'country.Country', related_name='country_essential_links', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    link = models.URLField(max_length=200, verbose_name=_('Essential link'))
+
+    class Meta:
+        verbose_name = _('Country essential link')
+        verbose_name_plural = _('Country essential links')
+
+    def __str__(self):
+        return self.link
+
+
+class ContactPerson(models.Model):
+    country = country = models.ForeignKey(
+        'country.Country', related_name='country_contact_persons', on_delete=models.PROTECT,
+        verbose_name=_('Country'), null=True, blank=True
+    )
+    image = models.FileField(upload_to='contact_person/', blank=True)
+    full_name = models.CharField(max_length=255, verbose_name=_('Full name of contact person'))
+    designation = models.CharField(max_length=255, verbose_name=_('Designation of contact person'))
+    email = models.CharField(max_length=255, verbose_name=_('Email of contact person'))
+
+    class Meta:
+        verbose_name = _('Country contact person')
+        verbose_name_plural = _('Country contact persons')
+
+    def __str__(self):
+        return self.full_name if self.full_name else ''
+
+
 class CountryAdditionalInfo(models.Model):
     country = models.ForeignKey(
         'country.Country', related_name='country_additonal_info', on_delete=models.PROTECT,
@@ -132,8 +187,8 @@ class CountryAdditionalInfo(models.Model):
     total_displacement_source = models.TextField(blank=True, null=True)
 
     class Meta:
-        verbose_name = _('CountryAdditional Info')
-        verbose_name_plural = _('CountryAdditional Infos')
+        verbose_name = _('Country additional information')
+        verbose_name_plural = _('Country additional informations')
 
     def __str__(self):
         return self.total_displacement_since if self.total_displacement_since else str(self.id)

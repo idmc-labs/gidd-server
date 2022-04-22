@@ -1,7 +1,26 @@
 from django.contrib import admin
 from apps.country.models import (
-    Country, CountryAdditionalInfo, Conflict, Disaster
+    Country, CountryAdditionalInfo,
+    Conflict, Disaster, OverView, EssentialLink, ContactPerson
 )
+
+
+class OverViewInline(admin.TabularInline):
+    autocomplete_fields = ['country', ]
+    model = OverView
+    extra = 0
+
+
+class EssentialLinkInline(admin.TabularInline):
+    autocomplete_fields = ['country']
+    model = EssentialLink
+    extra = 0
+
+
+class ContactPersonInline(admin.TabularInline):
+    autocomplete_fields = ['country', ]
+    model = ContactPerson
+    extra = 0
 
 
 class CountryAdmin(admin.ModelAdmin):
@@ -24,6 +43,7 @@ class CountryAdmin(admin.ModelAdmin):
         'is_country_office_nrc',
         'is_country_office_iom',
     ]
+    inlines = [OverViewInline, EssentialLinkInline, ContactPersonInline]
 
 
 class CountryAdditionalInfoAdmin(admin.ModelAdmin):
@@ -93,7 +113,28 @@ class DisasterAdmin(admin.ModelAdmin):
     autocomplete_fields = ['country', ]
 
 
+class OverViewAdmin(admin.ModelAdmin):
+    search_fields = ['country__name']
+    list_display = ['year', 'country', 'description', 'updated_at']
+    autocomplete_fields = ['country', ]
+
+
+class EssentialLinkAdmin(admin.ModelAdmin):
+    search_fields = ['country__name']
+    list_display = ['country', 'link']
+    autocomplete_fields = ['country']
+
+
+class ContactPersonAdmin(admin.ModelAdmin):
+    search_fields = ['country__name']
+    list_display = ['country', 'full_name', 'image']
+    autocomplete_fields = ['country', ]
+
+
 admin.site.register(Country, CountryAdmin)
 admin.site.register(CountryAdditionalInfo, CountryAdditionalInfoAdmin)
 admin.site.register(Conflict, ConflictAdmin)
 admin.site.register(Disaster, DisasterAdmin)
+admin.site.register(OverView, OverViewAdmin)
+admin.site.register(EssentialLink, EssentialLinkAdmin)
+admin.site.register(ContactPerson, ContactPersonAdmin)
