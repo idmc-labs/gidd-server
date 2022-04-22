@@ -42,7 +42,8 @@ env = environ.Env(
     DB_OLD_PWD=(str, 'postgres'),
     DB_OLD_HOST=(str, 'olddb'),
     DB_OLD_PORT=(int, 5432),
-    ENABLE_MIGRATION=(bool, False)
+    ENABLE_MIGRATION=(bool, False),
+    USE_LOCAL_STORATE=(bool, True),
 )
 
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -53,10 +54,11 @@ DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
 
-# Local apps
+# Local appsexit
 LOCAL_APPS = [
     'apps.country',
     'apps.old_gidd',
+    'apps.good_practice',
 ]
 
 # Application definition
@@ -71,6 +73,8 @@ INSTALLED_APPS = [
     'corsheaders',
     'rest_framework',
     'django_filters',
+    'tinymce',
+    'storages',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
@@ -181,7 +185,13 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
-STATIC_URL = 'static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+
+if DEBUG or env('USE_LOCAL_STORATE'):
+    STATIC_URL = env('DJANGO_STATIC_URL')
+    MEDIA_URL = env('DJANGO_MEDIA_URL')
+    STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+    MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -218,4 +228,28 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20,
+}
+
+# Tinymce settings
+DJANGO_SETTINGS_MODULE = "testtinymce.settings"
+TINYMCE_DEFAULT_CONFIG = {
+    "height": "320px",
+    "width": "960px",
+    "menubar": "file edit view insert format tools table help",
+    "plugins": (
+        "advlist autolink lists link image charmap print preview anchor "
+        "searchreplace visualblocks code fullscreen insertdatetime media table "
+        "paste code help wordcount spellchecker"
+    ),
+    "toolbar": (
+        "undo redo | bold italic underline strikethrough | fontselect "
+        "fontsizeselect formatselect | alignleft aligncenter alignright "
+        "alignjustify | outdent indent |  numlist bullist checklist | forecolor "
+        "backcolor casechange permanentpen formatpainter removeformat | "
+        "pagebreak | charmap emoticons | fullscreen  preview save print | "
+        "insertfile image media pageembed template link anchor codesample | "
+        "a11ycheck ltr rtl | showcomments addcomment code"
+    ),
+    "custom_undo_redo_levels": 10,
+    "language": "en",
 }

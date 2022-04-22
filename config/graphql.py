@@ -10,5 +10,6 @@ class CustomAsyncGraphQLView(AsyncGraphQLView):
 
     async def get_context(self, request: Request, response: Optional[Response]) -> Any:
         return {
+            "request": request,
             "country_additonal_loader": DataLoader(load_fn=load_country_additonal_info)
         }
