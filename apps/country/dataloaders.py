@@ -21,7 +21,7 @@ def country_additonal_info_load(keys: List[int]):
 
 def country_overviews_load(keys: List[int]):
     qs = OverView.objects.filter(
-        country_id__in=keys
+        country_id__in=keys, is_published=True,
     )
 
     _map = defaultdict(list)
@@ -32,7 +32,7 @@ def country_overviews_load(keys: List[int]):
 
 def country_essential_links_load(keys: List[int]):
     qs = EssentialLink.objects.filter(
-        country_id__in=keys
+        country_id__in=keys, is_published=True,
     )
 
     _map = defaultdict(list)
@@ -43,7 +43,7 @@ def country_essential_links_load(keys: List[int]):
 
 def country_contact_persons_load(keys: List[int]):
     qs = ContactPerson.objects.filter(
-        country_id__in=keys
+        country_id__in=keys, is_published=True,
     )
 
     _map = defaultdict(list)
