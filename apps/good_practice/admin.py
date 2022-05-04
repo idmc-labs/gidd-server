@@ -19,8 +19,7 @@ class GoodPracticeAdmin(admin.ModelAdmin):
     search_fields = ['name']
     list_display = [
         'title', 'description', 'country', 'type', 'drivers_of_dispalcement',
-        'drivers_of_dispalcement', 'trigger', 'dispalcement_impact', 'intervention_phase',
-        'stage', 'timeframe'
+        'drivers_of_dispalcement', 'stage'
     ]
     autocomplete_fields = ['country', ]
     inlines = [MediaAndResourceLinkInline]

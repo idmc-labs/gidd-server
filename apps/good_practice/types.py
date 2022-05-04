@@ -11,11 +11,7 @@ from .gh_filters import GoodPracticeFilter
 from .enums import (
     TypeEnum,
     DriversOfDisplacementTypeEnum,
-    TriggerTypeEnum,
-    DisplacementImpactTypeEnum,
-    InterventionPhaseTypeEnum,
     StageTypeEnum,
-    TimeframeTypeEnum,
 )
 from apps.country.types import CountryType
 
@@ -46,11 +42,7 @@ class GoodPracticeType:
     country: CountryType
     type: TypeEnum
     drivers_of_dispalcement: DriversOfDisplacementTypeEnum
-    trigger: TriggerTypeEnum
-    dispalcement_impact: DisplacementImpactTypeEnum
-    intervention_phase: InterventionPhaseTypeEnum
     stage: StageTypeEnum
-    timeframe: TimeframeTypeEnum
 
 
 @strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter)
