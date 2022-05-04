@@ -37,8 +37,8 @@ env = environ.Env(
     DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
     DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
     # Old db
-    DB_OLD_NAME=(str, 'postgres'),
-    DB_OLD_USER=(str, 'postgres'),
+    DB_OLD_NAME=(str, 'idmc'),
+    DB_OLD_USER=(str, 'allochi'),
     DB_OLD_PWD=(str, 'postgres'),
     DB_OLD_HOST=(str, 'olddb'),
     DB_OLD_PORT=(int, 5432),
