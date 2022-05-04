@@ -134,6 +134,9 @@ class OverView(models.Model):
     description = models.TextField(blank=True, verbose_name=_('Country description'))
     year = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
+    is_published = models.BooleanField(
+        default=False, verbose_name=_('Is published?')
+    )
 
     class Meta:
         verbose_name = _('Country overview')
@@ -149,6 +152,9 @@ class EssentialLink(models.Model):
         verbose_name=_('Country'), null=True, blank=True
     )
     link = models.URLField(max_length=200, verbose_name=_('Essential link'))
+    is_published = models.BooleanField(
+        default=False, verbose_name=_('Is published?')
+    )
 
     class Meta:
         verbose_name = _('Country essential link')
@@ -167,6 +173,9 @@ class ContactPerson(models.Model):
     full_name = models.CharField(max_length=255, verbose_name=_('Full name of contact person'))
     designation = models.CharField(max_length=255, verbose_name=_('Designation of contact person'))
     email = models.CharField(max_length=255, verbose_name=_('Email of contact person'))
+    is_published = models.BooleanField(
+        default=False, verbose_name=_('Is published?')
+    )
 
     class Meta:
         verbose_name = _('Country contact person')
