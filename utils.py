@@ -26,5 +26,5 @@ def build_url(file, request):
     file_name = file.name
     url = ''
     if file_name:
-        url = request.build_absolute_uri(file_name)
+        url = request.build_absolute_uri(file.url)
     return FileFieldType(name=file_name, url=url).resolve_file()

@@ -39,6 +39,7 @@ class OverViewType:
 class EssentialLinkType:
     id: auto
     link: auto
+    title: auto
 
 
 @strawberry.django.type(ContactPerson, pagination=True)

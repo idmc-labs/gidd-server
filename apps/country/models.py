@@ -152,6 +152,7 @@ class EssentialLink(models.Model):
         verbose_name=_('Country'), null=True, blank=True
     )
     link = models.URLField(max_length=200, verbose_name=_('Essential link'))
+    title = models.CharField(max_length=255, verbose_name=_('Title'), blank=True)
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
