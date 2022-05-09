@@ -66,7 +66,7 @@ class GoodPractice(models.Model):
         CHILDREN_AND_YOUTH = 'children_and_youth', _('Children and youth')
 
     title = models.CharField(max_length=255, verbose_name=_('Title'))
-    description = models.TextField(blank=True, verbose_name=_('Description'))
+    description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
     country = models.ForeignKey(
         'country.Country', related_name='country_good_practice', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True

@@ -112,7 +112,7 @@ class Country(models.Model):
     # Used in IDMC website
     background_image = models.FileField(upload_to='countries/', blank=True)
     title = models.CharField(max_length=255, verbose_name=_('Country title'), blank=True)
-    description = models.TextField(blank=True, verbose_name=_('Country description'))
+    description = models.TextField(blank=True, verbose_name=_('Country description'), null=True)
 
     class Meta:
         verbose_name = _('Country')
@@ -131,7 +131,7 @@ class OverView(models.Model):
         'country.Country', related_name='country_overviews', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True
     )
-    description = models.TextField(blank=True, verbose_name=_('Country description'))
+    description = models.TextField(blank=True, verbose_name=_('Country description'), null=True)
     year = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
     is_published = models.BooleanField(
@@ -147,11 +147,11 @@ class OverView(models.Model):
 
 
 class EssentialLink(models.Model):
-    country = models.ForeignKey(
+    country = models.OneToOneField(
         'country.Country', related_name='country_essential_links', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True
     )
-    description = models.TextField(verbose_name=_('Description'), blank=True)
+    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
@@ -165,12 +165,12 @@ class EssentialLink(models.Model):
 
 
 class ContactPerson(models.Model):
-    country = country = models.ForeignKey(
+    country = country = models.OneToOneField(
         'country.Country', related_name='country_contact_persons', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True
     )
     image = models.FileField(upload_to='contact_person/', blank=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True)
+    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
