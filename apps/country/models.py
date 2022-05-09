@@ -151,8 +151,7 @@ class EssentialLink(models.Model):
         'country.Country', related_name='country_essential_links', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True
     )
-    link = models.URLField(max_length=200, verbose_name=_('Essential link'))
-    title = models.CharField(max_length=255, verbose_name=_('Title'), blank=True)
+    description = models.TextField(verbose_name=_('Description'), blank=True)
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
@@ -162,7 +161,7 @@ class EssentialLink(models.Model):
         verbose_name_plural = _('Country essential links')
 
     def __str__(self):
-        return self.link
+        return self.description
 
 
 class ContactPerson(models.Model):
@@ -171,9 +170,7 @@ class ContactPerson(models.Model):
         verbose_name=_('Country'), null=True, blank=True
     )
     image = models.FileField(upload_to='contact_person/', blank=True)
-    full_name = models.CharField(max_length=255, verbose_name=_('Full name of contact person'))
-    designation = models.CharField(max_length=255, verbose_name=_('Designation of contact person'))
-    email = models.CharField(max_length=255, verbose_name=_('Email of contact person'))
+    description = models.TextField(verbose_name=_('Description'), blank=True)
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
@@ -183,7 +180,7 @@ class ContactPerson(models.Model):
         verbose_name_plural = _('Country contact persons')
 
     def __str__(self):
-        return self.full_name if self.full_name else ''
+        return self.description
 
 
 class CountryAdditionalInfo(models.Model):

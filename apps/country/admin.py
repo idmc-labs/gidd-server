@@ -3,23 +3,30 @@ from apps.country.models import (
     Country, CountryAdditionalInfo,
     Conflict, Disaster, OverView, EssentialLink, ContactPerson
 )
+from apps.country.form import (
+    OverviewForm, EssentialLinkForm,
+    ContactPersonFrom, CountryForm
+)
 
 
 class OverViewInline(admin.TabularInline):
     autocomplete_fields = ['country', ]
     model = OverView
+    form = OverviewForm
     extra = 0
 
 
 class EssentialLinkInline(admin.TabularInline):
     autocomplete_fields = ['country']
     model = EssentialLink
+    form = EssentialLinkForm
     extra = 0
 
 
 class ContactPersonInline(admin.TabularInline):
     autocomplete_fields = ['country', ]
     model = ContactPerson
+    form = ContactPersonFrom
     extra = 0
 
 
@@ -43,6 +50,7 @@ class CountryAdmin(admin.ModelAdmin):
         'is_country_office_nrc',
         'is_country_office_iom',
     ]
+    form = CountryForm
     inlines = [OverViewInline, EssentialLinkInline, ContactPersonInline]
 
 
@@ -121,13 +129,13 @@ class OverViewAdmin(admin.ModelAdmin):
 
 class EssentialLinkAdmin(admin.ModelAdmin):
     search_fields = ['country__name']
-    list_display = ['country', 'link']
+    list_display = ['country', 'description']
     autocomplete_fields = ['country']
 
 
 class ContactPersonAdmin(admin.ModelAdmin):
     search_fields = ['country__name']
-    list_display = ['country', 'full_name', 'image']
+    list_display = ['country', 'description']
     autocomplete_fields = ['country', ]
 
 

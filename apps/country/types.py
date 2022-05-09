@@ -38,16 +38,13 @@ class OverViewType:
 @strawberry.django.type(EssentialLink, pagination=True)
 class EssentialLinkType:
     id: auto
-    link: auto
-    title: auto
+    description: auto
 
 
 @strawberry.django.type(ContactPerson, pagination=True)
 class ContactPersonType:
     id: auto
-    full_name: auto
-    email: auto
-    designation: auto
+    description: auto
 
     @strawberry.field
     async def image(self, info: Info) -> FileFieldType:
@@ -66,6 +63,46 @@ class CountryAdditionalInfoType:
 @strawberry.django.type(CountryAdditionalInfo, pagination=True, filters=CountryAdditionalInfoFilter)
 class CountryAdditionalInfoListType(CountryAdditionalInfoType):
     pass
+
+
+@strawberry.type
+class TimeSeriesStatisticsType:
+    year: str
+    total: int
+
+
+@strawberry.type
+class CategoryStatisticsType:
+    label: str
+    total: int
+
+
+@strawberry.type
+class ConflictStatisticsType:
+    new_displacements: int
+    new_displacements_label: str
+    total_idps: int
+    idp_label: str
+    timeseries: List[TimeSeriesStatisticsType]
+
+
+@strawberry.type
+class DisasterStatisticsType:
+    new_displacements: int
+    new_displacements_label: str
+    total_events: int
+    eventsLabel: str
+    timeseries: List[TimeSeriesStatisticsType]
+    categories: List[CategoryStatisticsType]
+
+
+@strawberry.type
+class Statistics:
+    start_year: int
+    end_year: int
+    bounds: List[int]
+    conflicts: ConflictStatisticsType
+    disasters: DisasterStatisticsType
 
 
 @strawberry.django.type(Country)
@@ -109,6 +146,47 @@ class CountryType:
     @strawberry.field
     async def background_image(self, info: Info) -> FileFieldType:
         return build_url(self.background_image, info.context['request'])
+
+    @strawberry.field
+    async def statistics(self, info: Info) -> List[Statistics]:
+        return [
+            Statistics(
+                start_year=12,
+                end_year=400,
+                bounds=[1, 2, 3, 4, 5, 6, 7],
+                conflicts=ConflictStatisticsType(
+                    new_displacements=400,
+                    new_displacements_label=400,
+                    total_idps=600,
+                    idp_label="New displacement",
+                    timeseries=[
+                        TimeSeriesStatisticsType(
+                            year=2018,
+                            total=200,
+                            total_idps=400,
+                            total_new_dispalcement=500
+                        ),
+                    ]
+                ),
+                disasters=DisasterStatisticsType(
+                    new_displacements=200,
+                    new_displacements_label='New displacement',
+                    total_events=400,
+                    eventsLabel='Event lable',
+                    timeseries=[
+                        TimeSeriesStatisticsType(
+                            year=2018,
+                            total=200
+                        ),
+                    ],
+                    categories=[
+                        CategoryStatisticsType(
+                            label=300, total=200
+                        )
+                    ]
+                )
+            )
+        ]
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
