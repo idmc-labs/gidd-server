@@ -110,6 +110,8 @@ class CountryType:
     description: auto
     essential_links: auto
     contact_person_description: auto
+    latest_new_displacements_description: auto
+    internal_displacement_description: auto
 
     @strawberry.field
     async def country_additonal_info(self, info: Info) -> List[CountryAdditionalInfoType]:

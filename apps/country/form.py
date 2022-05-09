@@ -23,6 +23,13 @@ class CountryForm(forms.ModelForm):
         attrs={'cols': 80, 'rows': 30}), label=_("Contact person description")
     )
 
+    latest_new_displacements_description = forms.CharField(widget=TinyMCE(
+        attrs={'cols': 80, 'rows': 30}), label=_("Latest new displacements description")
+    )
+    internal_displacement_description = forms.CharField(widget=TinyMCE(
+        attrs={'cols': 80, 'rows': 30}), label=_("Internal displacement description")
+    )
+
     class Meta:
         model = Country
         fields = '__all__'

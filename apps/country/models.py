@@ -118,6 +118,12 @@ class Country(models.Model):
     contact_person_description = models.TextField(
         verbose_name=_('Contact person description'), blank=True, null=True
     )
+    latest_new_displacements_description = models.TextField(
+        blank=True, verbose_name=_('Latest new displacements description'), null=True
+    )
+    internal_displacement_description = models.TextField(
+        blank=True, verbose_name=_('Internal displacement description'), null=True
+    )
 
     class Meta:
         verbose_name = _('Country')
