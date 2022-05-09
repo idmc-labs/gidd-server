@@ -17318,4 +17318,466 @@ enum TypeEnum {
   DISPLACEMENT_MONITORING_DATA_COLLECTION_ANALYSIS_AND_SYSTEMS
   RISK_REDUCTION_AND_PREVENTION
   PROTECTION_AND_ASSISTANCE_AND_DURABLE_SOLUTIONS
+}type CategoryStatisticsType {
+  label: String!
+  total: Int!
+}
+
+input ConflictFilter {
+  id: IDFilterLookup
+}
+
+input ConflictInputType {
+  year: Int!
+  totalDisplacement: Int
+  totalDisplacementSource: String
+  newDisplacement: Int
+  newDisplacementSource: String
+  returns: Int
+  returnsSource: String
+  localIntegration: Int
+  localIntegrationSource: String
+  resettlement: Int
+  resettlementSource: String
+  crossBorderFlight: Int
+  crossBorderFlightSource: String
+  childrenBornToIdps: Int
+  childrenBornToIdpsSource: String
+  idpDeaths: Int
+  idpDeathsSource: String
+  totalDisplacementSince: String
+  newDisplacementSince: String
+  returnsSince: String
+  resettlementSince: String
+  localIntegrationSince: String
+  crossBorderFlightSince: String
+  childrenBornToIdpsSince: String
+  idpDeathsSince: String
+  country: CountryInputType
+}
+
+type ConflictListType {
+  id: ID!
+  year: Int!
+  totalDisplacement: Int
+  totalDisplacementSource: String
+  newDisplacement: Int
+  newDisplacementSource: String
+  returns: Int
+  returnsSource: String
+  localIntegration: Int
+  localIntegrationSource: String
+  resettlement: Int
+  resettlementSource: String
+  crossBorderFlight: Int
+  crossBorderFlightSource: String
+  childrenBornToIdps: Int
+  childrenBornToIdpsSource: String
+  idpDeaths: Int
+  idpDeathsSource: String
+  totalDisplacementSince: String
+  newDisplacementSince: String
+  returnsSince: String
+  resettlementSince: String
+  localIntegrationSince: String
+  crossBorderFlightSince: String
+  childrenBornToIdpsSince: String
+  idpDeathsSince: String
+  country(pagination: OffsetPaginationInput): CountryListType
+}
+
+type ConflictStatisticsType {
+  newDisplacements: Int!
+  newDisplacementsLabel: String!
+  totalIdps: Int!
+  idpLabel: String!
+  timeseries: [TimeSeriesStatisticsType!]!
+}
+
+type ConflictType {
+  id: ID!
+  year: Int!
+  totalDisplacement: Int
+  totalDisplacementSource: String
+  newDisplacement: Int
+  newDisplacementSource: String
+  returns: Int
+  returnsSource: String
+  localIntegration: Int
+  localIntegrationSource: String
+  resettlement: Int
+  resettlementSource: String
+  crossBorderFlight: Int
+  crossBorderFlightSource: String
+  childrenBornToIdps: Int
+  childrenBornToIdpsSource: String
+  idpDeaths: Int
+  idpDeathsSource: String
+  totalDisplacementSince: String
+  newDisplacementSince: String
+  returnsSince: String
+  resettlementSince: String
+  localIntegrationSince: String
+  crossBorderFlightSince: String
+  childrenBornToIdpsSince: String
+  idpDeathsSince: String
+  country(pagination: OffsetPaginationInput): CountryListType
+}
+
+"""Continent enum"""
+enum ContinentEnum {
+  EUROPE
+  OCEANIA
+  AMERICAS
+  AFRICA
+  ASIA
+  ANTARTICA
+}
+
+type CountryAdditionalInfoType {
+  id: ID!
+  year: Int
+  totalDisplacement: Int
+  totalDisplacementSince: String
+  totalDisplacementSource: String
+}
+
+input CountryFilter {
+  id: IDFilterLookup
+  iso3: StrFilterLookup
+}
+
+input CountryInputType {
+  iso3: String!
+  iso2: String!
+  name: String!
+  idmcNames: String
+  idmcContinent: String
+  idmcRegion: RegionEnum
+  idmcSubRegion: String
+  wbRegion: String
+  unPopulationDivisionNames: String
+  unitedNationsRegion: String
+  isLeastDevelopedCountry: Boolean
+  isSmallIslandDevelopingState: Boolean
+  isIdmcGo2013: Boolean
+  isConflictAffectedSince1970: Boolean
+  isCountryOfficeNrc: Boolean
+  isCountryOfficeIom: Boolean
+}
+
+type CountryListType {
+  id: ID!
+  iso3: String!
+  iso2: String!
+  name: String!
+  idmcNames: String
+  idmcContinent: ContinentEnum
+  idmcRegion: RegionEnum
+  idmcSubRegion: SubRegionEnum
+  wbRegion: RegionEnum
+  unPopulationDivisionNames: String
+  unitedNationsRegion: RegionEnum
+  isLeastDevelopedCountry: Boolean!
+  isSmallIslandDevelopingState: Boolean!
+  isIdmcGo2013: Boolean!
+  isConflictAffectedSince1970: Boolean!
+  isCountryOfficeNrc: Boolean!
+  isCountryOfficeIom: Boolean!
+  title: String!
+  description: String
+  essentialLinks: String
+  contactPersonDescription: String
+  backgroundImage: FileFieldType!
+  contactPersonImage: FileFieldType!
+  countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  overviews: [OverViewType!]!
+  statistics: [Statistics!]!
+}
+
+type CountryType {
+  id: ID!
+  iso3: String!
+  iso2: String!
+  name: String!
+  idmcNames: String
+  idmcContinent: ContinentEnum
+  idmcRegion: RegionEnum
+  idmcSubRegion: SubRegionEnum
+  wbRegion: RegionEnum
+  unPopulationDivisionNames: String
+  unitedNationsRegion: RegionEnum
+  isLeastDevelopedCountry: Boolean!
+  isSmallIslandDevelopingState: Boolean!
+  isIdmcGo2013: Boolean!
+  isConflictAffectedSince1970: Boolean!
+  isCountryOfficeNrc: Boolean!
+  isCountryOfficeIom: Boolean!
+  title: String!
+  description: String
+  essentialLinks: String
+  contactPersonDescription: String
+  backgroundImage: FileFieldType!
+  contactPersonImage: FileFieldType!
+  countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  overviews: [OverViewType!]!
+  statistics: [Statistics!]!
+}
+
+"""Date (isoformat)"""
+scalar Date
+
+"""Date with time (isoformat)"""
+scalar DateTime
+
+input DisasterFilter {
+  id: IDFilterLookup
+}
+
+type DisasterListType {
+  id: ID!
+  year: Int!
+  glideNumber: String
+  eventName: String
+  locationText: String
+  startDate: Date
+  startDateAccuracy: String
+  endDate: Date
+  endDateAccuracy: String
+  hazardCategory: String
+  hazardSubCategory: String
+  hazardSubType: String
+  hazardType: String
+  newDisplacement: Int
+  newDisplacementSource: String
+  newDisplacementSince: String
+  country(pagination: OffsetPaginationInput): CountryListType
+}
+
+type DisasterStatisticsType {
+  newDisplacements: Int!
+  newDisplacementsLabel: String!
+  totalEvents: Int!
+  eventsLabel: String!
+  timeseries: [TimeSeriesStatisticsType!]!
+  categories: [CategoryStatisticsType!]!
+}
+
+type DisasterType {
+  id: ID!
+  year: Int!
+  glideNumber: String
+  eventName: String
+  locationText: String
+  startDate: Date
+  startDateAccuracy: String
+  endDate: Date
+  endDateAccuracy: String
+  hazardCategory: String
+  hazardSubCategory: String
+  hazardSubType: String
+  hazardType: String
+  newDisplacement: Int
+  newDisplacementSource: String
+  newDisplacementSince: String
+  country(pagination: OffsetPaginationInput): CountryListType
+}
+
+"""Drivers of displacement type"""
+enum DriversOfDisplacementTypeEnum {
+  SLOW_ONSET_DISASTERS
+  SUDDEN_ONSET_DISASTERS
+  CONFLICT_AND_VIOLENCE
+  DEVELOPMENT_AND_URBANISATION
+}
+
+type FaqListType {
+  id: ID!
+  question: String!
+  answer: String!
+}
+
+type FaqType {
+  id: ID!
+  question: String!
+  answer: String!
+}
+
+type FileFieldType {
+  name: String!
+  url: String!
+}
+
+type GoodPracticeListType {
+  id: ID!
+  title: String!
+  description: String
+  country: CountryType
+  type: TypeEnum!
+  driversOfDispalcement: DriversOfDisplacementTypeEnum!
+  stage: StageTypeEnum!
+}
+
+type GoodPracticeType {
+  id: ID!
+  title: String!
+  description: String
+  country: CountryType
+  type: TypeEnum!
+  driversOfDispalcement: DriversOfDisplacementTypeEnum!
+  stage: StageTypeEnum!
+}
+
+input IDFilterLookup {
+  exact: ID
+  iExact: ID
+  contains: ID
+  iContains: ID
+  inList: [ID!]
+  gt: ID
+  gte: ID
+  lt: ID
+  lte: ID
+  startsWith: ID
+  iStartsWith: ID
+  endsWith: ID
+  iEndsWith: ID
+  range: [ID!]
+  isNull: Boolean
+  regex: String
+  iRegex: String
+}
+
+type Mutation {
+  createCountry(data: CountryInputType!): CountryType!
+  createConflict(data: ConflictInputType!): ConflictType!
+}
+
+input OffsetPaginationInput {
+  offset: Int! = 0
+  limit: Int! = -1
+}
+
+type OverViewType {
+  id: ID!
+  description: String
+  year: Int!
+  updatedAt: DateTime!
+}
+
+type Query {
+  conflicts(pagination: OffsetPaginationInput, filters: ConflictFilter): [ConflictListType!]!
+  disasters(pagination: OffsetPaginationInput, filters: DisasterFilter): [DisasterListType!]!
+  countries(pagination: OffsetPaginationInput, filters: CountryFilter): [CountryListType!]!
+  conflict(pk: ID): ConflictType!
+  disaster(pk: ID): DisasterType!
+  country(pk: ID): CountryType!
+  faqs: [FaqListType!]!
+  goodPracticies: [GoodPracticeListType!]!
+  faq(pk: ID!): FaqType!
+  goodPractice(pk: ID!): GoodPracticeType!
+}
+
+"""country regions"""
+enum RegionEnum {
+  CARIBBEAN
+  SOUTH_EAST_ASIA
+  SOUTHERN_EUROPE
+  EAST_ASIA
+  NORTH_AMERICA
+  SOUTH_ASIA
+  LATIN_AMERICA
+  WESTERN_AFRICA
+  MICRONESIA
+  HORN_OF_AFRICA
+  NORTH_WEST_AND_CENTRAL_EUROPE
+  MELANESIA
+  EASTERN_EUROPE
+  AUSTRALIA_AND_NZ
+  CENTRAL_AFRICA
+  POLYNESIA
+  NORTHERN
+  CENTRAL_ASIA
+  WESTERN_ASIA
+  SOUTHERN_AFRICA
+  ASIA
+  SOUTHERN_ASIA
+  EUROPE
+  EUROPE_AND_SOUTHERN_ASIA
+  ARFRICA
+  MIDDLE_EAST_AND_NORTH_AFRICA
+  OCEANIA
+  EAST_ASIA_AND_PACIFIC
+  HIGH_INCOME_NON_OECD_MEMBER
+  SUB_SAHARAN_AFRICA
+  MIDDLE_AFRICA
+  AMERICAS
+  HIGH_INCOME_OECD_MEMBER
+  LATIN_AMERICA_AND__THE_CARIBBEAN
+  SOUTH_AMERICA
+  AUSTRALIA_AND_NEW_ZEALAND
+  WESTERN_EUROPE
+  CENTRAL_AMERICA
+  NORTHEN_AMERICA
+  SOUTH_EASTERN_ASIA
+  EASTERN_AFRICA
+  EASTERN_ASIA
+  NORTHERN_EUROPE
+}
+
+"""Stage types"""
+enum StageTypeEnum {
+  PROMISING
+  ADVANCED
+  SUCCESSFUL
+}
+
+type Statistics {
+  startYear: Int!
+  endYear: Int!
+  bounds: [Int!]!
+  conflicts: ConflictStatisticsType!
+  disasters: DisasterStatisticsType!
+}
+
+input StrFilterLookup {
+  exact: String
+  iExact: String
+  contains: String
+  iContains: String
+  inList: [String!]
+  gt: String
+  gte: String
+  lt: String
+  lte: String
+  startsWith: String
+  iStartsWith: String
+  endsWith: String
+  iEndsWith: String
+  range: [String!]
+  isNull: Boolean
+  regex: String
+  iRegex: String
+}
+
+"""country sub regions"""
+enum SubRegionEnum {
+  CARIBBEAN
+  LATIN_AMERICA
+  MIDDLE_EAST
+  SOUTH_CAUCASUS
+}
+
+type TimeSeriesStatisticsType {
+  year: String!
+  total: Int!
+}
+
+"""Good practice types"""
+enum TypeEnum {
+  POLICIES_STRATEGIES_AND_LEAGAL_FRAMEWORKS
+  GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP
+  DISPLACEMENT_MONITORING_DATA_COLLECTION_ANALYSIS_AND_SYSTEMS
+  RISK_REDUCTION_AND_PREVENTION
+  PROTECTION_AND_ASSISTANCE_AND_DURABLE_SOLUTIONS
 }

@@ -8,8 +8,6 @@ from .models import (
     Conflict,
     Disaster,
     OverView,
-    EssentialLink,
-    ContactPerson,
 )
 from .gh_filters import (
     CountryFilter,
@@ -33,22 +31,6 @@ class OverViewType:
     description: auto
     year: auto
     updated_at: auto
-
-
-@strawberry.django.type(EssentialLink, pagination=True)
-class EssentialLinkType:
-    id: auto
-    description: auto
-
-
-@strawberry.django.type(ContactPerson, pagination=True)
-class ContactPersonType:
-    id: auto
-    description: auto
-
-    @strawberry.field
-    async def image(self, info: Info) -> FileFieldType:
-        return build_url(self.image, info.context['request'])
 
 
 @strawberry.django.type(CountryAdditionalInfo, pagination=True, filters=CountryAdditionalInfoFilter)
@@ -126,6 +108,8 @@ class CountryType:
     is_country_office_iom: auto
     title: auto
     description: auto
+    essential_links: auto
+    contact_person_description: auto
 
     @strawberry.field
     async def country_additonal_info(self, info: Info) -> List[CountryAdditionalInfoType]:
@@ -136,16 +120,12 @@ class CountryType:
         return await info.context["country_overviews_loader"].load(self.id)
 
     @strawberry.field
-    async def essential_links(self, info: Info) -> List[EssentialLinkType]:
-        return await info.context["country_essential_links_loader"].load(self.id)
-
-    @strawberry.field
-    async def contact_persons(self, info: Info) -> List[ContactPersonType]:
-        return await info.context["country_contact_persons_loader"].load(self.id)
-
-    @strawberry.field
     async def background_image(self, info: Info) -> FileFieldType:
         return build_url(self.background_image, info.context['request'])
+
+    @strawberry.field
+    async def contact_person_image(self, info: Info) -> FileFieldType:
+        return build_url(self.contact_person_image, info.context['request'])
 
     @strawberry.field
     async def statistics(self, info: Info) -> List[Statistics]:

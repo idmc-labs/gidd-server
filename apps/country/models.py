@@ -113,6 +113,11 @@ class Country(models.Model):
     background_image = models.FileField(upload_to='countries/', blank=True)
     title = models.CharField(max_length=255, verbose_name=_('Country title'), blank=True)
     description = models.TextField(blank=True, verbose_name=_('Country description'), null=True)
+    essential_links = models.TextField(verbose_name=_('Essential links'), blank=True, null=True)
+    contact_person_image = models.FileField(upload_to='contact_person/', blank=True)
+    contact_person_description = models.TextField(
+        verbose_name=_('Contact person description'), blank=True, null=True
+    )
 
     class Meta:
         verbose_name = _('Country')
@@ -144,43 +149,6 @@ class OverView(models.Model):
 
     def __str__(self):
         return self.description if self.description else str(self.updated_at)
-
-
-class EssentialLink(models.Model):
-    country = models.OneToOneField(
-        'country.Country', related_name='country_essential_links', on_delete=models.PROTECT,
-        verbose_name=_('Country'), null=True, blank=True
-    )
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
-    is_published = models.BooleanField(
-        default=False, verbose_name=_('Is published?')
-    )
-
-    class Meta:
-        verbose_name = _('Country essential link')
-        verbose_name_plural = _('Country essential links')
-
-    def __str__(self):
-        return self.description
-
-
-class ContactPerson(models.Model):
-    country = country = models.OneToOneField(
-        'country.Country', related_name='country_contact_persons', on_delete=models.PROTECT,
-        verbose_name=_('Country'), null=True, blank=True
-    )
-    image = models.FileField(upload_to='contact_person/', blank=True)
-    description = models.TextField(verbose_name=_('Description'), blank=True, null=True)
-    is_published = models.BooleanField(
-        default=False, verbose_name=_('Is published?')
-    )
-
-    class Meta:
-        verbose_name = _('Country contact person')
-        verbose_name_plural = _('Country contact persons')
-
-    def __str__(self):
-        return self.description
 
 
 class CountryAdditionalInfo(models.Model):
