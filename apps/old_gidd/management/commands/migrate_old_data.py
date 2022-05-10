@@ -65,8 +65,7 @@ class Command(BaseCommand):
     def _country_iso_to_bounding_box_map(self, iso3):
         for bound in COUNTRY_BOUNDING:
             if bound['iso3'] == iso3:
-                return bound['bounding']
-            return []
+                return bound['bounding_box']
 
     def create_countries(self):
         NewCountry.objects.bulk_create(
@@ -88,7 +87,7 @@ class Command(BaseCommand):
                     is_conflict_affected_since_1970=old_country.conflict_affected_since_1970,
                     is_country_office_nrc=old_country.country_office_nrc,
                     is_country_office_iom=old_country.country_office_iom,
-                    bounding_box=[23.23, 45.44, 55.6, 455.44]
+                    bounding_box=self._country_iso_to_bounding_box_map(old_country.iso3)
                 ) for old_country in OldCountry.objects.using('idmc_public').all()
             ]
         )
