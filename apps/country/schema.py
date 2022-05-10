@@ -1,5 +1,6 @@
 import strawberry
 from typing import List, Optional
+from django.db.models.functions import Coalesce
 from .types import (
     ConflictType,
     DisasterType,
@@ -14,7 +15,7 @@ from .types import (
     ConflictTimeSeriesStatisticsType
 )
 from apps.country.models import Disaster, Conflict
-from django.db.models import Value, Sum, F, Count, CharField, Case, When
+from django.db.models import Value, Sum, F, Count, CharField, Case, When, IntegerField
 from .gh_filters import DisasterStatisticsFilter, ConflictStatisticsFilter
 from strawberry_django.filters import apply as filter_apply
 from asgiref.sync import sync_to_async
@@ -24,11 +25,11 @@ from .models import Country
 @sync_to_async
 def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
     timeseries_qs = disaster_qs.values('year').annotate(
-        total=Sum('new_displacement')
+        total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
     ).values('year', 'total')
 
     categories_qs = disaster_qs.values('hazard_category').annotate(
-        total=Sum('new_displacement'),
+        total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
         label=Case(
             When(hazard_sub_category=None, then=Value('Not labeled')),
             default=F('hazard_sub_category'),
@@ -37,12 +38,12 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
     ).values('label', 'total')
     return DisasterStatisticsType(
         new_displacements=disaster_qs.aggregate(
-            total_new_displacement=Sum('new_displacement')
+            total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
         )['total_new_displacement'],
 
         total_events=disaster_qs.values('event_name').annotate(
             events=Count('id')
-        ).aggregate(total_events=Sum('events'))['total_events'],
+        ).aggregate(total_events=Coalesce(Sum('events', output_field=IntegerField()), 0))['total_events'],
 
         timeseries=[TimeSeriesStatisticsType(**item) for item in timeseries_qs],
 
@@ -53,16 +54,16 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
 @sync_to_async
 def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
     timeseries_qs = conflict_qs.values('year').annotate(
-        total_new_displacement=Sum('new_displacement'),
-        total_idps=Sum('total_displacement')
+        total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
+        total_idps=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
     ).values('year', 'total_new_displacement', 'total_idps')
     return ConflictStatisticsType(
         total_idps=conflict_qs.aggregate(
-            total_new_displacement=Sum('total_displacement')
+            total_new_displacement=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
         )['total_new_displacement'],
 
         new_displacements=conflict_qs.aggregate(
-            total_new_displacement=Sum('new_displacement')
+            total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 2)
         )['total_new_displacement'],
 
         timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],

@@ -49,34 +49,34 @@ class CountryAdditionalInfoListType(CountryAdditionalInfoType):
 
 @strawberry.type
 class TimeSeriesStatisticsType:
-    year: Optional[str]
-    total: Optional[int]
+    year: str
+    total: int
 
 
 @strawberry.type
 class ConflictTimeSeriesStatisticsType:
-    year: Optional[str]
-    total_new_displacement: Optional[int]
-    total_idps: Optional[int]
+    year: str
+    total_new_displacement: int
+    total_idps: int
 
 
 @strawberry.type
 class CategoryStatisticsType:
-    label: Optional[str]
-    total: Optional[int]
+    label: str
+    total: int
 
 
 @strawberry.type
 class ConflictStatisticsType:
-    new_displacements: Optional[int]
-    total_idps: Optional[int]
+    new_displacements: int
+    total_idps: int
     timeseries: List[ConflictTimeSeriesStatisticsType]
 
 
 @strawberry.type
 class DisasterStatisticsType:
-    new_displacements: Optional[int]
-    total_events: Optional[int]
+    new_displacements: int
+    total_events: int
     timeseries: List[TimeSeriesStatisticsType]
     categories: List[CategoryStatisticsType]
 
