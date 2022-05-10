@@ -80,7 +80,7 @@ class DisasterStatisticsFilter:
     def filter_categories(self, queryset):
         if not self.categories:
             return queryset
-        return queryset.filter(hazard_sub_category__in=self.categories)
+        return queryset.filter(hazard_type__in=self.categories)
 
     def filter_countries(self, queryset):
         if not self.countries:
