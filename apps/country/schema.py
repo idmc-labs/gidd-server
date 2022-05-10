@@ -28,11 +28,12 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
         total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
     ).values('year', 'total')
 
-    categories_qs = disaster_qs.values('hazard_category').annotate(
+    # FIXME should we filter out not labeld hazard type?
+    categories_qs = disaster_qs.filter(hazard_type__isnull=False).values('hazard_type').annotate(
         total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
         label=Case(
             When(hazard_sub_category=None, then=Value('Not labeled')),
-            default=F('hazard_sub_category'),
+            default=F('hazard_type'),
             output_field=CharField()
         )
     ).values('label', 'total')
