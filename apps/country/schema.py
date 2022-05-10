@@ -21,7 +21,7 @@ from asgiref.sync import sync_to_async
 
 
 @sync_to_async
-def disaster_statistics_qs(disaster_qs) -> List[DisasterStatisticsType]:
+def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
     timeseries_qs = disaster_qs.values('year').annotate(
         total=Sum('new_displacement')
     ).values('year', 'total')
@@ -34,42 +34,38 @@ def disaster_statistics_qs(disaster_qs) -> List[DisasterStatisticsType]:
             output_field=CharField()
         )
     ).values('label', 'total')
-    return [
-        DisasterStatisticsType(
-            new_displacements=disaster_qs.aggregate(
-                total_new_displacement=Sum('new_displacement')
-            )['total_new_displacement'],
+    return DisasterStatisticsType(
+        new_displacements=disaster_qs.aggregate(
+            total_new_displacement=Sum('new_displacement')
+        )['total_new_displacement'],
 
-            total_events=disaster_qs.values('event_name').annotate(
-                events=Count('id')
-            ).aggregate(total_events=Sum('events'))['total_events'],
+        total_events=disaster_qs.values('event_name').annotate(
+            events=Count('id')
+        ).aggregate(total_events=Sum('events'))['total_events'],
 
-            timeseries=[TimeSeriesStatisticsType(**item) for item in timeseries_qs],
+        timeseries=[TimeSeriesStatisticsType(**item) for item in timeseries_qs],
 
-            categories=[CategoryStatisticsType(**item) for item in categories_qs]
-        )
-    ]
+        categories=[CategoryStatisticsType(**item) for item in categories_qs]
+    )
 
 
 @sync_to_async
-def conflict_statistics_qs(conflict_qs) -> List[ConflictStatisticsType]:
+def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
     timeseries_qs = conflict_qs.values('year').annotate(
         total_new_displacement=Sum('new_displacement'),
         total_idps=Sum('total_displacement')
     ).values('year', 'total_new_displacement', 'total_idps')
-    return [
-        ConflictStatisticsType(
-            total_idps=conflict_qs.aggregate(
-                total_new_displacement=Sum('total_displacement')
-            )['total_new_displacement'],
+    return ConflictStatisticsType(
+        total_idps=conflict_qs.aggregate(
+            total_new_displacement=Sum('total_displacement')
+        )['total_new_displacement'],
 
-            new_displacements=conflict_qs.aggregate(
-                total_new_displacement=Sum('new_displacement')
-            )['total_new_displacement'],
+        new_displacements=conflict_qs.aggregate(
+            total_new_displacement=Sum('new_displacement')
+        )['total_new_displacement'],
 
-            timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],
-        )
-    ]
+        timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],
+    )
 
 
 @strawberry.type
@@ -82,9 +78,9 @@ class Query:
     country: CountryType = strawberry.django.field()
 
     @strawberry.field
-    def disaster_statistics(self, filters: DisasterStatisticsFilter) -> List[DisasterStatisticsType]:
+    def disaster_statistics(self, filters: DisasterStatisticsFilter) -> DisasterStatisticsType:
         return disaster_statistics_qs(filter_apply(filters, Disaster.objects.all()))
 
     @strawberry.field
-    def conflict_statistics(self, filters: ConflictStatisticsFilter) -> List[ConflictStatisticsType]:
+    def conflict_statistics(self, filters: ConflictStatisticsFilter) -> ConflictStatisticsType:
         return conflict_statistics_qs(filter_apply(filters, Conflict.objects.all()))
