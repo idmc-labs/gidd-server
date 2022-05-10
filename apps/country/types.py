@@ -54,6 +54,13 @@ class TimeSeriesStatisticsType:
 
 
 @strawberry.type
+class ConflictTimeSeriesStatisticsType:
+    year: Optional[str]
+    total_new_displacement: Optional[int]
+    total_idps: Optional[int]
+
+
+@strawberry.type
 class CategoryStatisticsType:
     label: Optional[str]
     total: Optional[int]
@@ -63,7 +70,7 @@ class CategoryStatisticsType:
 class ConflictStatisticsType:
     new_displacements: Optional[int]
     total_idps: Optional[int]
-    timeseries: List[TimeSeriesStatisticsType]
+    timeseries: List[ConflictTimeSeriesStatisticsType]
 
 
 @strawberry.type

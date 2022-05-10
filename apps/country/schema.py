@@ -11,6 +11,7 @@ from .types import (
     TimeSeriesStatisticsType,
     CategoryStatisticsType,
     ConflictStatisticsType,
+    ConflictTimeSeriesStatisticsType
 )
 from apps.country.models import Disaster, Conflict
 from django.db.models import Value, Sum, F, Count, CharField, Case, When
@@ -53,19 +54,20 @@ def disaster_statistics_qs(disaster_qs) -> List[DisasterStatisticsType]:
 @sync_to_async
 def conflict_statistics_qs(conflict_qs) -> List[ConflictStatisticsType]:
     timeseries_qs = conflict_qs.values('year').annotate(
-        total=Sum('new_displacement')
-    ).values('year', 'total')
+        total_new_displacement=Sum('new_displacement'),
+        total_idps=Sum('total_displacement')
+    ).values('year', 'total_new_displacement', 'total_idps')
     return [
         ConflictStatisticsType(
             total_idps=conflict_qs.aggregate(
-                total_new_displacement=Sum('new_displacement')
+                total_new_displacement=Sum('total_displacement')
             )['total_new_displacement'],
 
             new_displacements=conflict_qs.aggregate(
                 total_new_displacement=Sum('new_displacement')
             )['total_new_displacement'],
 
-            timeseries=[TimeSeriesStatisticsType(**item) for item in timeseries_qs],
+            timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],
         )
     ]
 
