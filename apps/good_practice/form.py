@@ -7,7 +7,7 @@ from tinymce.widgets import TinyMCE
 
 
 class FaqForm(forms.ModelForm):
-    answer = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Answer"))
+    answer = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Answer"), required=False)
 
     class Meta:
         model = Faq
@@ -15,7 +15,7 @@ class FaqForm(forms.ModelForm):
 
 
 class MediaAndResourceLinkForm(forms.ModelForm):
-    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Description"))
+    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Description"), required=False)
 
     class Meta:
         model = MediaAndResourceLink
@@ -23,7 +23,7 @@ class MediaAndResourceLinkForm(forms.ModelForm):
 
 
 class GoodPracticeForm(forms.ModelForm):
-    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Description"))
+    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Description"), required=False)
 
     class Meta:
         model = GoodPractice
