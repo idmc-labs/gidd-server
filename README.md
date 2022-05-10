@@ -29,7 +29,7 @@ cat full-db.sql  | docker-compose exec -T olddb psql -U postgres -d postgres
 # To migrate old db to new db first change the password of allochi and postgres
 # user in olddb
 docker-compose exec olddb bash
-psql -U postres
+psql -U postgres
 ALTER USER allochi WITH PASSWORD '<default-password-here>';
 ```
 
