@@ -1,5 +1,5 @@
 import strawberry
-from typing import List
+from typing import List, Optional
 from .types import (
     ConflictType,
     DisasterType,
@@ -18,6 +18,7 @@ from django.db.models import Value, Sum, F, Count, CharField, Case, When
 from .gh_filters import DisasterStatisticsFilter, ConflictStatisticsFilter
 from strawberry_django.filters import apply as filter_apply
 from asgiref.sync import sync_to_async
+from .models import Country
 
 
 @sync_to_async
@@ -68,6 +69,14 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
     )
 
 
+@sync_to_async
+def get_country_object(pk, iso3):
+    if pk:
+        return Country.objects.get(pk=pk)
+    if iso3:
+        return Country.objects.get(iso3=iso3)
+
+
 @strawberry.type
 class Query:
     conflicts: List[ConflictListType] = strawberry.django.field()
@@ -76,6 +85,10 @@ class Query:
     conflict: ConflictType = strawberry.django.field()
     disaster: DisasterType = strawberry.django.field()
     country: CountryType = strawberry.django.field()
+
+    @strawberry.field
+    def country(self, pk: Optional[strawberry.ID] = None, iso3: Optional[str] = None) -> CountryType:
+        return get_country_object(pk, iso3)
 
     @strawberry.field
     def disaster_statistics(self, filters: DisasterStatisticsFilter) -> DisasterStatisticsType:
