@@ -1,6 +1,7 @@
 import datetime
 from django.core.files.storage import get_storage_class
 import strawberry
+from typing import Optional
 
 StorageClass = get_storage_class()
 
@@ -15,8 +16,8 @@ def current_year():
 
 @strawberry.type
 class FileFieldType:
-    name: str
-    url: str
+    name: Optional[str]
+    url: Optional[str]
 
     def resolve_file(self):
         return FileFieldType(name=self.name, url=self.url)
@@ -27,4 +28,5 @@ def build_url(file, request):
     url = ''
     if file_name:
         url = request.build_absolute_uri(file.url)
-    return FileFieldType(name=file_name, url=url).resolve_file()
+        return FileFieldType(name=file_name, url=url).resolve_file()
+    return None

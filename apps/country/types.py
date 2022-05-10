@@ -116,8 +116,12 @@ class CountryType:
         return await info.context["country_overviews_loader"].load(self.id)
 
     @strawberry.field
-    async def background_image(self, info: Info) -> FileFieldType:
+    async def background_image(self, info: Info) -> Optional[FileFieldType]:
         return build_url(self.background_image, info.context['request'])
+
+    @strawberry.field
+    async def contact_person_image(self, info: Info) -> Optional[FileFieldType]:
+        return build_url(self.contact_person_image, info.context['request'])
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
