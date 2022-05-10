@@ -1,4 +1,5 @@
 from django.db import models
+from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from utils import year_choices, current_year
 
@@ -108,6 +109,10 @@ class Country(models.Model):
     )
     is_country_office_iom = models.BooleanField(
         default=False, verbose_name=_('Is country office iom?')
+    )
+    bounding_box = ArrayField(
+        verbose_name=_('Bounding Box'),
+        base_field=models.FloatField(blank=False), null=True
     )
     # Used in IDMC website
     background_image = models.FileField(upload_to='countries/', blank=True)
