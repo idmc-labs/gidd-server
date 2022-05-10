@@ -136,6 +136,47 @@ class Country(models.Model):
     def country_additional_info(self):
         return self.country_additonal_info
 
+    @property
+    def disaster_statistics(self):
+        from apps.country.types import (
+            DisasterStatisticsType,
+            TimeSeriesStatisticsType,
+            CategoryStatisticsType
+        )
+
+        timeseries_qs = Disaster.objects.filter(
+            country=self.pk
+        ).values('year').annotate(
+            _year=models.Value('year'), total=models.Sum('new_displacement')
+        ).values('year', 'total')
+
+        categories_qs = Disaster.objects.filter(
+            country=self.pk
+        ).values('hazard_category').annotate(
+            total=models.Sum('new_displacement'),
+            label=models.F('hazard_category')
+        ).values('label', 'total')
+
+        return DisasterStatisticsType(
+            new_displacements=Disaster.objects.filter(
+                country=self.pk
+            ).aggregate(total_new_displacement=models.Sum('new_displacement'))['total_new_displacement'],
+
+            total_events=Disaster.objects.filter(
+                country=self.pk
+            ).values('event_name').annotate(
+                events=models.Count('id')
+            ).aggregate(total_events=models.Sum('events'))['total_events'],
+
+            timeseries=[TimeSeriesStatisticsType(**item) for item in timeseries_qs],
+
+            categories=[CategoryStatisticsType(**item) for item in categories_qs]
+        )
+
+    @property
+    def conflict_statistics(self):
+        return self.country_conflict.all()
+
 
 class OverView(models.Model):
     country = models.ForeignKey(
