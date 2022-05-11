@@ -64,7 +64,7 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
         )['total_new_displacement'],
 
         new_displacements=conflict_qs.aggregate(
-            total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 2)
+            total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
         )['total_new_displacement'],
 
         timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],
