@@ -67,6 +67,9 @@ class Command(BaseCommand):
             if bound['iso3'] == iso3:
                 return bound['bounding_box']
 
+    def _capitalize_string(self, string):
+        return string.capitalize() if string else None
+
     def create_countries(self):
         NewCountry.objects.bulk_create(
             [
@@ -153,16 +156,16 @@ class Command(BaseCommand):
                     country_id=self.get_country_id_from_iso3(old_disaster.iso3),
                     year=old_disaster.year,
                     glide_number=old_disaster.glide_number,
-                    event_name=old_disaster.event_name,
+                    event_name=self._capitalize_string(old_disaster.event_name),
                     location_text=old_disaster.location_text,
                     start_date=old_disaster.start_date,
                     start_date_accuracy=old_disaster.start_date_accuracy,
                     end_date=old_disaster.end_date,
                     end_date_accuracy=old_disaster.end_date_accuracy,
-                    hazard_category=old_disaster.hazard_category,
-                    hazard_sub_category=old_disaster.hazard_sub_category,
-                    hazard_sub_type=old_disaster.hazard_sub_type,
-                    hazard_type=old_disaster.hazard_type,
+                    hazard_category=self._capitalize_string(old_disaster.hazard_category),
+                    hazard_sub_category=self._capitalize_string(old_disaster.hazard_sub_category),
+                    hazard_sub_type=self._capitalize_string(old_disaster.hazard_sub_type),
+                    hazard_type=self._capitalize_string(old_disaster.hazard_type),
                     new_displacement=old_disaster.new_displacement,
                     new_displacement_source=old_disaster.new_displacement_source,
                     new_displacement_since=old_disaster.new_displacement_since,
