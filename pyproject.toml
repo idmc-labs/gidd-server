@@ -19,6 +19,7 @@ factory-boy = "^3.2.1"
 pytest-asyncio = "^0.18.3"
 django-storages = "^1.12.3"
 django-tinymce = "^3.4.0"
+django-reversion = "^5.0.0"
 
 [tool.poetry.dev-dependencies]
 pytest-profiling = "*"

@@ -133,6 +133,17 @@ python-versions = ">=3.6"
 Django = ">=2.2"
 
 [[package]]
+name = "django-reversion"
+version = "5.0.0"
+description = "An extension to the Django web framework that provides version control for model instances."
+category = "main"
+optional = false
+python-versions = ">=3.7"
+
+[package.dependencies]
+django = ">=2.0"
+
+[[package]]
 name = "django-storages"
 version = "1.12.3"
 description = "Support for many storage backends in Django"
@@ -599,7 +610,7 @@ testing = ["pytest (>=6)", "pytest-checkdocs (>=2.4)", "pytest-flake8", "pytest-
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "c8d9d66dc56ec5b504074352f977db134fe83b0e357a39a98259fe5aa13abbde"
+content-hash = "0b2cdfb04e752a016b47851fe87733bda6232f5329e8ae183932c6878dbe26ad"
 
 [metadata.files]
 anyio = [
@@ -645,6 +656,10 @@ django-environ = [
 django-filter = [
     {file = "django-filter-21.1.tar.gz", hash = "sha256:632a251fa8f1aadb4b8cceff932bb52fe2f826dd7dfe7f3eac40e5c463d6836e"},
     {file = "django_filter-21.1-py3-none-any.whl", hash = "sha256:f4a6737a30104c98d2e2a5fb93043f36dd7978e0c7ddc92f5998e85433ea5063"},
+]
+django-reversion = [
+    {file = "django-reversion-5.0.0.tar.gz", hash = "sha256:0bade3c399387451087f0c67835e0d3d186d767de6a5c5ba53a88eafc3f271c8"},
+    {file = "django_reversion-5.0.0-py3-none-any.whl", hash = "sha256:7bea725de7f56769d89a5a712cf7b7f1b02abc27655432f2eb1a703264986d99"},
 ]
 django-storages = [
     {file = "django-storages-1.12.3.tar.gz", hash = "sha256:a475edb2f0f04c4f7e548919a751ecd50117270833956ed5bd585c0575d2a5e7"},

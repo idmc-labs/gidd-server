@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'django_filters',
     'tinymce',
     'storages',
+    'reversion',
 ] + LOCAL_APPS
 
 MIDDLEWARE = [
