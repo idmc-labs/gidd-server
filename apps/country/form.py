@@ -29,6 +29,9 @@ class CountryForm(forms.ModelForm):
     internal_displacement_description = forms.CharField(widget=TinyMCE(
         attrs={'cols': 80, 'rows': 30}), label=_("Internal displacement description"), required=False
     )
+    displacement_data_description = forms.CharField(widget=TinyMCE(
+        attrs={'cols': 80, 'rows': 30}), label=_("Displacement data description"), required=False
+    )
 
     class Meta:
         model = Country

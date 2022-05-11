@@ -129,6 +129,9 @@ class Country(models.Model):
     internal_displacement_description = models.TextField(
         blank=True, verbose_name=_('Internal displacement description'), null=True
     )
+    displacement_data_description = models.TextField(
+        blank=True, verbose_name=_('Displacement data description'), null=True
+    )
 
     class Meta:
         verbose_name = _('Country')
