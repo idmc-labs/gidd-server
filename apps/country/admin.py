@@ -1,4 +1,5 @@
 from django.contrib import admin
+from reversion.admin import VersionAdmin
 from apps.country.models import (
     Country, CountryAdditionalInfo,
     Conflict, Disaster, OverView
@@ -15,7 +16,7 @@ class OverViewInline(admin.TabularInline):
     extra = 0
 
 
-class CountryAdmin(admin.ModelAdmin):
+class CountryAdmin(VersionAdmin):
     search_fields = ['name']
     list_display = [
         'iso3',
