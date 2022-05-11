@@ -29,7 +29,7 @@ env = environ.Env(
     DB_PWD=(str, 'postgres'),
     DB_HOST=(str, 'db'),
     DB_PORT=(int, 5432),
-    CORS_ORIGIN_REGEX_WHITELIST=(str, 'r\"^https://\w+\.domain\.com$\"'), # noqa W605
+    CORS_ALLOWED_ORIGINS=(list, []),
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
@@ -46,6 +46,7 @@ env = environ.Env(
     USE_LOCAL_STORATE=(bool, True),
 )
 
+CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
