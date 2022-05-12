@@ -58,11 +58,9 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
         total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
         total_idps=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
     ).values('year', 'total_new_displacement', 'total_idps')
+    total_idps = conflict_qs.order_by('-year').first().total_displacement if conflict_qs.order_by('-year') else 0
     return ConflictStatisticsType(
-        total_idps=conflict_qs.aggregate(
-            total_new_displacement=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
-        )['total_new_displacement'],
-
+        total_idps=total_idps if total_idps else 0,
         new_displacements=conflict_qs.aggregate(
             total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
         )['total_new_displacement'],
