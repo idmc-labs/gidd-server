@@ -13,6 +13,8 @@ from typing import List
 class CountryFilter:
     id: auto
     iso3: auto
+    name: auto
+    idmc_names: auto
 
 
 @strawberry.django.filters.filter(CountryAdditionalInfo, lookups=True)
