@@ -45,3 +45,12 @@ Download country background images zip file, extract it, and move to media or bu
 ```bash
 docker-compose exec server python manage.py save_country_images
 ```
+
+## Aws bucket setup
+Add these environment variables in .env file
+```bash
+ENABLE_AWS_BUCKET=True
+AWS_S3_ACCESS_KEY_ID='<your-aws-production-id>'
+AWS_S3_SECRET_ACCESS_KEY='<your-aws-secret-key>'
+AWS_STORAGE_BUCKET_NAME='<aws-bucket-name>'
+```

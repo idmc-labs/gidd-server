@@ -44,6 +44,11 @@ env = environ.Env(
     DB_OLD_PORT=(int, 5432),
     ENABLE_MIGRATION=(bool, False),
     USE_LOCAL_STORATE=(bool, True),
+    # S3 bucket settings
+    ENABLE_AWS_BUCKET=(bool, False),
+    AWS_S3_ACCESS_KEY_ID=(str, ''),
+    AWS_S3_SECRET_ACCESS_KEY=(str, ''),
+    AWS_STORAGE_BUCKET_NAME=(str, ''),
 )
 
 CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
@@ -194,6 +199,19 @@ if DEBUG or env('USE_LOCAL_STORATE'):
     MEDIA_URL = env('DJANGO_MEDIA_URL')
     STATIC_ROOT = env('DJANGO_STATIC_ROOT')
     MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+elif not DEBUG and env('ENABLE_AWS_BUCKET'):
+    STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+    DEFAULT_FILE_STORAGE = "config.storage_backends.MediaStorage"
+    AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
+    AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+    AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+    AWS_S3_OBJECT_PARAMETERS = {
+        'CacheControl': 'max-age=86400',
+    }
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{env('DJANGO_STATIC_URL')}/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{env('DJANGO_MEDIA_URL')}/"
+    TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
