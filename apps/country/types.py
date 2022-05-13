@@ -104,7 +104,6 @@ class CountryType:
     description: auto
     essential_links: auto
     contact_person_description: auto
-    latest_new_displacements_description: auto
     internal_displacement_description: auto
     displacement_data_description: auto
     bounding_box: List[float]

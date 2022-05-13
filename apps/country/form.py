@@ -32,10 +32,6 @@ class CountryForm(forms.ModelForm):
     contact_person_description = forms.CharField(widget=TinyMCE(
         attrs={'cols': 80, 'rows': 30}), label=_("Contact person description"), required=False
     )
-
-    latest_new_displacements_description = forms.CharField(widget=TinyMCE(
-        attrs={'cols': 80, 'rows': 30}), label=_("Latest new displacements description"), required=False
-    )
     internal_displacement_description = forms.CharField(widget=TinyMCE(
         attrs={'cols': 80, 'rows': 30}), label=_("Internal displacement description"), required=False
     )
