@@ -13,6 +13,7 @@ from apps.old_gidd.models import (
     Disaster as OldDisaster,
 )
 from .country_bounding import COUNTRY_BOUNDING
+from .static_text import COUNTRY_DESCRIPTION, COUNTRY_DISPLACEMENT_DATA_DESCRIPTION
 
 
 class Command(BaseCommand):
@@ -90,7 +91,9 @@ class Command(BaseCommand):
                     is_conflict_affected_since_1970=old_country.conflict_affected_since_1970,
                     is_country_office_nrc=old_country.country_office_nrc,
                     is_country_office_iom=old_country.country_office_iom,
-                    bounding_box=self._country_iso_to_bounding_box_map(old_country.iso3)
+                    bounding_box=self._country_iso_to_bounding_box_map(old_country.iso3),
+                    description=COUNTRY_DESCRIPTION,
+                    displacement_data_description=COUNTRY_DISPLACEMENT_DATA_DESCRIPTION,
                 ) for old_country in OldCountry.objects.using('idmc_public').all()
             ]
         )
