@@ -90,8 +90,8 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         writer = csv.writer(response, delimiter=',')
         writer.writerow([
             'Year', 'Glide Number', 'Event Name', 'Location Text', 'Start Date', 'Start Date Accuracy',
-            'End Date', 'End Date Accuracy', 'Hazard Category', 'Hazard Sub Category', 'Hazard Sub Category',
-            'Hazard Sub Type', 'Hazard Type', 'New Displacement', 'New Displacement Source', 'New Displacement Since'
+            'End Date', 'End Date Accuracy', 'Hazard Category', 'Hazard Sub Category', 'Hazard Sub Type',
+            'Hazard Type', 'New Displacement', 'New Displacement Source', 'New Displacement Since'
         ])
         disaster_qs = Disaster.objects.filter(country__iso3=iso3)
         for disaster in disaster_qs:
