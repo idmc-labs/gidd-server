@@ -36,7 +36,7 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
             default=F('hazard_type'),
             output_field=CharField()
         )
-    ).filter(total__gte=1).order_by('year').values('label', 'total')
+    ).filter(total__gte=1).values('label', 'total')
     return DisasterStatisticsType(
         new_displacements=disaster_qs.aggregate(
             total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
