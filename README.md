@@ -38,3 +38,10 @@ ALTER USER allochi WITH PASSWORD '<default-password-here>';
 docker-compose exec server python manage.py migrate
 docker-compose exec server python manage.py migrate_old_data
 ```
+
+## Migrate country background images
+Download country background images zip file, extract it, and move to media or bucket. Finally run this management command.
+
+```bash
+docker-compose exec server python manage.py save_country_images
+```
