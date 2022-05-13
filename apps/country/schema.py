@@ -26,7 +26,7 @@ from .models import Country
 def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
     timeseries_qs = disaster_qs.values('year').annotate(
         total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
-    ).values('year', 'total')
+    ).order_by('year').values('year', 'total')
 
     # FIXME should we filter out not labeld hazard type?
     categories_qs = disaster_qs.filter(hazard_type__isnull=False).values('hazard_type').annotate(
@@ -36,7 +36,7 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
             default=F('hazard_type'),
             output_field=CharField()
         )
-    ).filter(total__gte=1).values('label', 'total')
+    ).filter(total__gte=1).order_by('year').values('label', 'total')
     return DisasterStatisticsType(
         new_displacements=disaster_qs.aggregate(
             total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
@@ -57,7 +57,7 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
     timeseries_qs = conflict_qs.values('year').annotate(
         total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
         total_idps=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
-    ).values('year', 'total_new_displacement', 'total_idps')
+    ).order_by('year').values('year', 'total_new_displacement', 'total_idps')
     total_idps = conflict_qs.order_by('-year').first().total_displacement if conflict_qs.order_by('-year') else 0
     return ConflictStatisticsType(
         total_idps=total_idps if total_idps else 0,
