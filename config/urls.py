@@ -39,11 +39,12 @@ router.register("disasters", DisasterViewSet, "diasters-view")
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("graphql/", CustomAsyncGraphQLView.as_view(schema=schema, graphiql=False)),
-    path("graphiql/", CustomAsyncGraphQLView.as_view(schema=schema)),
     path('api/', include(router.urls)),
     path('tinymce/', include('tinymce.urls')),
 ]
-
+# Enable graphiql in development server only
+if settings.DEBUG:
+    urlpatterns.append(path("graphiql/", CustomAsyncGraphQLView.as_view(schema=schema)))
 admin.site.site_header = "GIDD administration"
 
 # Static and media file urls
