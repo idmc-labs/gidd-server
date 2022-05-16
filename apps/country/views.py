@@ -43,9 +43,12 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             'Cross Border Flight Since', 'Children Born To IDPS Since', 'IDP deaths since'
         ])
         conflict_qs = Conflict.objects.filter(country__iso3=iso3)
-        year = request.GET.get('year', None)
-        if year:
-            conflict_qs = conflict_qs.filter(year=year)
+        start_year = request.GET.get('start_year', None)
+        end_year = request.GET.get('end_year', None)
+        if start_year:
+            conflict_qs = conflict_qs.filter(year__gte=start_year)
+        if end_year:
+            conflict_qs = conflict_qs.filter(year__lte=end_year)
         for conflict in conflict_qs:
             writer.writerow(
                 [
@@ -97,10 +100,13 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             'Hazard Type', 'New Displacement', 'New Displacement Source', 'New Displacement Since'
         ])
         disaster_qs = Disaster.objects.filter(country__iso3=iso3)
-        year = request.GET.get('year', None)
         hazard_type = request.GET.get('hazard_type', None)
-        if year:
-            disaster_qs = disaster_qs.filter(year=year)
+        start_year = request.GET.get('start_year', None)
+        end_year = request.GET.get('end_year', None)
+        if start_year:
+            disaster_qs = disaster_qs.filter(year__gte=start_year)
+        if end_year:
+            disaster_qs = disaster_qs.filter(year__lte=end_year)
         if hazard_type:
             disaster_qs = disaster_qs.filter(hazard_type=hazard_type)
         for disaster in disaster_qs:
