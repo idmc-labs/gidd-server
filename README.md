@@ -47,7 +47,13 @@ docker-compose exec server python manage.py save_country_images
 ```
 
 ## Aws bucket setup
-Add these environment variables in .env file
+Add these environment variables in .env file if aws IAM role is used
+```bash
+ENABLE_AWS_BUCKET=True
+AWS_STORAGE_BUCKET_NAME='<aws-bucket-name>'
+```
+
+Add these environment variables in .env file if aws IAM role is not used
 ```bash
 ENABLE_AWS_BUCKET=True
 AWS_S3_ACCESS_KEY_ID='<your-aws-production-id>'

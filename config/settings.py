@@ -202,8 +202,9 @@ if DEBUG or env('USE_LOCAL_STORATE'):
 elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     DEFAULT_FILE_STORAGE = "config.storage_backends.MediaStorage"
-    AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+    # NOTE: Uncomment these settings if IAM roles is not used
+    # AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
+    # AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_S3_OBJECT_PARAMETERS = {
