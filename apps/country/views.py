@@ -108,7 +108,8 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         if end_year:
             disaster_qs = disaster_qs.filter(year__lte=end_year)
         if hazard_type:
-            disaster_qs = disaster_qs.filter(hazard_type=hazard_type)
+            hazard_type_list = [x.strip() for x in hazard_type.split(',')][:-1]
+            disaster_qs = disaster_qs.filter(hazard_type__in=hazard_type_list)
         for disaster in disaster_qs:
             writer.writerow(
                 [
