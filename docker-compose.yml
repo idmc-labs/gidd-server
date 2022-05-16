@@ -20,6 +20,7 @@ services:
       - postgres-data-old:/var/lib/postgresql/data
 
   server:
+    restart: always
     image: gidd-server/server
     build:
       context: ./
