@@ -210,9 +210,9 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{env('DJANGO_STATIC_URL')}/"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/{env('DJANGO_MEDIA_URL')}/"
-    TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
+    TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
@@ -274,3 +274,4 @@ TINYMCE_DEFAULT_CONFIG = {
     "custom_undo_redo_levels": 10,
     "language": "en",
 }
+# TINYMCE_COMPRESSOR = True
