@@ -104,7 +104,7 @@ class Command(BaseCommand):
     def _get_country_descriptoin(self):
         return '''
             <p>
-                Welcome to IDMC's country profile pages! Here, you will find key information
+                Welcome to IDMC's country profile pages. Here, you will find key information
                 and data on internal displacement at the country level. By using our intuitive
                 navigation tools, you will be able to query and download our data, and get
                 the latest updates on internal displacement. You will also find material
