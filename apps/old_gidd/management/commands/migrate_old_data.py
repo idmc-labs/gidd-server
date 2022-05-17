@@ -238,8 +238,7 @@ class Command(BaseCommand):
         ) as csv_file:
             figures_analysis_data = list(csv.reader(csv_file, skipinitialspace=True))
 
-        self.reset_new_db()
         self.create_countries(contact_data, figures_analysis_data)
-        # self.create_countries_addtional_info()
-        # self.create_conflicts()
-        # self.create_disasters()
+        self.create_countries_addtional_info()
+        self.create_conflicts()
+        self.create_disasters()
