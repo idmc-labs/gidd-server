@@ -1,4 +1,7 @@
 from django.core.management.base import BaseCommand
+import os
+import csv
+from django.conf import settings
 from apps.country.models import (
     Country as NewCountry,
     CountryAdditionalInfo,
@@ -13,7 +16,6 @@ from apps.old_gidd.models import (
     Disaster as OldDisaster,
 )
 from .country_bounding import COUNTRY_BOUNDING
-from .static_text import COUNTRY_DESCRIPTION, COUNTRY_DISPLACEMENT_DATA_DESCRIPTION
 
 
 class Command(BaseCommand):
@@ -71,7 +73,47 @@ class Command(BaseCommand):
     def _capitalize_string(self, string):
         return string.capitalize() if string else None
 
-    def create_countries(self):
+    def _get_contact_description_from_contact_list(self, iso3, contact_data):
+        for contact in contact_data:
+            if contact['iso3'] == iso3:
+                return f'''
+                    <p>
+                        <b>{contact['ME']}</b>
+                    </p>
+                    <p>
+                        {contact['TITLE']}
+                    </p>
+                    <p>
+                        <a href="mailto:{contact['EMAIL']}">📧 Email </a>
+                    </p>
+                '''
+
+    def _get_figures_analysis_data(self, iso3, displacement_data):
+        for displacement in displacement_data:
+            if displacement[1] == iso3.lower():
+                return f'''
+                    <p>
+                        Learn more about the sources of our figures, as well as
+                        our methodologies and caveats.
+                    </p>
+                    <p>
+                        <a href={displacement[0]}>🗎 Latest Figure Analysis (PDF)</a>
+                    </p>
+                '''
+
+    def _get_country_descriptoin(self):
+        return '''
+            <p>
+                Welcome to IDMC's country profile pages! Here, you will find key information
+                and data on internal displacement at the country level. By using our intuitive
+                navigation tools, you will be able to query and download our data, and get
+                the latest updates on internal displacement. You will also find material
+                related to the country in question, as well as essential reading and
+                methodological documentation.
+            </p>
+        '''
+
+    def create_countries(self, contact_data, figures_analysis_data):
         NewCountry.objects.bulk_create(
             [
                 NewCountry(
@@ -92,8 +134,13 @@ class Command(BaseCommand):
                     is_country_office_nrc=old_country.country_office_nrc,
                     is_country_office_iom=old_country.country_office_iom,
                     bounding_box=self._country_iso_to_bounding_box_map(old_country.iso3),
-                    description=COUNTRY_DESCRIPTION,
-                    displacement_data_description=COUNTRY_DISPLACEMENT_DATA_DESCRIPTION,
+                    description=self._get_country_descriptoin(),
+                    displacement_data_description=self._get_figures_analysis_data(
+                        old_country.iso3, figures_analysis_data
+                    ),
+                    contact_person_description=self._get_contact_description_from_contact_list(
+                        old_country.iso3, contact_data
+                    ),
                 ) for old_country in OldCountry.objects.using('idmc_public').all()
             ]
         )
@@ -178,8 +225,21 @@ class Command(BaseCommand):
         self.stdout.write(self.style.SUCCESS(f'{NewDisaster.objects.count()} disasters created.\n'))
 
     def handle(self, *args, **options):
+        with open(os.path.join(
+            settings.BASE_DIR, 'apps/old_gidd/management/commands/idmc_contacts.csv'), mode='r'
+        ) as csv_file:
+            contact_data = [
+                {k: v for k, v in row.items()}
+                for row in csv.DictReader(csv_file, skipinitialspace=True)
+            ]
+
+        with open(os.path.join(
+            settings.BASE_DIR, 'apps/old_gidd/management/commands/figures_analysis.csv'), mode='r'
+        ) as csv_file:
+            figures_analysis_data = list(csv.reader(csv_file, skipinitialspace=True))
+
         self.reset_new_db()
-        self.create_countries()
-        self.create_countries_addtional_info()
-        self.create_conflicts()
-        self.create_disasters()
+        self.create_countries(contact_data, figures_analysis_data)
+        # self.create_countries_addtional_info()
+        # self.create_conflicts()
+        # self.create_disasters()
