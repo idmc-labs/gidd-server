@@ -75,7 +75,7 @@ class Command(BaseCommand):
 
     def _get_contact_description_from_contact_list(self, iso3, contact_data):
         for contact in contact_data:
-            if contact['iso3'] == iso3:
+            if contact['ISO3'] == iso3:
                 return f'''
                     <p>
                         <b>{contact['ME']}</b>
