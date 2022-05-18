@@ -1,7 +1,6 @@
 import strawberry
 from typing import List, Optional
 from django.db.models.functions import Coalesce
-from django.db.models import Q
 from .types import (
     ConflictType,
     DisasterType,
@@ -13,7 +12,6 @@ from .types import (
     TimeSeriesStatisticsType,
     CategoryStatisticsType,
     ConflictStatisticsType,
-    ConflictTimeSeriesStatisticsType
 )
 from apps.country.models import Disaster, Conflict
 from django.db.models import Value, Sum, F, Count, CharField, Case, When, IntegerField
@@ -55,12 +53,17 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
 
 @sync_to_async
 def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
-    timeseries_qs = conflict_qs.filter(
-        Q(new_displacement__gt=0) | ~Q(total_displacement=None)
+    new_displacement_timeseries_qs = conflict_qs.filter(
+        new_displacement__gt=0
     ).values('year').annotate(
-        total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
-        total_idps=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
-    ).order_by('year').values('year', 'total_new_displacement', 'total_idps')
+        total=Sum('new_displacement', output_field=IntegerField()),
+    ).order_by('year').values('year', 'total')
+
+    idps_timeseries_qs = conflict_qs.filter(
+        new_displacement__isnull=False
+    ).values('year').annotate(
+        total=Sum('total_displacement', output_field=IntegerField())
+    ).order_by('year').values('year', 'total')
     total_idps = conflict_qs.order_by('-year').first().total_displacement if conflict_qs.order_by('-year') else 0
     return ConflictStatisticsType(
         total_idps=total_idps if total_idps else 0,
@@ -68,7 +71,8 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
             total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
         )['total_new_displacement'],
 
-        timeseries=[ConflictTimeSeriesStatisticsType(**item) for item in timeseries_qs],
+        new_displacement_timeseries=[TimeSeriesStatisticsType(**item) for item in new_displacement_timeseries_qs],
+        idps_timeseries=[TimeSeriesStatisticsType(**item) for item in idps_timeseries_qs],
     )
 
 
