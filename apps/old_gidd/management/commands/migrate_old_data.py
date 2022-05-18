@@ -78,6 +78,11 @@ class Command(BaseCommand):
             if contact['ISO3'] == iso3:
                 return f'''
                     <p>
+                        Do you have more questions about this country? Contact
+                        our Monitoring ExpertDo you have more questions about
+                        this country? Contact our Monitoring Expert
+                    </p>
+                    <p>
                         <b>{contact['ME']}</b>
                     </p>
                     <p>
@@ -194,6 +199,7 @@ class Command(BaseCommand):
                     cross_border_flight_since=old_conflict.cross_border_flight_since,
                     children_born_to_idps_since=old_conflict.children_born_to_idps_since,
                     idp_deaths_since=old_conflict.idp_deaths_since,
+                    old_id=old_conflict.id,
                 ) for old_conflict in OldConflict.objects.using('idmc_platform').all()
             ]
         )
@@ -219,6 +225,7 @@ class Command(BaseCommand):
                     new_displacement=old_disaster.new_displacement,
                     new_displacement_source=old_disaster.new_displacement_source,
                     new_displacement_since=old_disaster.new_displacement_since,
+                    old_id=old_disaster.id,
                 ) for old_disaster in OldDisaster.objects.using('idmc_platform').all()
             ]
         )

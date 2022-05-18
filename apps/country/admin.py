@@ -2,7 +2,8 @@ from django.contrib import admin
 from reversion.admin import VersionAdmin
 from apps.country.models import (
     Country, CountryAdditionalInfo,
-    Conflict, Disaster, OverView
+    Conflict, Disaster, OverView,
+    SnapshotFile,
 )
 from apps.country.form import (
     OverviewForm, CountryForm
@@ -37,6 +38,11 @@ class CountryAdmin(VersionAdmin):
         'is_country_office_iom',
     ]
     form = CountryForm
+    list_filter = [
+        'idmc_continent',
+        'idmc_region',
+        'idmc_sub_region',
+    ]
     inlines = [OverViewInline, ]
 
 
@@ -48,14 +54,16 @@ class CountryAdditionalInfoAdmin(admin.ModelAdmin):
         'total_displacement_source',
 
     ]
+    list_filter = ['year', ]
     search_fields = ['country__name']
     autocomplete_fields = ['country', ]
 
 
 class ConflictAdmin(admin.ModelAdmin):
-    search_fields = ['country__name']
+    search_fields = ['country__name', 'old_id']
     list_display = [
         'year',
+        'old_id',
         'total_displacement',
         'total_displacement_source',
         'new_displacement',
@@ -82,13 +90,15 @@ class ConflictAdmin(admin.ModelAdmin):
         'idp_deaths_since',
 
     ]
+    list_filter = ['year', ]
     autocomplete_fields = ['country', ]
 
 
 class DisasterAdmin(admin.ModelAdmin):
-    search_fields = ['country__name']
+    search_fields = ['country__name', 'old_id']
     list_display = [
         'year',
+        'old_id',
         'glide_number',
         'event_name',
         'location_text',
@@ -104,6 +114,13 @@ class DisasterAdmin(admin.ModelAdmin):
         'new_displacement_source',
         'new_displacement_since',
     ]
+    list_filter = [
+        'year',
+        'hazard_category',
+        'hazard_sub_category',
+        'hazard_sub_type',
+        'hazard_type',
+    ]
     autocomplete_fields = ['country', ]
 
 
@@ -113,8 +130,14 @@ class OverViewAdmin(admin.ModelAdmin):
     autocomplete_fields = ['country', ]
 
 
+class SnapshotFileAdmin(admin.ModelAdmin):
+    search_fields = ['title']
+    list_display = ['title', 'created_at', 'updated_at']
+
+
 admin.site.register(Country, CountryAdmin)
 admin.site.register(CountryAdditionalInfo, CountryAdditionalInfoAdmin)
 admin.site.register(Conflict, ConflictAdmin)
 admin.site.register(Disaster, DisasterAdmin)
 admin.site.register(OverView, OverViewAdmin)
+admin.site.register(SnapshotFile, SnapshotFileAdmin)

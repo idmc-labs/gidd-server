@@ -210,9 +210,24 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
-    TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
+    AWS_IS_GZIPPED = True
+    GZIP_CONTENT_TYPES = [
+        'text/css', 'text/javascript', 'application/javascript', 'application/x-javascript', 'image/svg+xml',
+        'application/json',
+    ]
+
+    # Static configuration
+    STATICFILES_LOCATION = 'static'
+    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+    STATICFILES_STORAGE = 'deep.s3_storages.StaticStorage'
+
+    # Media configuration
+    MEDIAFILES_LOCATION = 'media'
+    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+    DEFAULT_FILE_STORAGE = 'deep.s3_storages.MediaStorage'
+
+    # Tinymce url
+    TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

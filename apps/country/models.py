@@ -129,6 +129,8 @@ class Country(models.Model):
     displacement_data_description = models.TextField(
         blank=True, verbose_name=_('Displacement data description'), null=True
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Country')
@@ -194,6 +196,8 @@ class OverView(models.Model):
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Country overview')
@@ -212,6 +216,8 @@ class CountryAdditionalInfo(models.Model):
     total_displacement = models.BigIntegerField(blank=True, null=True)
     total_displacement_since = models.TextField(blank=True, null=True)
     total_displacement_source = models.TextField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Country additional information')
@@ -254,6 +260,9 @@ class Conflict(models.Model):
     cross_border_flight_since = models.TextField(blank=True, null=True)
     children_born_to_idps_since = models.TextField(blank=True, null=True)
     idp_deaths_since = models.TextField(blank=True, null=True)
+    old_id = models.BigIntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Conflict')
@@ -283,6 +292,9 @@ class Disaster(models.Model):
     new_displacement = models.BigIntegerField(blank=True, null=True)
     new_displacement_source = models.TextField(blank=True, null=True)
     new_displacement_since = models.TextField(blank=True, null=True)
+    old_id = models.BigIntegerField(blank=True, null=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
         verbose_name = _('Disaster')
@@ -290,3 +302,17 @@ class Disaster(models.Model):
 
     def __str__(self):
         return str(self.year)
+
+
+class SnapshotFile(models.Model):
+    snaphot_file = models.FileField(upload_to='snaphots/', blank=True)
+    title = models.CharField(max_length=255, verbose_name=_('Title'))
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Snaphot file')
+        verbose_name_plural = _('Snaphot files')
+
+    def __str__(self):
+        return str(self.title)
