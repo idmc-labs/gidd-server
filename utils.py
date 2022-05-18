@@ -29,3 +29,15 @@ def build_url(file, request):
         url = request.build_absolute_uri(file.url)
         return FileFieldType(name=file_name, url=url).resolve_file()
     return None
+
+
+def round_and_remove_zero(num):
+    if num is None or num == 0:
+        return None
+    absolute_num = abs(num)
+    sign = 1 if num > 0 else -1
+    if absolute_num < 100:
+        return sign * absolute_num
+    if absolute_num < 1000:
+        return sign * round(absolute_num / 100) * 100
+    return sign * round(num / 1000) * 1000

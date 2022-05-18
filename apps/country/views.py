@@ -13,6 +13,7 @@ from .serializers import (
     DisasterSerializer,
     CountryAdditionalInfoSerializer
 )
+from utils import round_and_remove_zero
 
 
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
@@ -36,12 +37,7 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         response['Content-Disposition'] = 'attachment; filename="conflict-data.csv"'
         writer = csv.writer(response, delimiter=',')
         writer.writerow([
-            'Year', 'Total Displacement', 'Total Displacement Source', 'New Displacement', 'New Displacement Source',
-            'Returns', 'Returns Source', 'Local Integration', 'Local Integration Source', 'Resettlement',
-            'Resettlement Source', 'Cross border flight', 'Cross Border Flight Source', 'Children Born To IDPs',
-            'Children Born To IDPS Source', 'Idp Deaths', 'Idp Deaths Source', 'Total Displacement Since',
-            'New Displacement Since', 'Returns Since', 'Resettlement Since', 'Local Integration Since',
-            'Cross Border Flight Since', 'Children Born To IDPS Since', 'IDP deaths since'
+            'ISO3', 'Country / Territory', 'Year', 'Total number of IDPs', 'Conflict Internal Displacements'
         ])
         conflict_qs = Conflict.objects.filter(
             Q(country__iso3=iso3) & Q(new_displacement__gt=0) | Q(total_displacement__gt=0)
@@ -55,31 +51,11 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         for conflict in conflict_qs:
             writer.writerow(
                 [
+                    conflict.country.iso3,
+                    conflict.country.name,
                     conflict.year,
-                    conflict.total_displacement,
-                    conflict.total_displacement_source,
-                    conflict.new_displacement,
-                    conflict.new_displacement_source,
-                    conflict.returns,
-                    conflict.returns_source,
-                    conflict.local_integration,
-                    conflict.local_integration_source,
-                    conflict.resettlement,
-                    conflict.resettlement_source,
-                    conflict.cross_border_flight,
-                    conflict.cross_border_flight_source,
-                    conflict.children_born_to_idps,
-                    conflict.children_born_to_idps_source,
-                    conflict.idp_deaths,
-                    conflict.idp_deaths_source,
-                    conflict.total_displacement_since,
-                    conflict.new_displacement_since,
-                    conflict.returns_since,
-                    conflict.resettlement_since,
-                    conflict.local_integration_since,
-                    conflict.cross_border_flight_since,
-                    conflict.children_born_to_idps_since,
-                    conflict.idp_deaths_since,
+                    round_and_remove_zero(conflict.new_displacement),
+                    round_and_remove_zero(conflict.total_displacement),
                 ]
             )
         return response
@@ -98,9 +74,8 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         response['Content-Disposition'] = 'attachment; filename="disaster-data.csv"'
         writer = csv.writer(response, delimiter=',')
         writer.writerow([
-            'Year', 'Glide Number', 'Event Name', 'Location Text', 'Start Date', 'Start Date Accuracy',
-            'End Date', 'End Date Accuracy', 'Hazard Category', 'Hazard Sub Category', 'Hazard Sub Type',
-            'Hazard Type', 'New Displacement', 'New Displacement Source', 'New Displacement Since'
+            'ISO3', 'Country / Territory', 'Year', 'Event Name', 'Date of event (start)',
+            'Disaster Internal Displacements', 'Hazard Category', 'Hazard Type', 'Hazard Sub Type'
         ])
         disaster_qs = Disaster.objects.filter(country__iso3=iso3, new_displacement__gt=0)
         hazard_type = request.GET.get('hazard_type', None)
@@ -119,21 +94,15 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         for disaster in disaster_qs:
             writer.writerow(
                 [
+                    disaster.country.iso3,
+                    disaster.country.name,
                     disaster.year,
-                    disaster.glide_number,
                     disaster.event_name,
-                    disaster.location_text,
                     disaster.start_date,
-                    disaster.start_date_accuracy,
-                    disaster.end_date,
-                    disaster.end_date_accuracy,
+                    round_and_remove_zero(disaster.new_displacement),
                     disaster.hazard_category,
-                    disaster.hazard_sub_category,
-                    disaster.hazard_sub_type,
                     disaster.hazard_type,
-                    disaster.new_displacement,
-                    disaster.new_displacement_source,
-                    disaster.new_displacement_since,
+                    disaster.hazard_sub_type,
                 ]
             )
         return response
