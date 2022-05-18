@@ -69,7 +69,10 @@ class Command(BaseCommand):
                 return bound['bounding_box']
 
     def _capitalize_string(self, string):
-        return string.capitalize() if string else None
+        value = string.capitalize() if string else None
+        if value == 'Volcanic eruption':
+            value = 'Volcanic activity'
+        return value
 
     def _get_contact_description_from_contact_list(self, iso3, contact_data):
         for contact in contact_data:
