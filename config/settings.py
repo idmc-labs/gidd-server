@@ -196,11 +196,49 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
+# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+# STATICFILES_LOCATION = env('STATICFILES_LOCATION')
+# MEDIAFILES_LOCATION = env('MEDIAFILES_LOCATION')
+# AWS_STORAGE_BUCKET_NAME_STATIC = env('AWS_STORAGE_BUCKET_NAME_STATIC')
+# AWS_STORAGE_BUCKET_NAME_MEDIA = env('AWS_STORAGE_BUCKET_NAME_MEDIA')
+#
+# if DEBUG or env('USE_LOCAL_STORATE'):
+#     STATIC_URL = env('DJANGO_STATIC_URL')
+#     MEDIA_URL = env('DJANGO_MEDIA_URL')
+#     STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+#     MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
+# elif not DEBUG and env('ENABLE_AWS_BUCKET'):
+#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
+#     DEFAULT_FILE_STORAGE = "config.storage_backends.MediaStorage"
+#     # NOTE: Uncomment these settings if IAM roles is not used
+#     # AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
+#     # AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+#     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
+#     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
+#     AWS_S3_OBJECT_PARAMETERS = {
+#         'CacheControl': 'max-age=86400',
+#     }
+#     AWS_IS_GZIPPED = True
+#     GZIP_CONTENT_TYPES = [
+#         'text/css', 'text/javascript', 'application/javascript', 'application/x-javascript', 'image/svg+xml',
+#         'application/json',
+#     ]
+#
+#     # Static configuration
+#     STATICFILES_LOCATION = 'static'
+#     STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
+#     STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
+#
+#     # Media configuration
+#     MEDIAFILES_LOCATION = 'media'
+#     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
+#     DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
+#
+#     # Tinymce url
+#     TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
+
+
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATICFILES_LOCATION = env('STATICFILES_LOCATION')
-MEDIAFILES_LOCATION = env('MEDIAFILES_LOCATION')
-AWS_STORAGE_BUCKET_NAME_STATIC = env('AWS_STORAGE_BUCKET_NAME_STATIC')
-AWS_STORAGE_BUCKET_NAME_MEDIA = env('AWS_STORAGE_BUCKET_NAME_MEDIA')
 
 if DEBUG or env('USE_LOCAL_STORATE'):
     STATIC_URL = env('DJANGO_STATIC_URL')
@@ -218,24 +256,9 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    AWS_IS_GZIPPED = True
-    GZIP_CONTENT_TYPES = [
-        'text/css', 'text/javascript', 'application/javascript', 'application/x-javascript', 'image/svg+xml',
-        'application/json',
-    ]
-
-    # Static configuration
-    STATICFILES_LOCATION = 'static'
-    STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
-
-    # Media configuration
-    MEDIAFILES_LOCATION = 'media'
-    MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-    DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
-
-    # Tinymce url
-    TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
+    TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
