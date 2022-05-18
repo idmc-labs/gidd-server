@@ -3,6 +3,7 @@ from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import filters
 from rest_framework.permissions import AllowAny
 from rest_framework.decorators import action
+from django.db.models import Q
 import csv
 from django.http import HttpResponse
 from .models import Country, Conflict, Disaster, CountryAdditionalInfo
@@ -42,7 +43,9 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             'New Displacement Since', 'Returns Since', 'Resettlement Since', 'Local Integration Since',
             'Cross Border Flight Since', 'Children Born To IDPS Since', 'IDP deaths since'
         ])
-        conflict_qs = Conflict.objects.filter(country__iso3=iso3)
+        conflict_qs = Conflict.objects.filter(
+            Q(country__iso3=iso3) & Q(new_displacement__gt=0) | Q(total_displacement__gt=0)
+        )
         start_year = request.GET.get('start_year', None)
         end_year = request.GET.get('end_year', None)
         if start_year:
@@ -99,7 +102,7 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             'End Date', 'End Date Accuracy', 'Hazard Category', 'Hazard Sub Category', 'Hazard Sub Type',
             'Hazard Type', 'New Displacement', 'New Displacement Source', 'New Displacement Since'
         ])
-        disaster_qs = Disaster.objects.filter(country__iso3=iso3)
+        disaster_qs = Disaster.objects.filter(country__iso3=iso3, new_displacement__gt=0)
         hazard_type = request.GET.get('hazard_type', None)
         start_year = request.GET.get('start_year', None)
         end_year = request.GET.get('end_year', None)
