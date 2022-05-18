@@ -60,7 +60,7 @@ def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
     ).order_by('year').values('year', 'total')
 
     idps_timeseries_qs = conflict_qs.filter(
-        new_displacement__isnull=False
+        total_displacement__isnull=False
     ).values('year').annotate(
         total=Sum('total_displacement', output_field=IntegerField())
     ).order_by('year').values('year', 'total')
