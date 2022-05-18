@@ -1,6 +1,7 @@
 import strawberry
 from typing import List, Optional
 from django.db.models.functions import Coalesce
+from django.db.models import Q
 from .types import (
     ConflictType,
     DisasterType,
@@ -24,7 +25,7 @@ from .models import Country
 
 @sync_to_async
 def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
-    timeseries_qs = disaster_qs.values('year').annotate(
+    timeseries_qs = disaster_qs.filter(new_displacement__gt=0).values('year').annotate(
         total=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0)
     ).order_by('year').values('year', 'total')
 
@@ -54,7 +55,9 @@ def disaster_statistics_qs(disaster_qs) -> DisasterStatisticsType:
 
 @sync_to_async
 def conflict_statistics_qs(conflict_qs) -> ConflictStatisticsType:
-    timeseries_qs = conflict_qs.values('year').annotate(
+    timeseries_qs = conflict_qs.filter(
+        Q(new_displacement__gt=0) | ~Q(total_displacement=None)
+    ).values('year').annotate(
         total_new_displacement=Coalesce(Sum('new_displacement', output_field=IntegerField()), 0),
         total_idps=Coalesce(Sum('total_displacement', output_field=IntegerField()), 0)
     ).order_by('year').values('year', 'total_new_displacement', 'total_idps')

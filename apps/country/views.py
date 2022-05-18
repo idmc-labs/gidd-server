@@ -40,7 +40,7 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
             'ISO3', 'Country / Territory', 'Year', 'Total number of IDPs', 'Conflict Internal Displacements'
         ])
         conflict_qs = Conflict.objects.filter(
-            Q(country__iso3=iso3) & Q(new_displacement__gt=0) | Q(total_displacement__gt=0)
+            Q(country__iso3=iso3) & (Q(new_displacement__gt=0) | ~Q(total_displacement=None))
         )
         start_year = request.GET.get('start_year', None)
         end_year = request.GET.get('end_year', None)
