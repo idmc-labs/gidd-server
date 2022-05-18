@@ -49,6 +49,10 @@ env = environ.Env(
     AWS_S3_ACCESS_KEY_ID=(str, ''),
     AWS_S3_SECRET_ACCESS_KEY=(str, ''),
     AWS_STORAGE_BUCKET_NAME=(str, ''),
+    STATICFILES_LOCATION=(str, 'static'),
+    MEDIAFILES_LOCATION=(str, 'media'),
+    AWS_STORAGE_BUCKET_NAME_STATIC=(str, 'static'),
+    AWS_STORAGE_BUCKET_NAME_MEDIA=(str, 'media'),
 )
 
 CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
@@ -219,12 +223,12 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     # Static configuration
     STATICFILES_LOCATION = 'static'
     STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-    STATICFILES_STORAGE = 'deep.s3_storages.StaticStorage'
+    STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
 
     # Media configuration
     MEDIAFILES_LOCATION = 'media'
     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-    DEFAULT_FILE_STORAGE = 'deep.s3_storages.MediaStorage'
+    DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
 
     # Tinymce url
     TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
