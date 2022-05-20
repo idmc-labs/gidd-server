@@ -65,7 +65,7 @@ class Command(BaseCommand):
             self.stdout.write(self.style.ERROR(f'for {iso3} ISO3 country does not exists \n'))
             return NewCountry.objects.create(iso3=iso3, name=f'{iso3} (This iso3 have no country)').id
 
-    def _country_iso_to_bounding_box_map(self, iso3):
+    def _country_iso_to_bounding_box_map(iso3):
         for bound in COUNTRY_BOUNDING:
             if bound['iso3'] == iso3:
                 return bound['bounding_box']
