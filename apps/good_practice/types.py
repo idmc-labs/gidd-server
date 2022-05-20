@@ -5,7 +5,7 @@ from strawberry.django import auto
 from .models import (
     Faq, GoodPractice, MediaAndResourceLink
 )
-from .gh_filters import GoodPracticeFilter
+from .gh_filters import GoodPracticeFilter, FaqFilter
 # from typing import List
 # from strawberry.types import Info
 from .enums import (
@@ -23,7 +23,7 @@ class FaqType:
     answer: auto
 
 
-@strawberry.django.type(Faq, pagination=True)
+@strawberry.django.type(Faq, pagination=True, filters=FaqFilter)
 class FaqListType(FaqType):
     pass
 

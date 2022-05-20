@@ -1,7 +1,8 @@
 from django.db.models import Q
+from strawberry.django import auto
 
 from .models import (
-    GoodPractice
+    GoodPractice, Faq
 )
 import strawberry
 from .enums import (
@@ -52,6 +53,15 @@ class GoodPracticeFilter:
         if not self.countries:
             return queryset
         return queryset.filter(country__in=self.countries)
+
+    @property
+    def qs(self):
+        return super().qs.filter(is_published=True)
+
+
+@strawberry.django.filters.filter(Faq)
+class FaqFilter:
+    question: auto
 
     @property
     def qs(self):

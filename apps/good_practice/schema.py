@@ -10,10 +10,6 @@ from .models import GoodPractice, Faq
 from asgiref.sync import sync_to_async
 
 
-def faqs_qs() -> List[FaqListType]:
-    return Faq.objects.filter(is_published=True)
-
-
 def faq_obj(pk) -> FaqType:
     return sync_to_async(
         Faq.objects.get, thread_sensitive=True
@@ -36,5 +32,5 @@ class Query:
     def good_practice(self, pk: strawberry.ID) -> GoodPracticeType:
         return good_practice_obj(pk)
 
-    faqs: List[FaqListType] = strawberry.django.field(resolver=faqs_qs)
+    faqs: List[FaqListType] = strawberry.django.field()
     good_practicies: List[GoodPracticeListType] = strawberry.django.field()
