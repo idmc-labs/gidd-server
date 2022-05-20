@@ -52,3 +52,7 @@ class GoodPracticeFilter:
         if not self.countries:
             return queryset
         return queryset.filter(country__in=self.countries)
+
+    @property
+    def qs(self):
+        return super().qs.filter(is_published=True)
