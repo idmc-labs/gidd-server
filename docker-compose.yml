@@ -1,0 +1,56 @@
+services:
+  db:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5432
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+
+  olddb:
+    image: postgres:14
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_PORT=5433
+    volumes:
+      - postgres-data-old:/var/lib/postgresql/data
+
+  server:
+    restart: always
+    image: gidd-server/server
+    build:
+      context: ./
+    tty: true
+    environment:
+      DEBUG: "true"
+      SECRET_KEY: unsecure-aaaaaaaaaaa-dont-use-in-production
+      DB_NAME: postgres
+      DB_USER: postgres
+      DB_PWD: postgres
+      DB_HOST: db
+      DB_PORT: 5432
+      OLD_DB_NAME: postgres
+      OLD_DB_USER: postgres
+      OLD_DB_PWD: postgres
+      OLD_DB_HOST: olddb
+      OLD_DB_PORT: 5433
+    env_file:
+      - .env
+    command: bash -c "/code/scripts/run_develop.sh"
+    volumes:
+      - ./:/code
+      - media:/media
+    ports:
+      - '7000:7000'
+    depends_on:
+      - db
+      - olddb
+
+volumes:
+  media:
+  postgres-data:
+  postgres-data-old:
