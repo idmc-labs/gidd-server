@@ -11,6 +11,7 @@ from .enums import (
     StageTypeEnum,
 )
 from typing import List
+from apps.country.enums import RegionEnum
 
 
 @strawberry.django.filters.filter(GoodPractice)
@@ -20,6 +21,7 @@ class GoodPracticeFilter:
     drivers_of_displacements: List[DriversOfDisplacementTypeEnum] | None
     stages: List[StageTypeEnum] | None
     countries: List[strawberry.ID] | None
+    regions: List[RegionEnum] | None
 
     def filter_search(self, queryset):
         if not self.search:
@@ -53,6 +55,11 @@ class GoodPracticeFilter:
         if not self.countries:
             return queryset
         return queryset.filter(country__in=self.countries)
+
+    def filter_regions(self, queryset):
+        if not self.regions:
+            return queryset
+        return queryset.filter(country__idmc_region__in=self.regions)
 
     @property
     def qs(self):

@@ -83,6 +83,10 @@ class GoodPractice(models.Model):
     focus_area = models.CharField(
         max_length=255, verbose_name=_('Stage'), choices=FocusArea.choices
     )
+    image = models.FileField(upload_to='good_practice/', blank=True, verbose_name=_('Good practices'))
+    created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
+    updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
+    good_practice_form_url = models.URLField(max_length=255, verbose_name=_('Good practice form URL'))
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
