@@ -42,10 +42,13 @@ def format_types(info, obj):
     result.pop('country')
     for field in obj._meta.fields:
         if isinstance(field, FileField):
-            result['image'] = FileFieldType(
-                name=obj.image.name,
-                url=info.context['request'].build_absolute_uri(obj.image.url)
-            )
+            if obj.image:
+                result['image'] = FileFieldType(
+                    name=obj.image.name,
+                    url=info.context['request'].build_absolute_uri(obj.image.url)
+                )
+            else:
+                result['image'] = None
     return result
 
 

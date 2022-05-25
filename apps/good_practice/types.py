@@ -15,6 +15,8 @@ from .enums import (
 )
 from apps.country.types import CountryType
 import strawberry_django
+from typing import Optional
+from utils import FileFieldType
 
 
 @strawberry.django.type(Faq, pagination=True)
@@ -66,7 +68,7 @@ class GoodPracticeMinType:
     good_practice_form_url: auto
     focus_area: auto
     is_published: auto
-    image: auto
+    image: Optional[FileFieldType]
 
 
 @strawberry_django.ordering.order(GoodPractice)
