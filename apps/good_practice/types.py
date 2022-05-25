@@ -12,6 +12,7 @@ from .enums import (
     TypeEnum,
     DriversOfDisplacementTypeEnum,
     StageTypeEnum,
+    FocusAreaEnum,
 )
 from apps.country.types import CountryType
 import strawberry_django
@@ -52,9 +53,11 @@ class GoodPracticeType:
     drivers_of_dispalcement: DriversOfDisplacementTypeEnum
     stage: StageTypeEnum
     good_practice_form_url: auto
-    focus_area: auto
+    focus_area: FocusAreaEnum
     is_published: auto
+    good_practice_form_url: auto
     image: auto
+    published_date: auto
 
 
 @strawberry.django.type(GoodPractice)
@@ -66,9 +69,10 @@ class GoodPracticeMinType:
     drivers_of_dispalcement: DriversOfDisplacementTypeEnum
     stage: StageTypeEnum
     good_practice_form_url: auto
-    focus_area: auto
+    focus_area: FocusAreaEnum
     is_published: auto
     image: Optional[FileFieldType]
+    published_date: auto
 
 
 @strawberry_django.ordering.order(GoodPractice)

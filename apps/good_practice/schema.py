@@ -34,7 +34,7 @@ def good_practice_obj(pk) -> GoodPracticeMinType:
 
 @sync_to_async
 def get_qs(model) -> List[GoodPracticeMinType]:
-    return model.objects.all()
+    return model.objects.filter(is_published=True)
 
 
 def format_types(info, obj):

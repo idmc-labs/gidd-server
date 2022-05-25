@@ -14,3 +14,8 @@ StageTypeEnum = _process_enum(
     "StageTypeEnum",
     "Stage types"
 )
+FocusAreaEnum = _process_enum(
+    GoodPractice.FocusArea,
+    "FocusAreaEnum",
+    "Focus area"
+)

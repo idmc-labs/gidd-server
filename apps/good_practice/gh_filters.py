@@ -9,6 +9,7 @@ from .enums import (
     TypeEnum,
     DriversOfDisplacementTypeEnum,
     StageTypeEnum,
+    FocusAreaEnum,
 )
 from typing import List
 from apps.country.enums import RegionEnum
@@ -22,6 +23,7 @@ class GoodPracticeFilter:
     stages: List[StageTypeEnum] | None
     countries: List[strawberry.ID] | None
     regions: List[RegionEnum] | None
+    focus_area: List[FocusAreaEnum] | None
 
     def filter_search(self, queryset):
         if not self.search:
@@ -60,6 +62,11 @@ class GoodPracticeFilter:
         if not self.regions:
             return queryset
         return queryset.filter(country__idmc_region__in=self.regions)
+
+    def filter_focus_area(self, queryset):
+        if not self.focus_area:
+            return queryset
+        return queryset.filter(focus_area__in=self.focus_area)
 
     @property
     def qs(self):

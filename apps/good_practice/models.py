@@ -81,8 +81,9 @@ class GoodPractice(models.Model):
         max_length=255, verbose_name=_('Stage'), choices=StageType.choices
     )
     focus_area = models.CharField(
-        max_length=255, verbose_name=_('Stage'), choices=FocusArea.choices
+        max_length=255, verbose_name=_('Focus area'), choices=FocusArea.choices
     )
+    published_date = models.DateTimeField(blank=True)
     image = models.FileField(upload_to='good_practice/', blank=True, verbose_name=_('Good practices'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
