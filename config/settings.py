@@ -69,6 +69,7 @@ LOCAL_APPS = [
     'apps.country',
     'apps.old_gidd',
     'apps.good_practice',
+    'apps.common',
 ]
 
 # Application definition

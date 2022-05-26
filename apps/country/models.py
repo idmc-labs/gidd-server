@@ -311,8 +311,8 @@ class SnapshotFile(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     class Meta:
-        verbose_name = _('Snaphot file')
-        verbose_name_plural = _('Snaphot files')
+        verbose_name = _('Snapshot file')
+        verbose_name_plural = _('Snapshot files')
 
     def __str__(self):
         return str(self.title)
