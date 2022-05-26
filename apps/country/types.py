@@ -1,6 +1,6 @@
 # types.py
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 import strawberry_django
 from .models import (
     Country,

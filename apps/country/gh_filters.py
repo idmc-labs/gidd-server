@@ -1,5 +1,5 @@
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 from django.db.models import Q
 from .models import (
     Country,

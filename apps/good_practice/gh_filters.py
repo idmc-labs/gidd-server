@@ -1,5 +1,5 @@
 from django.db.models import Q
-from strawberry.django import auto
+from strawberry import auto
 
 from .models import (
     GoodPractice, Faq
@@ -24,6 +24,8 @@ class GoodPracticeFilter:
     countries: List[strawberry.ID] | None
     regions: List[RegionEnum] | None
     focus_area: List[FocusAreaEnum] | None
+    start_year: int | None
+    end_year: int | None
 
     def filter_search(self, queryset):
         if not self.search:
@@ -67,6 +69,16 @@ class GoodPracticeFilter:
         if not self.focus_area:
             return queryset
         return queryset.filter(focus_area__in=self.focus_area)
+
+    def filter_start_year(self, queryset):
+        if not self.start_year:
+            return queryset
+        return queryset.filter(start_year__gte=self.start_year)
+
+    def filter_end_year(self, queryset):
+        if not self.end_year:
+            return queryset
+        return queryset.filter(end_year__lte=self.end_year)
 
     @property
     def qs(self):

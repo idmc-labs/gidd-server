@@ -1,11 +1,11 @@
 # types.py
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 from typing import List
 from asgiref.sync import sync_to_async
 
 from .models import (
-    Faq, GoodPractice, MediaAndResourceLink
+    Faq, GoodPractice
 )
 from .gh_filters import GoodPracticeFilter, FaqFilter
 from .enums import (
@@ -32,12 +32,6 @@ class FaqListType(FaqType):
     pass
 
 
-@strawberry.django.type(MediaAndResourceLink, pagination=True)
-class MediaAndResourceLinkType:
-    id: auto
-    link: auto
-
-
 @sync_to_async
 def good_practice_count() -> int:
     return GoodPractice.objects.count()
@@ -58,6 +52,10 @@ class GoodPracticeType:
     good_practice_form_url: auto
     image: auto
     published_date: auto
+    media_and_resource_links: auto
+    start_year: auto
+    end_year: auto
+    page_viewed_count: auto
 
 
 @strawberry.django.type(GoodPractice)
@@ -73,6 +71,10 @@ class GoodPracticeMinType:
     is_published: auto
     image: Optional[FileFieldType]
     published_date: auto
+    media_and_resource_links: auto
+    start_year: auto
+    end_year: auto
+    page_viewed_count: auto
 
 
 @strawberry_django.ordering.order(GoodPractice)
@@ -83,6 +85,7 @@ class GoodPracticeOrder:
     good_practice_form_url: auto
     focus_area: auto
     is_published: auto
+    page_viewed_count: auto
 
 
 @strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder)
@@ -100,3 +103,8 @@ class OffsetPaginationInput:
 class PaginationBaseType:
     results: List[GoodPracticeMinType]
     total_count: int
+
+
+@strawberry_django.input(GoodPractice, partial=True)
+class PageViewedInputType:
+    id: auto
