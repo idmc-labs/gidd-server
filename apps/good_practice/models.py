@@ -63,9 +63,8 @@ class GoodPractice(models.Model):
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
     media_and_resource_links = models.TextField(blank=True, verbose_name=_('Media and resource links'), null=True)
-    country = models.ForeignKey(
-        'country.Country', related_name='country_good_practice', on_delete=models.PROTECT,
-        verbose_name=_('Country'), null=True, blank=True
+    countries = models.ManyToManyField(
+        'country.Country', related_name='country_good_practice', verbose_name=_('Countries')
     )
     type = models.CharField(
         max_length=255, verbose_name=_('Good practice type'), choices=Type.choices
@@ -97,3 +96,23 @@ class GoodPractice(models.Model):
 
     def __str__(self):
         return self.title
+
+
+class Gallery(models.Model):
+    youtube_video_url = models.URLField(null=True, blank=True, max_length=255, verbose_name=_('Youtube video url'))
+    image = models.FileField(upload_to='gallery/', blank=True, verbose_name=_('Good practices'))
+    caption = models.TextField(blank=True, verbose_name=_('Caption'), null=True)
+    good_practice = models.ForeignKey(
+        'good_practice.GoodPractice', related_name='good_practice', on_delete=models.PROTECT,
+        verbose_name=_('Good practice'), null=True, blank=True
+    )
+    is_published = models.BooleanField(
+        default=False, verbose_name=_('Is published?')
+    )
+
+    class Meta:
+        verbose_name = _('Gallery')
+        verbose_name_plural = _('Gallery')
+
+    def __str__(self):
+        return self.caption

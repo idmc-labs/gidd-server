@@ -3,7 +3,6 @@ from typing import List, Optional
 from .types import (
     FaqType,
     FaqListType,
-    GoodPracticeMinType,
     GoodPracticeType,
     PaginationBaseType,
     GoodPracticeOrder,
@@ -26,20 +25,20 @@ def faq_obj(pk) -> FaqType:
     )(pk=pk, is_published=True)
 
 
-def good_practice_obj(pk) -> GoodPracticeMinType:
+def good_practice_obj(pk) -> GoodPracticeType:
     return sync_to_async(
         GoodPractice.objects.get, thread_sensitive=True
     )(pk=pk, is_published=True)
 
 
 @sync_to_async
-def get_qs(model) -> List[GoodPracticeMinType]:
+def get_qs(model) -> List[GoodPracticeType]:
     return model.objects.filter(is_published=True)
 
 
 def format_types(info, obj):
     result = model_to_dict(obj)
-    result.pop('country')
+    result.pop('countries')
     for field in obj._meta.fields:
         if isinstance(field, FileField):
             if obj.image:
@@ -53,9 +52,9 @@ def format_types(info, obj):
 
 
 @sync_to_async
-def get_graphql_objects(info, qs) -> List[GoodPracticeMinType]:
+def get_graphql_objects(info, qs) -> List[GoodPracticeType]:
     return [
-        GoodPracticeMinType(
+        GoodPracticeType(
             **format_types(info, good_practice)
         ) for good_practice in qs
     ]

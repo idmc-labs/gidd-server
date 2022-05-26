@@ -3,6 +3,9 @@ from apps.country.dataloaders import (
     load_country_additonal_info,
     load_country_overviews_load,
 )
+from apps.good_practice.dataloaders import (
+    load_gallery, load_good_practice_country
+)
 from starlette.requests import Request
 from starlette.responses import Response
 from typing import Any, Optional
@@ -16,4 +19,6 @@ class CustomAsyncGraphQLView(AsyncGraphQLView):
             'request': request,
             'country_additonal_loader': DataLoader(load_fn=load_country_additonal_info),
             'country_overviews_loader': DataLoader(load_fn=load_country_overviews_load),
+            'gallery_loader': DataLoader(load_fn=load_gallery),
+            'good_practice_country_loader': DataLoader(load_fn=load_good_practice_country)
         }
