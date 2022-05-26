@@ -2,7 +2,7 @@
 import strawberry
 from apps.country.schema import Query as CountryQuery
 from apps.good_practice.schema import Query as GoodPracticeQuery
-from apps.country.mutations import Mutation as CountryMutation
+from apps.good_practice.mutations import Mutation as GoodPracticeMutation
 
 
 @strawberry.type
@@ -11,7 +11,7 @@ class Query(CountryQuery, GoodPracticeQuery):
 
 
 @strawberry.type
-class Mutation(CountryMutation):
+class Mutation(GoodPracticeMutation):
     pass
 
 
