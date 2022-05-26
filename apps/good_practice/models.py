@@ -19,18 +19,6 @@ class Faq(models.Model):
 
 class GoodPractice(models.Model):
     class Type(models.TextChoices):
-        POLICIES_STRATEGIES_AND_LEAGAL_FRAMEWORKS = (
-            'policies_strategies_and_legal_frameworks',
-            _('Policies, strategies and legal frameworks')
-        )
-        GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP = (
-            'governance_capacity_and_institutional_set_up',
-            _('Governance capacity and institutional set-up')
-        )
-        DISPLACEMENT_MONITORING_DATA_COLLECTION_ANALYSIS_AND_SYSTEMS = (
-            'displacement_monitoring_data_collection_analysis_and_systems',
-            _('Displacement monitoring (data collection, analysis and systems)')
-        )
         RISK_REDUCTION_AND_PREVENTION = (
             'risk_reduction_and_prevention',
             _('Risk Reduction and Prevention (DRR, CCA and peacebuilding)')
@@ -39,12 +27,23 @@ class GoodPractice(models.Model):
             'protection_and_assistance_and_durable_solutions',
             _('Protection and assistance, and durable solutions')
         )
+        STRATEGIES_POLICIES_AND_LEAGAL_FRAMEWORKS = (
+            'strategies_policies_and_legal_frameworks',
+            _('Strengthening policy and legal frameworks')
+        )
+        INTERVENTIONS = 'interventions', _('Interventions')
+        POLICIES = 'policies', _('Policies')
 
     class DriversOfDisplacementType(models.TextChoices):
-        SLOW_ONSET_DISASTERS = 'slow_onset_disasters', _('Slow onset disasters')
-        SUDDEN_ONSET_DISASTERS = 'sudden_onset_disasters', _('Sudden onset disasters')
-        CONFLICT_AND_VIOLENCE = 'conflict_and_violence', _('Conflict and violence')
-        DEVELOPMENT_AND_URBANISATION = 'development_and_urbanisation', _('Development and urbanisation')
+        INCREASING_TEMPERATURES_DROUGHT_AND_DESERTIFICATION = (
+            'increasing_temperatures_drought_and_desertification', _('Increasing temperatures, drought, and desertification')
+        )
+        LAND_FOREST_DEGRADATION_AND_LOSS_OF_BIODIVERSITY = (
+            'land_forest_degradation_and_loss_of_biodiversity', _('Land/forest degradation and loss of biodiversity')
+        )
+        GLACIAL_MELT = 'glacial_melt', _('Glacial melt')
+        FLOODS = 'floods', _('Floods')
+        LANDSLIDES = 'landslides', _('Landslides')
 
     class StageType(models.TextChoices):
         PROMISING = 'promising', _('Promising')
@@ -52,21 +51,18 @@ class GoodPractice(models.Model):
         SUCCESSFUL = 'successful', _('Successful')
 
     class FocusArea(models.TextChoices):
+        LIVELIHOODS_AND_EMPLOYMENT = 'livelihoods_and_employment', _('Livelihoods and employment')
+        SAFETY_AND_SECUTIRY = 'safety_and_security', _('Safety and social security')
         HEALTH = 'health', _('Health')
         EDUCATION = 'education', _('Education')
-        LIVELIHOODS_AND_EMPLOYMENT = 'livelihoods_and_employment', _('Livelihoods and employment')
         HOUSING_LAND_AND_PROPERTY = 'housing_land_and_property', _('Housing, land and property')
+        ENVIRONMENT = 'environment', _('Environment'),
         FOOD_AND_WATER_INSECURITY = 'food_and_water_insecurity', _('Food and water insecurity')
         SOCIAL_PROTECTION_AND_ASSISTANCE = 'social_protection_and_assistance', _('Social protection and assistance')
-        SAFETY_AND_SECUTIRY = 'safety_and_security', _('Safety and social security')
-        CIVIC_AND_SOCIAL_RIGHTS = 'civic_and_social_rights', _('Civic and social rights')
-        ENVIRONMENT = 'environment', _('Environment'),
-        GENDER = 'gender', _('Gender')
-        DISABILITY = 'disability', _('Disability')
-        CHILDREN_AND_YOUTH = 'children_and_youth', _('Children and youth')
 
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
+    media_and_resource_links = models.TextField(blank=True, verbose_name=_('Media and resource links'), null=True)
     country = models.ForeignKey(
         'country.Country', related_name='country_good_practice', on_delete=models.PROTECT,
         verbose_name=_('Country'), null=True, blank=True
@@ -91,6 +87,9 @@ class GoodPractice(models.Model):
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
+    start_year = models.BigIntegerField(verbose_name=_('Start year'))
+    end_year = models.BigIntegerField(blank=True, null=True, verbose_name=_('End year'))
+    page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
 
     class Meta:
         verbose_name = _('Good practice')
@@ -98,21 +97,3 @@ class GoodPractice(models.Model):
 
     def __str__(self):
         return self.title
-
-
-class MediaAndResourceLink(models.Model):
-    link = models.URLField(max_length=255, verbose_name=_('Media and resource link'))
-    good_practice = models.ForeignKey(
-        'good_practice.GoodPractice', related_name='country_essential_links', on_delete=models.PROTECT,
-        verbose_name=_('Good practice'), null=True, blank=True
-    )
-    is_published = models.BooleanField(
-        default=False, verbose_name=_('Is published?')
-    )
-
-    class Meta:
-        verbose_name = _('Media and resource link')
-        verbose_name_plural = _('Media and resource links')
-
-    def __str__(self):
-        return self.link
