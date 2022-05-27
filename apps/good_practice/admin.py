@@ -24,8 +24,8 @@ class GoodPracticeAdmin(admin.ModelAdmin):
     form = GoodPracticeForm
     search_fields = ['name']
     list_display = [
-        'title', 'description', 'type', 'drivers_of_dispalcement',
-        'drivers_of_dispalcement', 'stage'
+        'title', 'description', 'type', 'drivers_of_displacement',
+        'drivers_of_displacement', 'stage'
     ]
     inlines = [GalleryAdminInline, ]
     autocomplete_fields = ['countries', ]

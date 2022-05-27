@@ -46,10 +46,10 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     types = list(
         good_practice_qs.filter(type__isnull=False).distinct().values_list('type', flat=True)
     )
-    drivers_of_dispalcements = list(
+    drivers_of_displacement = list(
         good_practice_qs.filter(
-            drivers_of_dispalcement__isnull=False
-        ).distinct().values_list('drivers_of_dispalcement', flat=True)
+            drivers_of_displacement__isnull=False
+        ).distinct().values_list('drivers_of_displacement', flat=True)
     )
     stages = list(
         good_practice_qs.filter(stage__isnull=False).distinct().values_list('stage', flat=True)
@@ -70,11 +70,11 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
                 label=GoodPractice.Type(type).label
             ) for type in types
         ],
-        drivers_of_dispalcement=[
+        drivers_of_displacement=[
             EnumChoiceType(
                 name=GoodPractice.DriversOfDisplacementType(type).name,
                 label=GoodPractice.DriversOfDisplacementType(type).label
-            ) for type in drivers_of_dispalcements
+            ) for type in drivers_of_displacement
         ],
         stage=[
             EnumChoiceType(

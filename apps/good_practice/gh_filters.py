@@ -13,7 +13,6 @@ from .enums import (
 )
 from typing import List
 from apps.country.enums import RegionEnum
-from asgiref.sync import sync_to_async
 
 
 @strawberry.django.filters.filter(GoodPractice)
@@ -45,7 +44,7 @@ class GoodPracticeFilter:
     def filter_drivers_of_displacements(self, queryset):
         if not self.drivers_of_displacements:
             return queryset
-        return queryset.filter(drivers_of_dispalcement=self.drivers_of_displacements)
+        return queryset.filter(drivers_of_displacement=self.drivers_of_displacements)
 
     def filter_trigger_types(self, queryset):
         if not self.trigger_types:
@@ -89,7 +88,7 @@ class GoodPracticeFilter:
         return queryset.filter(
             Q(focus_area__in=good_practice_qs.values('focus_area')) |
             Q(type__in=good_practice_qs.values('type')) |
-            Q(drivers_of_dispalcement__in=good_practice_qs.values('drivers_of_dispalcement')) |
+            Q(drivers_of_dispalcement__in=good_practice_qs.values('drivers_of_displacement')) |
             Q(stage__in=good_practice_qs.values('stage'))
         ).distinct('id')
 

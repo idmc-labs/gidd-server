@@ -45,7 +45,7 @@ class Command(BaseCommand):
                 end_year=good_practice_item['Year end'] if good_practice_item['Year end'] else None,
                 focus_area=self._get_focus_area_enum(good_practice_item['Focus area 1']),
                 type=self._get_type_enum(good_practice_item['Type of good practice']),
-                drivers_of_dispalcement=self._get_drivers_of_dispalcement_enum(good_practice_item['Displacement drivers 1']),
+                drivers_of_displacement=self._get_drivers_of_dispalcement_enum(good_practice_item['Displacement drivers 1']),
                 published_date=timezone.now(),
                 is_published=True,
                 stage=None

@@ -72,7 +72,7 @@ class GoodPractice(models.Model):
     type = models.CharField(
         max_length=255, verbose_name=_('Good practice type'), choices=Type.choices
     )
-    drivers_of_dispalcement = models.CharField(
+    drivers_of_displacement = models.CharField(
         max_length=255, verbose_name=_('Driver of displacement'), choices=DriversOfDisplacementType.choices
     )
     stage = models.CharField(

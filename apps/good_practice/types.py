@@ -50,7 +50,7 @@ class GoodPracticeType:
     title: auto
     description: auto
     type: TypeEnum
-    drivers_of_dispalcement: DriversOfDisplacementTypeEnum
+    drivers_of_displacement: DriversOfDisplacementTypeEnum
     stage: StageTypeEnum
     good_practice_form_url: auto
     focus_area: FocusAreaEnum
@@ -98,7 +98,7 @@ class EnumChoiceType:
 @strawberry.type
 class GoodPracticeFilterChoiceType:
     type: Optional[List[EnumChoiceType]]
-    drivers_of_dispalcement: Optional[List[EnumChoiceType]]
+    drivers_of_displacement: Optional[List[EnumChoiceType]]
     stage: Optional[List[EnumChoiceType]]
     focus_area: Optional[List[EnumChoiceType]]
     regions: Optional[List[EnumChoiceType]]

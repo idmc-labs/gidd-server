@@ -33,7 +33,7 @@ class Migration(migrations.Migration):
         ),
         migrations.AlterField(
             model_name='goodpractice',
-            name='drivers_of_dispalcement',
+            name='drivers_of_displacement',
             field=models.CharField(choices=[('increasing_temperatures_drought_and_desertification', 'Increasing temperatures, drought, and desertification'), ('land_forest_degradation_and_loss_of_biodiversity', 'Land/forest degradation and loss of biodiversity'), ('glacial_melt', 'Glacial melt'), ('floods', 'Floods'), ('landslides', 'Landslides')], max_length=255, verbose_name='Driver of displacement'),
         ),
         migrations.AlterField(
