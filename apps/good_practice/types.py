@@ -90,12 +90,18 @@ class GoodPracticeFilterCountryChoiceType:
 
 
 @strawberry.type
+class EnumChoiceType:
+    name: str
+    label: str
+
+
+@strawberry.type
 class GoodPracticeFilterChoiceType:
-    type: Optional[List[str]]
-    drivers_of_dispalcement: Optional[List[str]]
-    stage: Optional[List[str]]
-    focus_area: Optional[List[str]]
-    regions: Optional[List[str]]
+    type: Optional[List[EnumChoiceType]]
+    drivers_of_dispalcement: Optional[List[EnumChoiceType]]
+    stage: Optional[List[EnumChoiceType]]
+    focus_area: Optional[List[EnumChoiceType]]
+    regions: Optional[List[EnumChoiceType]]
     countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
 
 

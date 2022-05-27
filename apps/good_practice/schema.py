@@ -8,6 +8,7 @@ from .types import (
     GoodPracticeOrder,
     GoodPracticeFilterChoiceType,
     GoodPracticeFilterCountryChoiceType,
+    EnumChoiceType,
 )
 from .models import GoodPractice, Faq
 from apps.country.models import Country
@@ -63,13 +64,36 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         countries__isnull=False
     ).distinct().values('countries').order_by().values('id', 'countries__name')
     return GoodPracticeFilterChoiceType(
-        type=[GoodPractice.Type(type).name for type in types],
-        drivers_of_dispalcement=[
-            GoodPractice.DriversOfDisplacementType(type).name for type in drivers_of_dispalcements
+        type=[
+            EnumChoiceType(
+                name=GoodPractice.Type(type).name,
+                label=GoodPractice.Type(type).label
+            ) for type in types
         ],
-        stage=[GoodPractice.StageType(type).name for type in stages],
-        focus_area=[GoodPractice.FocusArea(type).name for type in focus_areas],
-        regions=[Country.Region(type).name for type in regions],
+        drivers_of_dispalcement=[
+            EnumChoiceType(
+                name=GoodPractice.DriversOfDisplacementType(type).name,
+                label=GoodPractice.DriversOfDisplacementType(type).label
+            ) for type in drivers_of_dispalcements
+        ],
+        stage=[
+            EnumChoiceType(
+                name=GoodPractice.StageType(type).name,
+                label=GoodPractice.StageType(type).label
+            ) for type in stages
+        ],
+        focus_area=[
+            EnumChoiceType(
+                name=GoodPractice.FocusArea(type).name,
+                label=GoodPractice.FocusArea(type).label,
+            ) for type in focus_areas
+        ],
+        regions=[
+            EnumChoiceType(
+                name=Country.Region(type).name,
+                label=Country.Region(type).label
+            ) for type in regions
+        ],
         countries=[
             GoodPracticeFilterCountryChoiceType(
                 id=country['id'],
