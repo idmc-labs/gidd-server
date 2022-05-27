@@ -83,6 +83,15 @@ class GoodPracticeOrder:
     page_viewed_count: auto
 
 
+@strawberry.type
+class GoodPracticeFilterChoiceType:
+    type: Optional[List[str]]
+    drivers_of_dispalcement: Optional[List[str]]
+    stage: Optional[List[str]]
+    focus_area: Optional[List[str]]
+    regions: Optional[List[str]]
+
+
 @strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder)
 class GoodPracticeListType(GoodPracticeType):
     pass

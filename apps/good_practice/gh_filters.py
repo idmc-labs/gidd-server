@@ -58,12 +58,12 @@ class GoodPracticeFilter:
     def filter_countries(self, queryset):
         if not self.countries:
             return queryset
-        return queryset.filter(country__in=self.countries)
+        return queryset.filter(countries__in=self.countries)
 
     def filter_regions(self, queryset):
         if not self.regions:
             return queryset
-        return queryset.filter(country__idmc_region__in=self.regions)
+        return queryset.filter(country__wb_region__in=self.regions)
 
     def filter_focus_area(self, queryset):
         if not self.focus_area:
