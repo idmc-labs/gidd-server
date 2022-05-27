@@ -13,6 +13,7 @@ from .enums import (
 )
 from typing import List
 from apps.country.enums import RegionEnum
+from asgiref.sync import sync_to_async
 
 
 @strawberry.django.filters.filter(GoodPractice)
@@ -26,6 +27,7 @@ class GoodPracticeFilter:
     focus_area: List[FocusAreaEnum] | None
     start_year: int | None
     end_year: int | None
+    recommended_good_practice: strawberry.ID
 
     def filter_search(self, queryset):
         if not self.search:
@@ -79,6 +81,17 @@ class GoodPracticeFilter:
         if not self.end_year:
             return queryset
         return queryset.filter(end_year__lte=self.end_year)
+
+    def filter_recommended_good_practice(self, queryset):
+        if not self.recommended_good_practice:
+            return queryset
+        good_practice_qs = GoodPractice.objects.filter(id=self.recommended_good_practice)
+        return queryset.filter(
+            Q(focus_area__in=good_practice_qs.values('focus_area')) |
+            Q(type__in=good_practice_qs.values('type')) |
+            Q(drivers_of_dispalcement__in=good_practice_qs.values('drivers_of_dispalcement')) |
+            Q(stage__in=good_practice_qs.values('stage'))
+        ).distinct('id')
 
     @property
     def qs(self):
