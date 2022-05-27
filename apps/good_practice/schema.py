@@ -7,6 +7,7 @@ from .types import (
     PaginationBaseType,
     GoodPracticeOrder,
     GoodPracticeFilterChoiceType,
+    GoodPracticeFilterCountryChoiceType,
 )
 from .models import GoodPractice, Faq
 from apps.country.models import Country
@@ -58,6 +59,9 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     regions = list(
         good_practice_qs.filter(countries__wb_region__isnull=False).distinct().values_list('countries__wb_region', flat=True)
     )
+    countries_dict = good_practice_qs.filter(
+        countries__isnull=False
+    ).distinct().values('countries').order_by().values('id', 'countries__name')
     return GoodPracticeFilterChoiceType(
         type=[GoodPractice.Type(type).name for type in types],
         drivers_of_dispalcement=[
@@ -65,7 +69,13 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         stage=[GoodPractice.StageType(type).name for type in stages],
         focus_area=[GoodPractice.FocusArea(type).name for type in focus_areas],
-        regions=[Country.Region(type).name for type in regions]
+        regions=[Country.Region(type).name for type in regions],
+        countries=[
+            GoodPracticeFilterCountryChoiceType(
+                id=country['id'],
+                name=country['countries__name']
+            ) for country in countries_dict
+        ],
     )
 
 

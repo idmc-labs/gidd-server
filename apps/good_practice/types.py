@@ -84,12 +84,19 @@ class GoodPracticeOrder:
 
 
 @strawberry.type
+class GoodPracticeFilterCountryChoiceType:
+    id: int
+    name: str
+
+
+@strawberry.type
 class GoodPracticeFilterChoiceType:
     type: Optional[List[str]]
     drivers_of_dispalcement: Optional[List[str]]
     stage: Optional[List[str]]
     focus_area: Optional[List[str]]
     regions: Optional[List[str]]
+    countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
 
 
 @strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder)
