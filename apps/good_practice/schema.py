@@ -62,7 +62,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     )
     countries_dict = good_practice_qs.filter(
         countries__isnull=False
-    ).distinct().values('countries').order_by().values('id', 'countries__name')
+    ).distinct().values('countries').order_by().values('countries__id', 'countries__name')
     return GoodPracticeFilterChoiceType(
         type=[
             EnumChoiceType(
@@ -96,7 +96,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         countries=[
             GoodPracticeFilterCountryChoiceType(
-                id=country['id'],
+                id=country['countries__id'],
                 name=country['countries__name']
             ) for country in countries_dict
         ],
