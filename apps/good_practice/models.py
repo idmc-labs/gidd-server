@@ -27,8 +27,8 @@ class GoodPractice(models.Model):
             'protection_and_assistance_and_durable_solutions',
             _('Protection and assistance, and durable solutions')
         )
-        STRATEGIES_POLICIES_AND_LEAGAL_FRAMEWORKS = (
-            'strategies_policies_and_legal_frameworks',
+        STRENGTHENING_POLICY_AND_LEGAL_FRAMEWORKS = (
+            'strengthening_policy_and_legal_frameworks',
             _('Strengthening policy and legal frameworks')
         )
         INTERVENTIONS = 'interventions', _('Interventions')
@@ -40,6 +40,9 @@ class GoodPractice(models.Model):
         )
         LAND_FOREST_DEGRADATION_AND_LOSS_OF_BIODIVERSITY = (
             'land_forest_degradation_and_loss_of_biodiversity', _('Land/forest degradation and loss of biodiversity')
+        )
+        SEA_LEVEL_RISE_SALINIZATION_AND_OCEAN_ACIDIFICATION = (
+            'sea_level_rise_salinization_and_ocean_acidification', _('Sea level rise, salinization, and ocean acidification')
         )
         GLACIAL_MELT = 'glacial_melt', _('Glacial melt')
         FLOODS = 'floods', _('Floods')
@@ -73,7 +76,7 @@ class GoodPractice(models.Model):
         max_length=255, verbose_name=_('Driver of displacement'), choices=DriversOfDisplacementType.choices
     )
     stage = models.CharField(
-        max_length=255, verbose_name=_('Stage'), choices=StageType.choices
+        max_length=255, verbose_name=_('Stage'), choices=StageType.choices, null=True, blank=True
     )
     focus_area = models.CharField(
         max_length=255, verbose_name=_('Focus area'), choices=FocusArea.choices
