@@ -1,5 +1,5 @@
 
-from apps.good_practice.models import Gallery
+from apps.good_practice.models import Gallery, GoodPractice
 from apps.country.models import Country
 from collections import defaultdict
 from typing import List
@@ -29,5 +29,14 @@ def good_practice_country_load(keys: List[int]):
     return [_map[key] for key in keys]
 
 
+def good_practice_image_load(keys: List[int]):
+    qs = GoodPractice.objects.filter(id__in=keys)
+    _map = defaultdict(list)
+    for good_practice in qs:
+        _map[good_practice.id].append(good_practice.image)
+    return [_map[key] for key in keys]
+
+
 load_gallery = sync_to_async(gallery_load)
 load_good_practice_country = sync_to_async(good_practice_country_load)
+load_good_practice_image = sync_to_async(good_practice_image_load)

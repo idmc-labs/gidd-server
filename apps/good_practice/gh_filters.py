@@ -90,7 +90,7 @@ class GoodPracticeFilter:
             Q(type__in=good_practice_qs.values('type')) |
             Q(drivers_of_displacement__in=good_practice_qs.values('drivers_of_displacement')) |
             Q(stage__in=good_practice_qs.values('stage'))
-        ).distinct('id')
+        ).exclude(id=self.recommended_good_practice).distinct('id')
 
     @property
     def qs(self):

@@ -18,9 +18,7 @@ from strawberry_django.filters import apply as filter_apply
 from strawberry_django.pagination import apply as pagination_apply, OffsetPaginationInput
 from strawberry_django.ordering import apply as ordering_apply
 from django.forms.models import model_to_dict
-from django.db.models import FileField
 from strawberry.types import Info
-from utils import FileFieldType
 
 
 def faq_obj(pk) -> FaqType:
@@ -106,15 +104,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
 def format_types(info, obj):
     result = model_to_dict(obj)
     result.pop('countries')
-    for field in obj._meta.fields:
-        if isinstance(field, FileField):
-            if obj.image:
-                result['image'] = FileFieldType(
-                    name=obj.image.name,
-                    url=info.context['request'].build_absolute_uri(obj.image.url)
-                )
-            else:
-                result['image'] = None
+    result.pop('image')
     return result
 
 

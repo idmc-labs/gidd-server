@@ -23,6 +23,8 @@ class FileFieldType:
 
 
 def build_url(file, request):
+    if type(file) == list:
+        file = file[0]
     file_name = file.name
     url = ''
     if file_name:

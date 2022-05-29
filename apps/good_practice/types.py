@@ -56,12 +56,16 @@ class GoodPracticeType:
     focus_area: FocusAreaEnum
     is_published: auto
     good_practice_form_url: auto
-    image: Optional[FileFieldType]
     published_date: auto
     media_and_resource_links: auto
     start_year: auto
     end_year: auto
     page_viewed_count: auto
+
+    @strawberry.field
+    async def image(self, info: Info) -> Optional[FileFieldType]:
+        result = await info.context["good_practice_image_loader"].load(self.id)
+        return build_url(result, info.context['request'])
 
     @strawberry.field
     async def gallery(self, info: Info) -> List[GalleryType]:
