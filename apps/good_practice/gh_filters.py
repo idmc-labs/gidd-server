@@ -88,7 +88,7 @@ class GoodPracticeFilter:
         return queryset.filter(
             Q(focus_area__in=good_practice_qs.values('focus_area')) |
             Q(type__in=good_practice_qs.values('type')) |
-            Q(drivers_of_dispalcement__in=good_practice_qs.values('drivers_of_displacement')) |
+            Q(drivers_of_displacement__in=good_practice_qs.values('drivers_of_displacement')) |
             Q(stage__in=good_practice_qs.values('stage'))
         ).distinct('id')
 
