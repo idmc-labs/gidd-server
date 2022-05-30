@@ -22,7 +22,7 @@ class GalleryAdminInline(admin.TabularInline):
 
 class GoodPracticeAdmin(admin.ModelAdmin):
     form = GoodPracticeForm
-    search_fields = ['name']
+    search_fields = ['title']
     list_display = [
         'title', 'description', 'type', 'drivers_of_displacement',
         'drivers_of_displacement', 'stage'
