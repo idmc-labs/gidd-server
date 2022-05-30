@@ -1,5 +1,6 @@
 import strawberry
 from typing import List, Optional
+from django.db.models import Max, Min
 from .types import (
     FaqType,
     FaqListType,
@@ -98,6 +99,8 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
                 name=country['countries__name']
             ) for country in countries_dict
         ],
+        start_year=good_practice_qs.aggregate(Min('start_year'))['start_year__min'],
+        end_year=good_practice_qs.aggregate(Max('end_year'))['end_year__max'],
     )
 
 

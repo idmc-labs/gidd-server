@@ -107,6 +107,8 @@ class GoodPracticeFilterChoiceType:
     focus_area: Optional[List[EnumChoiceType]]
     regions: Optional[List[EnumChoiceType]]
     countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
+    start_year: int
+    end_year: int
 
 
 @strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder)
