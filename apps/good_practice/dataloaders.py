@@ -8,7 +8,8 @@ from asgiref.sync import sync_to_async
 
 def gallery_load(keys: List[int]):
     qs = Gallery.objects.filter(
-        good_practice__in=keys
+        good_practice__in=keys,
+        is_published=True,
     )
 
     _map = defaultdict(list)
