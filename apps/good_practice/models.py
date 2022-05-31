@@ -106,7 +106,7 @@ class Gallery(models.Model):
     image = models.FileField(upload_to='gallery/', blank=True, verbose_name=_('Image'))
     caption = models.TextField(blank=True, verbose_name=_('Caption'), null=True)
     good_practice = models.ForeignKey(
-        'good_practice.GoodPractice', related_name='good_practice', on_delete=models.PROTECT,
+        'good_practice.GoodPractice', related_name='good_practice', on_delete=models.CASCADE,
         verbose_name=_('Good practice'), null=True, blank=True
     )
     is_published = models.BooleanField(
