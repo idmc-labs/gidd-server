@@ -3,7 +3,7 @@ from apps.good_practice.models import GoodPractice
 
 
 @gql.django.type(GoodPractice)
-class GooodPracticeType(gql.Node):
+class GoodPracticeType(gql.Node):
     id: gql.auto
     page_viewed_count: gql.auto
 
@@ -11,7 +11,7 @@ class GooodPracticeType(gql.Node):
 @gql.type
 class Mutation:
     @gql.django.input_mutation
-    def increment_page_viewed_count(self, info, id: gql.ID) -> GooodPracticeType:
+    def increment_page_viewed_count(self, info, id: gql.ID) -> GoodPracticeType:
         obj = GoodPractice.objects.get(id=id)
         obj.page_viewed_count = obj.page_viewed_count + 1
         obj.save()
