@@ -85,6 +85,8 @@ class GoodPracticeOrder:
     focus_area: auto
     is_published: auto
     page_viewed_count: auto
+    published_date: auto
+    updated_at: auto
 
 
 @strawberry.type
