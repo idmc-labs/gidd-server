@@ -57,7 +57,9 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         good_practice_qs.filter(focus_area__isnull=False).distinct().values_list('focus_area', flat=True)
     )
     regions = list(
-        good_practice_qs.filter(countries__wb_region__isnull=False).distinct().values_list('countries__wb_region', flat=True)
+        good_practice_qs.filter(
+            countries__good_practice_region__isnull=False
+        ).distinct().values_list('countries__good_practice_region', flat=True)
     )
     countries_dict = good_practice_qs.filter(
         countries__isnull=False
@@ -89,8 +91,8 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         regions=[
             EnumChoiceType(
-                name=Country.Region(type).name,
-                label=Country.Region(type).label
+                name=Country.GoodPracticeRegion(type).name,
+                label=Country.GoodPracticeRegion(type).label
             ) for type in regions
         ],
         countries=[

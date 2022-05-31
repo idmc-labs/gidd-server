@@ -11,7 +11,7 @@ class Command(BaseCommand):
     help = 'Migrate good practices'
 
     def _clean_enum(self, text):
-        return text.lower().replace(" ", "_").replace(",", "").replace("/", "_")
+        return text.lower().replace(" ", "_").replace(",", "").replace("/", "_").replace("-", "_")
 
     def _get_focus_area_enum(self, text):
         return GoodPractice.FocusArea(self._clean_enum(text)).value
@@ -22,7 +22,7 @@ class Command(BaseCommand):
     def _get_drivers_of_dispalcement_enum(self, text):
         return GoodPractice.DriversOfDisplacementType(self._clean_enum(text)).value
 
-    def _get_countries_list(self, country_text):
+    def _get_countries_and_update_region(self, country_text, region_text):
         countries_name = [item.capitalize() for item in country_text.replace(" ", "").split(",")]
         if 'Elsalvador' in countries_name:
             countries_name = countries_name.remove('Elsalvador')
@@ -32,6 +32,7 @@ class Command(BaseCommand):
 
         qs = Country.objects.filter(name__in=countries_name)
         if qs:
+            qs.update(good_practice_region=self._clean_enum(region_text))
             return list(qs)
         else:
             print(country_text, 'Country not found')
@@ -50,7 +51,9 @@ class Command(BaseCommand):
                 is_published=True,
                 stage=None
             )
-            good_practice.countries.add(*self._get_countries_list(good_practice_item['Country']))
+            good_practice.countries.add(
+                *self._get_countries_and_update_region(good_practice_item['Country'], good_practice_item['Region'])
+            )
 
     def handle(self, *args, **options):
         with open(os.path.join(

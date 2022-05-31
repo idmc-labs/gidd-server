@@ -12,7 +12,7 @@ from .enums import (
     FocusAreaEnum,
 )
 from typing import List
-from apps.country.enums import RegionEnum
+from apps.country.enums import GoodPracticeRegionEnum
 
 
 @strawberry.django.filters.filter(GoodPractice)
@@ -22,7 +22,7 @@ class GoodPracticeFilter:
     drivers_of_displacements: List[DriversOfDisplacementTypeEnum] | None
     stages: List[StageTypeEnum] | None
     countries: List[strawberry.ID] | None
-    regions: List[RegionEnum] | None
+    regions: List[GoodPracticeRegionEnum] | None
     focus_area: List[FocusAreaEnum] | None
     start_year: int | None
     end_year: int | None
@@ -64,7 +64,7 @@ class GoodPracticeFilter:
     def filter_regions(self, queryset):
         if not self.regions:
             return queryset
-        return queryset.filter(country__wb_region__in=self.regions)
+        return queryset.filter(countries__good_practice_region__in=self.regions)
 
     def filter_focus_area(self, queryset):
         if not self.focus_area:

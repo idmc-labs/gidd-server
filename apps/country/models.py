@@ -65,6 +65,14 @@ class Country(models.Model):
         MIDDLE_EAST = 'middle_east', _('Middle East')
         SOUTH_CAUCASUS = 'south_caucasus', _('South caucasus')
 
+    class GoodPracticeRegion(models.TextChoices):
+        THE_AMERICAS = 'the_americas', _('The Americas')
+        SUB_SAHARAN_AFRICA = 'sub_saharan_africa', _('Sub-Saharan Africa')
+        SOUTH_ASIA = 'south_asia', _('South Asia')
+        MIDDLE_EAST_AND_NORTH_AFRICA = 'middle_east_and_north_africa', _('Middle East and North Africa')
+        EAST_ASIA_AND_THE_PACIFIC = 'east_asia_and_the_pacific', _('East Asia and the Pacific')
+        EUROPE_AND_CENTRAL_ASIA = 'europe_and_central_asia', _('Europe and Central Asia')
+
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     iso3 = models.CharField(max_length=10, verbose_name=_('Iso3'))
     iso2 = models.CharField(max_length=255, verbose_name=_('Iso2'))
@@ -90,6 +98,10 @@ class Country(models.Model):
     )
     united_nations_region = models.CharField(
         choices=Region.choices, max_length=100, verbose_name=_('United nations region'),
+        null=True, blank=True
+    )
+    good_practice_region = models.CharField(
+        choices=GoodPracticeRegion.choices, max_length=100, verbose_name=_('Good practice region'),
         null=True, blank=True
     )
     is_least_developed_country = models.BooleanField(
