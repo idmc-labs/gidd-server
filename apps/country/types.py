@@ -21,6 +21,7 @@ from .enums import (
     ContinentEnum,
     RegionEnum,
     SubRegionEnum,
+    GoodPracticeRegionEnum,
 )
 from utils import FileFieldType, build_url
 
@@ -86,6 +87,7 @@ class CountryType:
     idmc_region: RegionEnum
     idmc_sub_region: SubRegionEnum
     wb_region: RegionEnum
+    good_practice_region: GoodPracticeRegionEnum
     un_population_division_names: auto
     united_nations_region: RegionEnum
     is_least_developed_country: auto
