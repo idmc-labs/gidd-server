@@ -17,6 +17,17 @@ class Faq(models.Model):
         return self.question
 
 
+class Tag(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Tags'))
+
+    class Meta:
+        verbose_name = _('Tag')
+        verbose_name_plural = _('Tags')
+
+    def __str__(self):
+        return self.name
+
+
 class GoodPractice(models.Model):
     class Type(models.TextChoices):
         RISK_REDUCTION_AND_PREVENTION = (
@@ -92,6 +103,9 @@ class GoodPractice(models.Model):
     start_year = models.BigIntegerField(verbose_name=_('Start year'))
     end_year = models.BigIntegerField(blank=True, null=True, verbose_name=_('End year'))
     page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
+    tags = models.ManyToManyField(
+        'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags')
+    )
 
     class Meta:
         verbose_name = _('Good practice')

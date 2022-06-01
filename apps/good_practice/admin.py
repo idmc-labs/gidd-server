@@ -1,6 +1,6 @@
 from django.contrib import admin
 from apps.good_practice.models import (
-    GoodPractice, Faq, Gallery
+    GoodPractice, Faq, Gallery, Tag
 )
 from apps.good_practice.form import (
     FaqForm, GoodPracticeForm, GalleryForm
@@ -20,6 +20,13 @@ class GalleryAdminInline(admin.TabularInline):
     extra = 0
 
 
+class TagAdmin(admin.ModelAdmin):
+    search_fields = ['name']
+    list_display = [
+        'name'
+    ]
+
+
 class GoodPracticeAdmin(admin.ModelAdmin):
     form = GoodPracticeForm
     search_fields = ['title']
@@ -28,8 +35,9 @@ class GoodPracticeAdmin(admin.ModelAdmin):
         'drivers_of_displacement', 'stage'
     ]
     inlines = [GalleryAdminInline, ]
-    autocomplete_fields = ['countries', ]
+    autocomplete_fields = ['countries', 'tags']
 
 
 admin.site.register(Faq, FaqAdmin)
 admin.site.register(GoodPractice, GoodPracticeAdmin)
+admin.site.register(Tag, TagAdmin)
