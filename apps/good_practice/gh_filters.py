@@ -44,7 +44,7 @@ class GoodPracticeFilter:
     def filter_drivers_of_displacements(self, queryset):
         if not self.drivers_of_displacements:
             return queryset
-        return queryset.filter(drivers_of_displacement=self.drivers_of_displacements)
+        return queryset.filter(drivers_of_displacement__in=self.drivers_of_displacements)
 
     def filter_trigger_types(self, queryset):
         if not self.trigger_types:
