@@ -4,7 +4,7 @@ from strawberry import auto
 from typing import List
 
 from .models import (
-    Faq, GoodPractice, Gallery
+    Faq, GoodPractice, Gallery, Tag
 )
 from .gh_filters import GoodPracticeFilter, FaqFilter
 
@@ -44,6 +44,12 @@ class GalleryType:
         return build_url(self.image, info.context['request'])
 
 
+@strawberry.django.type(Tag)
+class TagType:
+    id: auto
+    name: auto
+
+
 @strawberry.django.type(GoodPractice)
 class GoodPracticeType:
     id: auto
@@ -74,6 +80,10 @@ class GoodPracticeType:
     @strawberry.field
     async def countries(self, info: Info) -> List[CountryType]:
         return await info.context["good_practice_country_loader"].load(self.id)
+
+    @strawberry.field
+    async def tags(self, info: Info) -> Optional[List[TagType]]:
+        return await info.context["good_practice_tags_loader"].load(self.id)
 
 
 @strawberry_django.ordering.order(GoodPractice)

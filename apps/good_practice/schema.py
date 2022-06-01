@@ -110,6 +110,7 @@ def format_types(info, obj):
     result = model_to_dict(obj)
     result.pop('countries')
     result.pop('image')
+    result.pop('tags')
     return result
 
 
