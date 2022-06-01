@@ -64,7 +64,7 @@ class GoodPracticeFilter:
     def filter_regions(self, queryset):
         if not self.regions:
             return queryset
-        return queryset.filter(countries__good_practice_region__in=self.regions)
+        return queryset.filter(countries__good_practice_region__in=self.regions).distinct()
 
     def filter_focus_area(self, queryset):
         if not self.focus_area:
@@ -94,7 +94,7 @@ class GoodPracticeFilter:
 
     @property
     def qs(self):
-        return super().qs.filter(is_published=True)
+        return super().qs.filter(is_published=True).distinct()
 
 
 @strawberry.django.filters.filter(Faq)
