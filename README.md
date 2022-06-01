@@ -69,3 +69,8 @@ Migrate good practices
 ```bash
 docker-compose exec server python manage.py migrate_good_practice
 ```
+
+Init tags
+```bash
+docker-compose exec server python manage.py init_tags
+```
