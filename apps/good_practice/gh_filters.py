@@ -2,14 +2,12 @@ from django.db.models import Q
 from strawberry import auto
 
 from .models import (
-    GoodPractice, Faq
+    GoodPractice, Faq,
 )
 import strawberry
 from .enums import (
     TypeEnum,
-    DriversOfDisplacementTypeEnum,
     StageTypeEnum,
-    FocusAreaEnum,
 )
 from typing import List
 from apps.country.enums import GoodPracticeRegionEnum
@@ -19,11 +17,11 @@ from apps.country.enums import GoodPracticeRegionEnum
 class GoodPracticeFilter:
     search: str | None
     types: List[TypeEnum] | None
-    drivers_of_displacements: List[DriversOfDisplacementTypeEnum] | None
+    drivers_of_displacements: List[strawberry.ID] | None
     stages: List[StageTypeEnum] | None
     countries: List[strawberry.ID] | None
     regions: List[GoodPracticeRegionEnum] | None
-    focus_area: List[FocusAreaEnum] | None
+    focus_area: List[strawberry.ID] | None
     start_year: int | None
     end_year: int | None
     recommended_good_practice: strawberry.ID

@@ -6,7 +6,9 @@ from apps.country.dataloaders import (
 from apps.good_practice.dataloaders import (
     load_gallery, load_good_practice_country,
     load_good_practice_image,
-    load_good_practice_tags
+    load_good_practice_tags,
+    load_good_practice_driver_of_displacement,
+    load_good_practice_focus_area,
 )
 from starlette.requests import Request
 from starlette.responses import Response
@@ -25,4 +27,6 @@ class CustomAsyncGraphQLView(AsyncGraphQLView):
             'good_practice_country_loader': DataLoader(load_fn=load_good_practice_country),
             'good_practice_image_loader': DataLoader(load_fn=load_good_practice_image),
             'good_practice_tags_loader': DataLoader(load_fn=load_good_practice_tags),
+            'good_practice_driver_of_displacement_loader': DataLoader(load_fn=load_good_practice_driver_of_displacement),
+            'good_practice_focus_area_loader': DataLoader(load_fn=load_good_practice_focus_area),
         }

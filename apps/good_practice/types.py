@@ -4,15 +4,13 @@ from strawberry import auto
 from typing import List
 
 from .models import (
-    Faq, GoodPractice, Gallery, Tag
+    Faq, GoodPractice, Gallery, Tag, DriversOfDisplacement, FocusArea,
 )
 from .gh_filters import GoodPracticeFilter, FaqFilter
 
 from .enums import (
     TypeEnum,
-    DriversOfDisplacementTypeEnum,
     StageTypeEnum,
-    FocusAreaEnum,
 )
 from apps.country.types import CountryType
 import strawberry_django
@@ -50,18 +48,26 @@ class TagType:
     name: auto
 
 
+@strawberry.django.type(DriversOfDisplacement)
+class DriversOfDisplacementType:
+    id: auto
+    name: auto
+
+
+@strawberry.django.type(FocusArea)
+class FocusAreaType:
+    id: auto
+    name: auto
+
+
 @strawberry.django.type(GoodPractice)
 class GoodPracticeType:
     id: auto
     title: auto
     description: auto
     type: TypeEnum
-    drivers_of_displacement: DriversOfDisplacementTypeEnum
     stage: StageTypeEnum
-    good_practice_form_url: auto
-    focus_area: FocusAreaEnum
     is_published: auto
-    good_practice_form_url: auto
     published_date: auto
     media_and_resource_links: auto
     start_year: auto
@@ -85,13 +91,20 @@ class GoodPracticeType:
     async def tags(self, info: Info) -> Optional[List[TagType]]:
         return await info.context["good_practice_tags_loader"].load(self.id)
 
+    @strawberry.field
+    async def driver_of_displacement(self, info: Info) -> Optional[List[DriversOfDisplacementType]]:
+        return await info.context["good_practice_driver_of_displacement_loader"].load(self.id)
+
+    @strawberry.field
+    async def focus_area(self, info: Info) -> Optional[List[FocusAreaType]]:
+        return await info.context["good_practice_focus_area_loader"].load(self.id)
+
 
 @strawberry_django.ordering.order(GoodPractice)
 class GoodPracticeOrder:
     id: auto
     title: auto
     description: auto
-    good_practice_form_url: auto
     focus_area: auto
     is_published: auto
     page_viewed_count: auto
@@ -114,9 +127,9 @@ class EnumChoiceType:
 @strawberry.type
 class GoodPracticeFilterChoiceType:
     type: Optional[List[EnumChoiceType]]
-    drivers_of_displacement: Optional[List[EnumChoiceType]]
+    drivers_of_displacement: Optional[List[DriversOfDisplacementType]]
     stage: Optional[List[EnumChoiceType]]
-    focus_area: Optional[List[EnumChoiceType]]
+    focus_area: Optional[List[FocusAreaType]]
     regions: Optional[List[EnumChoiceType]]
     countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
     start_year: int

@@ -4,7 +4,7 @@ import os
 from django.utils import timezone
 from django.conf import settings
 from apps.country.models import Country
-from apps.good_practice.models import GoodPractice
+from apps.good_practice.models import GoodPractice, DriversOfDisplacement, FocusArea
 
 
 class Command(BaseCommand):
@@ -13,14 +13,8 @@ class Command(BaseCommand):
     def _clean_enum(self, text):
         return text.lower().replace(" ", "_").replace(",", "").replace("/", "_").replace("-", "_")
 
-    def _get_focus_area_enum(self, text):
-        return GoodPractice.FocusArea(self._clean_enum(text)).value
-
     def _get_type_enum(self, text):
         return GoodPractice.Type(self._clean_enum(text)).value
-
-    def _get_drivers_of_dispalcement_enum(self, text):
-        return GoodPractice.DriversOfDisplacementType(self._clean_enum(text)).value
 
     def _get_countries_and_update_region(self, country_text, region_text):
         countries_name = [item.capitalize() for item in country_text.replace(" ", "").split(",")]
@@ -44,9 +38,7 @@ class Command(BaseCommand):
                 title=good_practice_item['Title'],
                 start_year=good_practice_item['Year start'],
                 end_year=good_practice_item['Year end'] if good_practice_item['Year end'] else None,
-                focus_area=self._get_focus_area_enum(good_practice_item['Focus area 1']),
                 type=self._get_type_enum(good_practice_item['Type of good practice']),
-                drivers_of_displacement=self._get_drivers_of_dispalcement_enum(good_practice_item['Displacement drivers 1']),
                 published_date=timezone.now(),
                 is_published=True,
                 stage=None
@@ -54,6 +46,41 @@ class Command(BaseCommand):
             good_practice.countries.add(
                 *self._get_countries_and_update_region(good_practice_item['Country'], good_practice_item['Region'])
             )
+            drivers_of_displacement_1 = good_practice_item['Displacement drivers 1'].strip() or None
+            if drivers_of_displacement_1:
+                drivers_of_displacement_obj_1, created = DriversOfDisplacement.objects.get_or_create(
+                    name=drivers_of_displacement_1
+                )
+                good_practice.drivers_of_displacement.add(drivers_of_displacement_obj_1.id)
+
+            drivers_of_displacement_2 = good_practice_item['Displacement drivers 2'].strip() or None
+            if drivers_of_displacement_2:
+                drivers_of_displacement_obj_2, created = DriversOfDisplacement.objects.get_or_create(
+                    name=drivers_of_displacement_2
+                )
+                good_practice.drivers_of_displacement.add(drivers_of_displacement_obj_2.id)
+
+            drivers_of_displacement_3 = good_practice_item['Displacement drivers 3'].strip() or None
+            if drivers_of_displacement_3:
+                drivers_of_displacement_obj_3, created = DriversOfDisplacement.objects.get_or_create(
+                    name=drivers_of_displacement_3
+                )
+                good_practice.drivers_of_displacement.add(drivers_of_displacement_obj_3.id)
+
+            focus_area_1 = good_practice_item['Focus area 1'].strip() or None
+            if focus_area_1:
+                focus_area_obj_1, created = FocusArea.objects.get_or_create(name=focus_area_1)
+                good_practice.focus_area.add(focus_area_obj_1.id)
+
+            focus_area_2 = good_practice_item['Focus area 2'].strip() or None
+            if focus_area_2:
+                focus_area_obj_2, created = FocusArea.objects.get_or_create(name=focus_area_2)
+                good_practice.focus_area.add(focus_area_obj_2.id)
+
+            focus_area_3 = good_practice_item['Focus area 3'].strip() or None
+            if focus_area_3:
+                focus_area_obj_3, created = FocusArea.objects.get_or_create(name=focus_area_3)
+                good_practice.focus_area.add(focus_area_obj_3.id)
 
     def handle(self, *args, **options):
         with open(os.path.join(

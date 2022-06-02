@@ -10,6 +10,8 @@ from .types import (
     GoodPracticeFilterChoiceType,
     GoodPracticeFilterCountryChoiceType,
     EnumChoiceType,
+    DriversOfDisplacementType,
+    FocusAreaType,
 )
 from .models import GoodPractice, Faq
 from apps.country.models import Country
@@ -45,16 +47,8 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     types = list(
         good_practice_qs.filter(type__isnull=False).distinct().values_list('type', flat=True)
     )
-    drivers_of_displacement = list(
-        good_practice_qs.filter(
-            drivers_of_displacement__isnull=False
-        ).distinct().values_list('drivers_of_displacement', flat=True)
-    )
     stages = list(
         good_practice_qs.filter(stage__isnull=False).distinct().values_list('stage', flat=True)
-    )
-    focus_areas = list(
-        good_practice_qs.filter(focus_area__isnull=False).distinct().values_list('focus_area', flat=True)
     )
     regions = list(
         good_practice_qs.filter(
@@ -72,10 +66,12 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             ) for type in types
         ],
         drivers_of_displacement=[
-            EnumChoiceType(
-                name=GoodPractice.DriversOfDisplacementType(type).name,
-                label=GoodPractice.DriversOfDisplacementType(type).label
-            ) for type in drivers_of_displacement
+            DriversOfDisplacementType(
+                name=driver_of_displacement['drivers_of_displacement__name'],
+                id=driver_of_displacement['id'],
+            ) for driver_of_displacement in good_practice_qs.filter(drivers_of_displacement__isnull=False).distinct(
+                'drivers_of_displacement__name'
+            ).order_by().values('id', 'drivers_of_displacement__name')
         ],
         stage=[
             EnumChoiceType(
@@ -84,10 +80,12 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             ) for type in stages
         ],
         focus_area=[
-            EnumChoiceType(
-                name=GoodPractice.FocusArea(type).name,
-                label=GoodPractice.FocusArea(type).label,
-            ) for type in focus_areas
+            FocusAreaType(
+                name=focus_area['focus_area__name'],
+                id=focus_area['id'],
+            ) for focus_area in good_practice_qs.filter(focus_area__isnull=False).distinct(
+                'focus_area__name'
+            ).order_by().values('id', 'focus_area__name')
         ],
         regions=[
             EnumChoiceType(
@@ -111,6 +109,8 @@ def format_types(info, obj):
     result.pop('countries')
     result.pop('image')
     result.pop('tags')
+    result.pop('drivers_of_displacement')
+    result.pop('focus_area')
     return result
 
 

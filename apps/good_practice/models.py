@@ -28,6 +28,28 @@ class Tag(models.Model):
         return self.name
 
 
+class DriversOfDisplacement(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+
+    class Meta:
+        verbose_name = _('Drivers of displacement')
+        verbose_name_plural = _('Drivers of displacements')
+
+    def __str__(self):
+        return self.name
+
+
+class FocusArea(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_('Name'))
+
+    class Meta:
+        verbose_name = _('Focus area')
+        verbose_name_plural = _('Focus areas')
+
+    def __str__(self):
+        return self.name
+
+
 class GoodPractice(models.Model):
     class Type(models.TextChoices):
         RISK_REDUCTION_AND_PREVENTION = (
@@ -45,34 +67,10 @@ class GoodPractice(models.Model):
         INTERVENTIONS = 'interventions', _('Interventions')
         POLICIES = 'policies', _('Policies')
 
-    class DriversOfDisplacementType(models.TextChoices):
-        INCREASING_TEMPERATURES_DROUGHT_AND_DESERTIFICATION = (
-            'increasing_temperatures_drought_and_desertification', _('Increasing temperatures, drought, and desertification')
-        )
-        LAND_FOREST_DEGRADATION_AND_LOSS_OF_BIODIVERSITY = (
-            'land_forest_degradation_and_loss_of_biodiversity', _('Land/forest degradation and loss of biodiversity')
-        )
-        SEA_LEVEL_RISE_SALINIZATION_AND_OCEAN_ACIDIFICATION = (
-            'sea_level_rise_salinization_and_ocean_acidification', _('Sea level rise, salinization, and ocean acidification')
-        )
-        GLACIAL_MELT = 'glacial_melt', _('Glacial melt')
-        FLOODS = 'floods', _('Floods')
-        LANDSLIDES = 'landslides', _('Landslides')
-
     class StageType(models.TextChoices):
         PROMISING = 'promising', _('Promising')
         ADVANCED = 'advanced', _('Advanced')
         SUCCESSFUL = 'successful', _('Successful')
-
-    class FocusArea(models.TextChoices):
-        LIVELIHOODS_AND_EMPLOYMENT = 'livelihoods_and_employment', _('Livelihoods and employment')
-        SAFETY_AND_SECUTIRY = 'safety_and_security', _('Safety and social security')
-        HEALTH = 'health', _('Health')
-        EDUCATION = 'education', _('Education')
-        HOUSING_LAND_AND_PROPERTY = 'housing_land_and_property', _('Housing, land and property')
-        ENVIRONMENT = 'environment', _('Environment'),
-        FOOD_AND_WATER_INSECURITY = 'food_and_water_insecurity', _('Food and water insecurity')
-        SOCIAL_PROTECTION_AND_ASSISTANCE = 'social_protection_and_assistance', _('Social protection and assistance')
 
     title = models.CharField(max_length=255, verbose_name=_('Title'))
     description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
@@ -83,29 +81,30 @@ class GoodPractice(models.Model):
     type = models.CharField(
         max_length=255, verbose_name=_('Good practice type'), choices=Type.choices
     )
-    drivers_of_displacement = models.CharField(
-        max_length=255, verbose_name=_('Driver of displacement'), choices=DriversOfDisplacementType.choices
+    drivers_of_displacement = models.ManyToManyField(
+        'good_practice.DriversOfDisplacement', related_name='good_practice',
+        verbose_name=_('Drivers of displacement'), blank=True
     )
     stage = models.CharField(
         max_length=255, verbose_name=_('Stage'), choices=StageType.choices, null=True, blank=True
     )
-    focus_area = models.CharField(
-        max_length=255, verbose_name=_('Focus area'), choices=FocusArea.choices
+    focus_area = models.ManyToManyField(
+        'good_practice.FocusArea', related_name='good_practice',
+        verbose_name=_('Focus area'), blank=True
+    )
+    tags = models.ManyToManyField(
+        'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags'), blank=True
     )
     published_date = models.DateTimeField(blank=True)
     image = models.FileField(upload_to='good_practice/', blank=True, verbose_name=_('Good practice image'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
-    good_practice_form_url = models.URLField(max_length=255, verbose_name=_('Good practice form URL'))
     is_published = models.BooleanField(
         default=False, verbose_name=_('Is published?')
     )
     start_year = models.BigIntegerField(verbose_name=_('Start year'))
     end_year = models.BigIntegerField(blank=True, null=True, verbose_name=_('End year'))
     page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
-    tags = models.ManyToManyField(
-        'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags')
-    )
 
     class Meta:
         verbose_name = _('Good practice')
