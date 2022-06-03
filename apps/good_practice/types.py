@@ -50,13 +50,13 @@ class TagType:
 
 @strawberry.django.type(DriversOfDisplacement)
 class DriversOfDisplacementType:
-    id: auto
+    id: int
     name: auto
 
 
 @strawberry.django.type(FocusArea)
 class FocusAreaType:
-    id: auto
+    id: int
     name: auto
 
 
