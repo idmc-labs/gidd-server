@@ -68,10 +68,10 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         drivers_of_displacement=[
             DriversOfDisplacementType(
                 name=driver_of_displacement['drivers_of_displacement__name'],
-                id=driver_of_displacement['id'],
+                id=driver_of_displacement['drivers_of_displacement__id'],
             ) for driver_of_displacement in good_practice_qs.filter(drivers_of_displacement__isnull=False).distinct(
                 'drivers_of_displacement__name'
-            ).order_by().values('id', 'drivers_of_displacement__name')
+            ).order_by().values('drivers_of_displacement__id', 'drivers_of_displacement__name')
         ],
         stage=[
             EnumChoiceType(
@@ -82,10 +82,10 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         focus_area=[
             FocusAreaType(
                 name=focus_area['focus_area__name'],
-                id=focus_area['id'],
+                id=focus_area['focus_area__id'],
             ) for focus_area in good_practice_qs.filter(focus_area__isnull=False).distinct(
                 'focus_area__name'
-            ).order_by().values('id', 'focus_area__name')
+            ).order_by().values('focus_area__id', 'focus_area__name')
         ],
         regions=[
             EnumChoiceType(
