@@ -50,13 +50,13 @@ class TagType:
 
 @strawberry.django.type(DriversOfDisplacement)
 class DriversOfDisplacementType:
-    id: int
+    id: auto
     name: auto
 
 
 @strawberry.django.type(FocusArea)
 class FocusAreaType:
-    id: int
+    id: auto
     name: auto
 
 
@@ -114,7 +114,7 @@ class GoodPracticeOrder:
 
 @strawberry.type
 class GoodPracticeFilterCountryChoiceType:
-    id: int
+    id: strawberry.ID
     name: str
 
 
