@@ -159,7 +159,7 @@ class Query:
 
         results = await get_graphql_objects(info, paginated_queryset)
 
-        total_count = await get_qs_count(paginated_queryset)
+        total_count = await get_qs_count(ordered_qyeryset)
 
         return PaginationBaseType(
             results=results,
