@@ -126,6 +126,10 @@ class Country(models.Model):
         verbose_name=_('Bounding Box'),
         base_field=models.FloatField(blank=False), null=True
     )
+    center_point = ArrayField(
+        verbose_name=_('Center point'),
+        base_field=models.FloatField(blank=False), null=True
+    )
     # Used in IDMC website
     background_image = models.FileField(upload_to='countries/', blank=True)
     title = models.CharField(max_length=255, verbose_name=_('Country title'), blank=True)

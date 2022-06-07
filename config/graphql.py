@@ -1,7 +1,8 @@
 from strawberry.django.views import AsyncGraphQLView
 from apps.country.dataloaders import (
     load_country_additonal_info,
-    load_country_overviews_load,
+    load_country_overviews,
+    load_good_practices_count,
 )
 from apps.good_practice.dataloaders import (
     load_gallery, load_good_practice_country,
@@ -22,7 +23,8 @@ class CustomAsyncGraphQLView(AsyncGraphQLView):
         return {
             'request': request,
             'country_additonal_loader': DataLoader(load_fn=load_country_additonal_info),
-            'country_overviews_loader': DataLoader(load_fn=load_country_overviews_load),
+            'country_good_practice_loader': DataLoader(load_fn=load_good_practices_count),
+            'country_overviews_loader': DataLoader(load_fn=load_country_overviews),
             'gallery_loader': DataLoader(load_fn=load_gallery),
             'good_practice_country_loader': DataLoader(load_fn=load_good_practice_country),
             'good_practice_image_loader': DataLoader(load_fn=load_good_practice_image),

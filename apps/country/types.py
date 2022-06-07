@@ -103,6 +103,7 @@ class CountryType:
     internal_displacement_description: auto
     displacement_data_description: auto
     bounding_box: List[float]
+    center_point: List[float]
 
     @strawberry.field
     async def country_additonal_info(self, info: Info) -> List[CountryAdditionalInfoType]:
@@ -119,6 +120,10 @@ class CountryType:
     @strawberry.field
     async def contact_person_image(self, info: Info) -> Optional[FileFieldType]:
         return build_url(self.contact_person_image, info.context['request'])
+
+    @strawberry.field
+    async def good_practices_count(self, info: Info) -> Optional[int]:
+        return await info.context["country_good_practice_loader"].load(self.id)
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)

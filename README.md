@@ -74,3 +74,8 @@ Init tags
 ```bash
 docker-compose exec server python manage.py init_tags
 ```
+
+Generate center points from bounds
+```bash
+docker-compose exec server python manage.py generate_center_points
+```
