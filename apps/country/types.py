@@ -125,6 +125,30 @@ class CountryType:
     async def good_practices_count(self, info: Info) -> Optional[int]:
         return await info.context["country_good_practice_loader"].load(self.id)
 
+    @strawberry.field
+    async def idmc_continent_label(self, info: Info) -> Optional[str]:
+        return ContinentEnum(self.idmc_continent).label if self.idmc_continent else ""
+
+    @strawberry.field
+    async def idmc_region_label(self, info: Info) -> str:
+        return RegionEnum(self.idmc_region).label if self.idmc_region else ""
+
+    @strawberry.field
+    async def idmc_sub_region_label(self, info: Info) -> str:
+        return SubRegionEnum(self.idmc_sub_region).label if self.idmc_sub_region else ""
+
+    @strawberry.field
+    async def wb_region_label(self, info: Info) -> str:
+        return RegionEnum(self.wb_region).label if self.wb_region else ""
+
+    @strawberry.field
+    async def good_practice_region_label(self, info: Info) -> str:
+        return GoodPracticeRegionEnum(self.good_practice_region).label if self.good_practice_region else ""
+
+    @strawberry.field
+    async def united_nations_region_label(self, info: Info) -> str:
+        return RegionEnum(self.united_nations_region).label if self.united_nations_region else ""
+
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
 class CountryListType(CountryType):

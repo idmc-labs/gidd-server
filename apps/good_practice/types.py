@@ -99,6 +99,14 @@ class GoodPracticeType:
     async def focus_area(self, info: Info) -> Optional[List[FocusAreaType]]:
         return await info.context["good_practice_focus_area_loader"].load(self.id)
 
+    @strawberry.field
+    async def type_label(self, info: Info) -> Optional[str]:
+        return TypeEnum(self.type).label if self.type else ""
+
+    @strawberry.field
+    async def stage_label(self, info: Info) -> str:
+        return StageTypeEnum(self.stage).label if self.stage else ""
+
 
 @strawberry_django.ordering.order(GoodPractice)
 class GoodPracticeOrder:
