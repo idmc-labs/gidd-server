@@ -31,10 +31,19 @@ class GoodPracticeAdmin(admin.ModelAdmin):
     form = GoodPracticeForm
     search_fields = ['title']
     list_display = [
-        'title', 'description', 'type', 'stage'
+        'title', 'type', 'focus_areas', 'country_names', 'drivers_of_displacements', 'start_year', 'end_year'
     ]
     inlines = [GalleryAdminInline, ]
     autocomplete_fields = ['countries', 'tags', 'focus_area', 'drivers_of_displacement']
+
+    def drivers_of_displacements(self, obj):
+        return ", ".join([item.name for item in obj.drivers_of_displacement.all()])
+
+    def focus_areas(self, obj):
+        return ", ".join([item.name for item in obj.focus_area.all()])
+
+    def country_names(self, obj):
+        return ", ".join([item.name for item in obj.countries.all()])
 
 
 class DriversOfDisplacementAdmin(admin.ModelAdmin):

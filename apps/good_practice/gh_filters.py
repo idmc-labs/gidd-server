@@ -70,16 +70,15 @@ class GoodPracticeFilter:
         return queryset.filter(focus_area__in=self.focus_area)
 
     def filter_start_year(self, queryset):
-        if not self.start_year:
-            return queryset
-        return queryset.filter(start_year__gte=self.start_year)
+        return queryset
 
     def filter_end_year(self, queryset):
         if not self.end_year:
             return queryset
         return queryset.filter(
-            (Q(end_year__lte=self.end_year) & Q(start_year__gte=self.start_year)) |
-            Q(start_year__lte=self.end_year, end_year__isnull=True)
+            Q(end_year__lte=self.end_year, start_year__gte=self.start_year) |
+            Q(end_year__gte=self.end_year, start_year__lte=self.start_year) |
+            Q(start_year__gte=self.start_year, end_year__isnull=True)
         ).distinct()
 
     def filter_recommended_good_practice(self, queryset):
