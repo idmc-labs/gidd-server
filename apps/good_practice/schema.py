@@ -30,6 +30,18 @@ def faq_obj(pk) -> FaqType:
     )(pk=pk, is_published=True)
 
 
+@sync_to_async
+def faq_qs() -> List[FaqListType]:
+    qs = Faq.objects.filter(is_published=True)
+    return [
+        FaqListType(
+            id=faq.id,
+            question=faq.question,
+            answer=faq.answer,
+        ) for faq in qs
+    ]
+
+
 def good_practice_obj(pk) -> GoodPracticeType:
     return sync_to_async(
         GoodPractice.objects.get, thread_sensitive=True
@@ -37,7 +49,7 @@ def good_practice_obj(pk) -> GoodPracticeType:
 
 
 @sync_to_async
-def get_qs(model) -> List[GoodPracticeType]:
+def good_practice_qs(model) -> List[GoodPracticeType]:
     return model.objects.filter(is_published=True)
 
 
@@ -138,7 +150,10 @@ class Query:
     def good_practice(self, pk: strawberry.ID) -> GoodPracticeType:
         return good_practice_obj(pk)
 
-    faqs: List[FaqListType] = strawberry.django.field()
+    @strawberry.field
+    async def faqs(self, info: Info) -> List[FaqListType]:
+        qs = await faq_qs()
+        return [FaqType(id=faq.id, question=faq.question, answer=faq.answer) for faq in qs]
 
     @strawberry.field
     async def good_practices(
@@ -148,7 +163,7 @@ class Query:
         pagination: OffsetPaginationInput,
         ordering: GoodPracticeOrder,
     ) -> PaginationBaseType:
-        qs = await get_qs(GoodPractice)
+        qs = await good_practice_qs(GoodPractice)
 
         if filters:
             qs = filter_apply(filters, qs)

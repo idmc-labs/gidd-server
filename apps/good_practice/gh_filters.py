@@ -77,8 +77,8 @@ class GoodPracticeFilter:
             return queryset
         return queryset.filter(
             Q(end_year__lte=self.end_year, start_year__gte=self.start_year) |
-            Q(end_year__gte=self.end_year, start_year__lte=self.start_year) |
-            Q(start_year__gte=self.start_year, end_year__isnull=True)
+            Q(end_year__gte=self.start_year, start_year__lte=self.end_year) |
+            Q(start_year__gte=self.start_year, start_year__lte=self.end_year, end_year__isnull=True)
         ).distinct()
 
     def filter_recommended_good_practice(self, queryset):
