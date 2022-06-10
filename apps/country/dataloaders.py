@@ -31,7 +31,7 @@ def country_overviews_load(keys: List[int]):
 
 
 def good_practices_count_load(keys: List[int]):
-    qs = Country.objects.filter(id__in=keys).annotate(
+    qs = Country.objects.filter(id__in=keys, country_good_practice__is_published=True).annotate(
         good_practices_count=Count('country_good_practice')
     ).values('id', 'good_practices_count')
     _map = defaultdict(int)

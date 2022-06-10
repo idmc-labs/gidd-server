@@ -89,6 +89,7 @@ class GoodPractice(models.Model):
     type = models.CharField(
         max_length=255, verbose_name=_('Good practice type'), choices=Type.choices
     )
+    implementing_entity = models.CharField(blank=True, max_length=255, verbose_name=_('Implementing entity'))
     drivers_of_displacement = models.ManyToManyField(
         'good_practice.DriversOfDisplacement', related_name='good_practice',
         verbose_name=_('Drivers of displacement'), blank=True
