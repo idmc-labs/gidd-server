@@ -257,8 +257,8 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     AWS_S3_OBJECT_PARAMETERS = {
         'CacheControl': 'max-age=86400',
     }
-    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}"
+    STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
+    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
 
 # Default primary key field type

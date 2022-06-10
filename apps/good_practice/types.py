@@ -73,7 +73,7 @@ class GoodPracticeType:
     start_year: auto
     end_year: auto
     page_viewed_count: auto
-    implementing_entity:auto
+    implementing_entity: auto
 
     @strawberry.field
     async def image(self, info: Info) -> Optional[FileFieldType]:
