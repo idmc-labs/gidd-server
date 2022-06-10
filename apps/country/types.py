@@ -1,6 +1,6 @@
 # types.py
 import strawberry
-from strawberry.django import auto
+from strawberry import auto
 import strawberry_django
 from .models import (
     Country,
@@ -21,6 +21,7 @@ from .enums import (
     ContinentEnum,
     RegionEnum,
     SubRegionEnum,
+    GoodPracticeRegionEnum,
 )
 from utils import FileFieldType, build_url
 
@@ -86,6 +87,7 @@ class CountryType:
     idmc_region: RegionEnum
     idmc_sub_region: SubRegionEnum
     wb_region: RegionEnum
+    good_practice_region: GoodPracticeRegionEnum
     un_population_division_names: auto
     united_nations_region: RegionEnum
     is_least_developed_country: auto
@@ -101,6 +103,7 @@ class CountryType:
     internal_displacement_description: auto
     displacement_data_description: auto
     bounding_box: List[float]
+    center_point: List[float]
 
     @strawberry.field
     async def country_additonal_info(self, info: Info) -> List[CountryAdditionalInfoType]:
@@ -117,6 +120,34 @@ class CountryType:
     @strawberry.field
     async def contact_person_image(self, info: Info) -> Optional[FileFieldType]:
         return build_url(self.contact_person_image, info.context['request'])
+
+    @strawberry.field
+    async def good_practices_count(self, info: Info) -> Optional[int]:
+        return await info.context["country_good_practice_loader"].load(self.id)
+
+    @strawberry.field
+    async def idmc_continent_label(self, info: Info) -> Optional[str]:
+        return ContinentEnum(self.idmc_continent).label if self.idmc_continent else ""
+
+    @strawberry.field
+    async def idmc_region_label(self, info: Info) -> str:
+        return RegionEnum(self.idmc_region).label if self.idmc_region else ""
+
+    @strawberry.field
+    async def idmc_sub_region_label(self, info: Info) -> str:
+        return SubRegionEnum(self.idmc_sub_region).label if self.idmc_sub_region else ""
+
+    @strawberry.field
+    async def wb_region_label(self, info: Info) -> str:
+        return RegionEnum(self.wb_region).label if self.wb_region else ""
+
+    @strawberry.field
+    async def good_practice_region_label(self, info: Info) -> str:
+        return GoodPracticeRegionEnum(self.good_practice_region).label if self.good_practice_region else ""
+
+    @strawberry.field
+    async def united_nations_region_label(self, info: Info) -> str:
+        return RegionEnum(self.united_nations_region).label if self.united_nations_region else ""
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)

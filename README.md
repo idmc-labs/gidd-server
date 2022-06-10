@@ -65,3 +65,17 @@ AWS_S3_ACCESS_KEY_ID='<your-aws-production-id>'
 AWS_S3_SECRET_ACCESS_KEY='<your-aws-secret-key>'
 AWS_STORAGE_BUCKET_NAME='<aws-bucket-name>'
 ```
+Migrate good practices
+```bash
+docker-compose exec server python manage.py migrate_good_practice
+```
+
+Init tags
+```bash
+docker-compose exec server python manage.py init_tags
+```
+
+Generate center points from bounds
+```bash
+docker-compose exec server python manage.py generate_center_points
+```

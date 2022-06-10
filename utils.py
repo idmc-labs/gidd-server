@@ -23,6 +23,8 @@ class FileFieldType:
 
 
 def build_url(file, request):
+    if type(file) == list:
+        file = file[0]
     file_name = file.name
     url = ''
     if file_name:
@@ -36,8 +38,10 @@ def round_and_remove_zero(num):
         return None
     absolute_num = abs(num)
     sign = 1 if num > 0 else -1
-    if absolute_num < 100:
+    if absolute_num <= 100:
         return sign * absolute_num
-    if absolute_num < 1000:
+    if absolute_num <= 1000:
+        return sign * round(absolute_num / 10) * 10
+    if absolute_num < 10000:
         return sign * round(absolute_num / 100) * 100
     return sign * round(num / 1000) * 1000
