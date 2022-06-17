@@ -64,8 +64,6 @@ class GoodPractice(models.Model):
             'strengthening_policy_and_legal_frameworks',
             _('Strengthening policy and legal frameworks')
         )
-        INTERVENTIONS = 'interventions', _('Interventions')
-        POLICIES = 'policies', _('Policies')
         GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP = (
             'governance_capacity_and_institutional_set_up',
             _('Governance capacity and institutional set-up')
