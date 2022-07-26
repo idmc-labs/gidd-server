@@ -37,7 +37,11 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         response['Content-Disposition'] = 'attachment; filename="conflict-data.csv"'
         writer = csv.writer(response, delimiter=',')
         writer.writerow([
-            'ISO3', 'Country / Territory', 'Year', 'Total number of IDPs', 'Conflict Internal Displacements'
+            'ISO3',
+            'Country / Territory',
+            'Year',
+            'Total number of IDPs',
+            'Conflict Internal Displacements',
         ])
         conflict_qs = Conflict.objects.filter(
             Q(country__iso3=iso3) & (Q(new_displacement__gt=0) | ~Q(total_displacement=None))
@@ -54,8 +58,8 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
                     conflict.country.iso3,
                     conflict.country.name,
                     conflict.year,
-                    round_and_remove_zero(conflict.new_displacement),
-                    round_and_remove_zero(conflict.total_displacement),
+                    round_and_remove_zero(conflict.total_displacement),  # Total number of IDPs
+                    round_and_remove_zero(conflict.new_displacement),  # Conflict Internal Displacements
                 ]
             )
         return response
