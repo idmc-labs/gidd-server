@@ -102,7 +102,7 @@ class GoodPractice(models.Model):
     tags = models.ManyToManyField(
         'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags'), blank=True
     )
-    published_date = models.DateTimeField(blank=True)
+    published_date = models.DateTimeField(blank=True, null=True)
     image = models.FileField(upload_to='good_practice/', blank=True, verbose_name=_('Good practice image'))
     created_at = models.DateTimeField(auto_now_add=True, verbose_name=_('Created at'))
     updated_at = models.DateTimeField(auto_now=True, verbose_name=_('Updated at'))
