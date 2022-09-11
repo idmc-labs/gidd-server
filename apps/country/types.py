@@ -100,7 +100,7 @@ class CountryType:
     name: auto
     idmc_names: auto
     idmc_continent: ContinentEnum
-    idmc_region:IdmcRegionEnum
+    idmc_region: IdmcRegionEnum
     idmc_sub_region: SubRegionEnum
     wb_region: WbRegionEnum
     good_practice_region: GoodPracticeRegionEnum

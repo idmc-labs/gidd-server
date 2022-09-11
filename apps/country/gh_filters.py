@@ -10,6 +10,7 @@ from .models import (
 from typing import List
 from .enums import IdmcRegionEnum
 
+
 @strawberry.django.filters.filter(Country, lookups=True)
 class CountryFilter:
     id: auto
