@@ -14,40 +14,48 @@ class Country(models.Model):
         ASIA = 'asia', _('Asia')
         ANTARTICA = 'Antarctica', _('Antarctica')
 
-    class Region(models.TextChoices):
-        CARIBBEAN = 'caribbean', _('Caribbean')
-        SOUTH_EAST_ASIA = 'south_east_asia', _('South-East Asia')
-        SOUTHERN_EUROPE = 'southern_europe', _('Southern Europe')
-        EAST_ASIA = 'east_asia', _('East Asia')
-        NORTH_AMERICA = 'north_america', _('North America')
-        SOUTH_ASIA = 'south_asia', _('South Asia')
-        LATIN_AMERICA = 'latin_america', _('Latin America')
-        WESTERN_AFRICA = 'western_africa', _('Western Africa')
-        MICRONESIA = 'micronesia', _('Micronesia')
-        HORN_OF_AFRICA = 'horn_of_africa', _('Horn of Africa')
-        NORTH_WEST_AND_CENTRAL_EUROPE = 'north_west_and_central_europe', _('North, West and Central Europe')
-        MELANESIA = 'melanesia', _('Melanesia')
-        EASTERN_EUROPE = 'eastern_europe', _('Eastern Europe')
+    class IdmcRegion(models.TextChoices):
         AUSTRALIA_AND_NZ = 'australia_and_nz', _('Australia and NZ')
+        CARIBBEAN = 'caribbean', _('Caribbean')
         CENTRAL_AFRICA = 'central_africa', _('Central Africa')
-        POLYNESIA = 'polynesia', _('Polynesia')
-        NORTHERN = 'northern_africa', _('Northern Africa')
         CENTRAL_ASIA = 'central_asia', _('Central Asia')
-        WESTERN_ASIA = 'western_asia', _('Western Asia')
+        EAST_ASIA = 'east_asia', _('East Asia')
+        EASTERN_EUROPE = 'eastern_europe', _('Eastern Europe')
+        HORN_OF_AFRICA = 'horn_of_africa', _('Horn of Africa')
+        LATIN_AMERICA = 'latin_america', _('Latin America')
+        MELANESIA = 'melanesia', _('Melanesia')
+        MICRONESIA = 'micronesia', _('Micronesia')
+        NORTH_AMERICA = 'north_america', _('North America')
+        NORTHERN_AFRICA = 'northern_africa', _('Northern Africa')
+        NORTH_WEST_AND_CENTRAL_EUROPE = 'north_west_and_central_europe', _('North, West and Central Europe')
+        POLYNESIA = 'polynesia', _('Polynesia')
+        SOUTH_ASIA = 'south_asia', _('South Asia')
+        SOUTH_EAST_ASIA = 'south_east_asia', _('South-East Asia')
         SOUTHERN_AFRICA = 'southern_africa', _('Southern Africa')
+        SOUTHERN_EUROPE = 'southern_europe', _('Southern Europe')
+        WESTERN_AFRICA = 'western_africa', _('Western Africa')
+        WESTERN_ASIA = 'western_asia', _('Western Asia')
+
+    class WbRegion(models.TextChoices):
+        EAST_ASIA_AND_PACIFIC = 'east_asia_and_pacific', _('East asia and pacific')
+        EUROPE_AND_CENTRAL_ASIA = 'europe_and_central_asia', _('Europe and Central Asia')
+        HIGH_INCOME_OECD_MEMBER = 'high_income_oecd_member', _('high income oecd member')
+        HIGH_INCOME_NON_OECD_MEMBER = 'high_income_non_oecd_member', _('high income non oecd member')
+        LATIN_AMERICA_AND_THE_CARIBBEAN = 'latin_america_and_the_caribbean', _('Latin America and the Caribbean')
+        MIDDLE_EAST_AND_NORTH_AFRICA = 'middle_east_and_north_africa', _('Middle east and north africa')
+        SOUTH_ASIA = 'south_asia', _('South Asia')
+        SUB_SAHARAN_AFRICA = 'sub_saharan_africa', _('Sub-Saharan Africa')
+
+    class UnitedNationsRegion(models.TextChoices):
         ASIA = 'asia', _('Asia')
         SOUTHERN_ASIA = 'southern_asia', _('Southren asia')
         EUROPE = 'europe', _('Europe')
         EUROPE_AND_SOUTHERN_ASIA = 'europe_and_central_asia', _('Europe and southern asia')
         ARFRICA = 'africa', _('Africa')
-        MIDDLE_EAST_AND_NORTH_AFRICA = 'middle_east_and_north_africa', _('Middle east and north africa')
         OCEANIA = 'oceania', _('oceania')
-        EAST_ASIA_AND_PACIFIC = 'east_asia_and_pacific', _('East asia and pacific')
-        HIGH_INCOME_NON_OECD_MEMBER = 'high_income_non_oecd_member', _('high income non oecd member')
         SUB_SAHARAN_AFRICA = 'sub_saharan_africa', _('Sub saharan africa')
         MIDDLE_AFRICA = 'middle_africa', _('middle africa')
         AMERICAS = 'americas', _('Americas')
-        HIGH_INCOME_OECD_MEMBER = 'high_income_oecd_member', _('high income oecd member')
         LATIN_AMERICA_AND__THE_CARIBBEAN = 'latin_america_and_the_caribbean', _('latin america and the caribbean')
         SOUTH_AMERICA = 'south_america', _('South america')
         AUSTRALIA_AND_NEW_ZEALAND = 'australia_and_new_zealand', _('Australia and new zealand')
@@ -82,7 +90,7 @@ class Country(models.Model):
         null=True, blank=True
     )
     idmc_region = models.CharField(
-        choices=Region.choices, max_length=100, verbose_name=_('Idmc region'),
+        choices=IdmcRegion.choices, max_length=100, verbose_name=_('Idmc region'),
         null=True, blank=True
     )
     idmc_sub_region = models.CharField(
@@ -90,14 +98,14 @@ class Country(models.Model):
         null=True, blank=True
     )
     wb_region = models.CharField(
-        choices=Region.choices, max_length=100, verbose_name=_('Wb region'),
+        choices=WbRegion.choices, max_length=100, verbose_name=_('Wb region'),
         null=True, blank=True
     )
     un_population_division_names = models.CharField(
         null=True, blank=True, max_length=255, verbose_name=_('Unpopulation division name')
     )
     united_nations_region = models.CharField(
-        choices=Region.choices, max_length=100, verbose_name=_('United nations region'),
+        choices=UnitedNationsRegion.choices, max_length=100, verbose_name=_('United nations region'),
         null=True, blank=True
     )
     good_practice_region = models.CharField(

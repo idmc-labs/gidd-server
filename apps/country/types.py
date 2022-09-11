@@ -1,6 +1,6 @@
 # types.py
 import strawberry
-from strawberry import auto
+from strawberry import auto, ID
 import strawberry_django
 from .models import (
     Country,
@@ -19,7 +19,9 @@ from typing import List, Optional
 from strawberry.types import Info
 from .enums import (
     ContinentEnum,
-    RegionEnum,
+    IdmcRegionEnum,
+    WbRegionEnum,
+    UnitedNationsRegionEnum,
     SubRegionEnum,
     GoodPracticeRegionEnum,
 )
@@ -55,6 +57,20 @@ class TimeSeriesStatisticsType:
 
 
 @strawberry.type
+class DisasterCountryType:
+    id: ID
+    iso3: str
+    country_name: str
+
+
+@strawberry.type
+class DisasterTimeSeriesStatisticsType:
+    year: str
+    total: int
+    country: DisasterCountryType
+
+
+@strawberry.type
 class CategoryStatisticsType:
     label: str
     total: int
@@ -72,7 +88,7 @@ class ConflictStatisticsType:
 class DisasterStatisticsType:
     new_displacements: int
     total_events: int
-    timeseries: List[TimeSeriesStatisticsType]
+    timeseries: List[DisasterTimeSeriesStatisticsType]
     categories: List[CategoryStatisticsType]
 
 
@@ -84,12 +100,12 @@ class CountryType:
     name: auto
     idmc_names: auto
     idmc_continent: ContinentEnum
-    idmc_region: RegionEnum
+    idmc_region:IdmcRegionEnum
     idmc_sub_region: SubRegionEnum
-    wb_region: RegionEnum
+    wb_region: WbRegionEnum
     good_practice_region: GoodPracticeRegionEnum
     un_population_division_names: auto
-    united_nations_region: RegionEnum
+    united_nations_region: UnitedNationsRegionEnum
     is_least_developed_country: auto
     is_small_island_developing_state: auto
     is_idmc_go_2013: auto
@@ -131,7 +147,7 @@ class CountryType:
 
     @strawberry.field
     async def idmc_region_label(self, info: Info) -> str:
-        return RegionEnum(self.idmc_region).label if self.idmc_region else ""
+        return IdmcRegionEnum(self.idmc_region).label if self.idmc_region else ""
 
     @strawberry.field
     async def idmc_sub_region_label(self, info: Info) -> str:
@@ -139,7 +155,7 @@ class CountryType:
 
     @strawberry.field
     async def wb_region_label(self, info: Info) -> str:
-        return RegionEnum(self.wb_region).label if self.wb_region else ""
+        return WbRegionEnum(self.wb_region).label if self.wb_region else ""
 
     @strawberry.field
     async def good_practice_region_label(self, info: Info) -> str:
@@ -147,7 +163,7 @@ class CountryType:
 
     @strawberry.field
     async def united_nations_region_label(self, info: Info) -> str:
-        return RegionEnum(self.united_nations_region).label if self.united_nations_region else ""
+        return UnitedNationsRegionEnum(self.united_nations_region).label if self.united_nations_region else ""
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
@@ -232,7 +248,7 @@ class CountryInputType:
     name: auto
     idmc_names: auto
     idmc_continent: auto
-    idmc_region: RegionEnum
+    idmc_region: IdmcRegionEnum
     idmc_sub_region: auto
     wb_region: auto
     un_population_division_names: auto
