@@ -21,7 +21,7 @@ def export_disasters(request, iso3=None):
     response['Content-Disposition'] = 'attachment; filename="disaster-data.csv"'
     writer = csv.writer(response, delimiter=',')
     writer.writerow([
-        'ISO3', 'Country / Territory', 'Year', 'Event Name', 'Date of event (start)',
+        'ISO3', 'Country / Territory', 'Year', 'Event Name', 'Date of Event (start)',
         'Disaster Internal Displacements', 'Hazard Category', 'Hazard Type', 'Hazard Sub Type'
     ])
     countries_iso3 = request.GET.get('countries_iso3', None)
