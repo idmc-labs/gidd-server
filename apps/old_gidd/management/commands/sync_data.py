@@ -44,7 +44,7 @@ class Command(BaseCommand):
         cleaned_enum_value = self._clean_country_enum(enum_value)
         if cleaned_enum_value:
             return NewCountry.IdmcRegion(
-                self._clean_country_enum(cleaned_enum_value)
+                cleaned_enum_value
             )
         return None
 
@@ -52,7 +52,7 @@ class Command(BaseCommand):
         cleaned_enum_value = self._clean_country_enum(enum_value)
         if cleaned_enum_value:
             return NewCountry.WbRegion(
-                self._clean_country_enum(cleaned_enum_value)
+                cleaned_enum_value
             )
         return None
 
@@ -60,7 +60,7 @@ class Command(BaseCommand):
         cleaned_enum_value = self._clean_country_enum(enum_value)
         if cleaned_enum_value:
             return NewCountry.UnitedNationsRegion(
-                self._clean_country_enum(cleaned_enum_value)
+                cleaned_enum_value
             )
         return None
 
@@ -68,7 +68,7 @@ class Command(BaseCommand):
         cleaned_enum_value = self._clean_country_enum(enum_value)
         if cleaned_enum_value:
             return NewCountry.SubRegion(
-                self._clean_country_enum(cleaned_enum_value)
+                cleaned_enum_value
             )
         return None
 
