@@ -60,6 +60,7 @@ def export_disasters(request, iso3=None):
         )
     return response
 
+
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CountrySerializer
     queryset = Country.objects.all().prefetch_related('country_additonal_info')

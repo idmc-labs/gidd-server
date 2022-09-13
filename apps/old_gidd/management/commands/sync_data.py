@@ -40,10 +40,26 @@ class Command(BaseCommand):
             )
         return None
 
-    def _country_region_enum_map(self, enum_value):
+    def _country_idmc_region_enum_map(self, enum_value):
         cleaned_enum_value = self._clean_country_enum(enum_value)
         if cleaned_enum_value:
-            return NewCountry.Region(
+            return NewCountry.IdmcRegion(
+                self._clean_country_enum(cleaned_enum_value)
+            )
+        return None
+
+    def _country_wb_region_enum_map(self, enum_value):
+        cleaned_enum_value = self._clean_country_enum(enum_value)
+        if cleaned_enum_value:
+            return NewCountry.WbRegion(
+                self._clean_country_enum(cleaned_enum_value)
+            )
+        return None
+
+    def _country_united_nations_region_enum_map(self, enum_value):
+        cleaned_enum_value = self._clean_country_enum(enum_value)
+        if cleaned_enum_value:
+            return NewCountry.UnitedNationsRegion(
                 self._clean_country_enum(cleaned_enum_value)
             )
         return None
@@ -276,11 +292,11 @@ class Command(BaseCommand):
                     name=old_country.idmc_names,
                     idmc_names=old_country.idmc_names,
                     idmc_continent=self._country_continent_enum_map(old_country.idmc_continent),
-                    idmc_region=self._country_region_enum_map(old_country.idmc_region),
+                    idmc_region=self._country_idmc_region_enum_map(old_country.idmc_region),
                     idmc_sub_region=self._country_subregion_enum_map(old_country.idmc_sub_region),
-                    wb_region=self._country_region_enum_map(old_country.wb_region),
+                    wb_region=self._country_wb_region_enum_map(old_country.wb_region),
                     un_population_division_names=old_country.un_population_division_names,
-                    united_nations_region=self._country_region_enum_map(old_country.united_nations_region),
+                    united_nations_region=self._country_united_nations_region_enum_map(old_country.united_nations_region),
                     is_least_developed_country=old_country.least_developed_countries,
                     is_small_island_developing_state=old_country.small_island_developing_states,
                     is_idmc_go_2013=old_country.idmc_go_2013,
