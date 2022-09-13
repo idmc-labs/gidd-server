@@ -16,6 +16,51 @@ from .serializers import (
 from utils import round_and_remove_zero
 
 
+def export_disasters(request, iso3=None):
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="disaster-data.csv"'
+    writer = csv.writer(response, delimiter=',')
+    writer.writerow([
+        'ISO3', 'Country / Territory', 'Year', 'Event Name', 'Date of Event (start)',
+        'Disaster Internal Displacements', 'Hazard Category', 'Hazard Type', 'Hazard Sub Type'
+    ])
+    countries_iso3 = request.GET.get('countries_iso3', None)
+    if not countries_iso3:
+        disaster_qs = Disaster.objects.filter(country__iso3=iso3, new_displacement__gt=0)
+    else:
+        countries_iso3_list = countries_iso3.split(',')
+        disaster_qs = Disaster.objects.filter(country__iso3__in=countries_iso3_list, new_displacement__gt=0)
+
+    hazard_type = request.GET.get('hazard_type', None)
+    start_year = request.GET.get('start_year', None)
+    end_year = request.GET.get('end_year', None)
+    if start_year:
+        disaster_qs = disaster_qs.filter(year__gte=start_year)
+    if end_year:
+        disaster_qs = disaster_qs.filter(year__lte=end_year)
+    if hazard_type:
+        if "-" in hazard_type:
+            hazard_type_list = [x.strip() for x in hazard_type.split(',')][:-1]
+        else:
+            hazard_type_list = [hazard_type]
+        disaster_qs = disaster_qs.filter(hazard_type__in=hazard_type_list)
+    for disaster in disaster_qs:
+        writer.writerow(
+            [
+                disaster.country.iso3,
+                disaster.country.name,
+                disaster.year,
+                disaster.event_name,
+                disaster.start_date,
+                round_and_remove_zero(disaster.new_displacement),
+                disaster.hazard_category,
+                disaster.hazard_type,
+                disaster.hazard_sub_type,
+            ]
+        )
+    return response
+
+
 class CountryViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = CountrySerializer
     queryset = Country.objects.all().prefetch_related('country_additonal_info')
@@ -74,42 +119,19 @@ class CountryViewSet(viewsets.ReadOnlyModelViewSet):
         """
         Export disaster
         """
-        response = HttpResponse(content_type='text/csv')
-        response['Content-Disposition'] = 'attachment; filename="disaster-data.csv"'
-        writer = csv.writer(response, delimiter=',')
-        writer.writerow([
-            'ISO3', 'Country / Territory', 'Year', 'Event Name', 'Date of event (start)',
-            'Disaster Internal Displacements', 'Hazard Category', 'Hazard Type', 'Hazard Sub Type'
-        ])
-        disaster_qs = Disaster.objects.filter(country__iso3=iso3, new_displacement__gt=0)
-        hazard_type = request.GET.get('hazard_type', None)
-        start_year = request.GET.get('start_year', None)
-        end_year = request.GET.get('end_year', None)
-        if start_year:
-            disaster_qs = disaster_qs.filter(year__gte=start_year)
-        if end_year:
-            disaster_qs = disaster_qs.filter(year__lte=end_year)
-        if hazard_type:
-            if "-" in hazard_type:
-                hazard_type_list = [x.strip() for x in hazard_type.split(',')][:-1]
-            else:
-                hazard_type_list = [hazard_type]
-            disaster_qs = disaster_qs.filter(hazard_type__in=hazard_type_list)
-        for disaster in disaster_qs:
-            writer.writerow(
-                [
-                    disaster.country.iso3,
-                    disaster.country.name,
-                    disaster.year,
-                    disaster.event_name,
-                    disaster.start_date,
-                    round_and_remove_zero(disaster.new_displacement),
-                    disaster.hazard_category,
-                    disaster.hazard_type,
-                    disaster.hazard_sub_type,
-                ]
-            )
-        return response
+        return export_disasters(request, iso3)
+
+    @action(
+        detail=False,
+        methods=["get"],
+        url_path="multiple-countries-disaster-export",
+        permission_classes=[AllowAny],
+    )
+    def multiple_countries_disaster_export(self, request):
+        """
+        Export disaster
+        """
+        return export_disasters(request)
 
 
 class CountryAdditionalInfoViewSet(viewsets.ReadOnlyModelViewSet):

@@ -8,6 +8,7 @@ from .models import (
     Disaster,
 )
 from typing import List
+from .enums import IdmcRegionEnum
 
 
 @strawberry.django.filters.filter(Country, lookups=True)
@@ -89,6 +90,7 @@ class DisasterStatisticsFilter:
     start_year: int | None
     end_year: int | None
     countries_iso3: List[str] | None
+    regions: List[IdmcRegionEnum] | None
 
     def filter_categories(self, queryset):
         if not self.categories:
@@ -114,6 +116,11 @@ class DisasterStatisticsFilter:
         if not self.countries_iso3:
             return queryset
         return queryset.filter(country__iso3__in=self.countries_iso3)
+
+    def filter_regions(self, queryset):
+        if not self.regions:
+            return queryset
+        return queryset.filter(country__idmc_region__in=self.regions)
 
     @property
     def qs(self):
