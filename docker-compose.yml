@@ -1,15 +1,6 @@
 version: '3.2'
 
 services:
-  # olddb:  # TODO: Remove this
-  #   image: postgres:14
-  #   environment:
-  #     - POSTGRES_DB=${LEGACY_POSTGRES_DB}
-  #     - POSTGRES_USER=${LEGACY_POSTGRES_USER}
-  #     - POSTGRES_PASSWORD=${LEGACY_POSTGRES_PASSWORD}
-  #   volumes:
-  #     - postgres-data-old:/var/lib/postgresql/data
-
   db:
     image: postgres:14
     environment:
@@ -34,14 +25,6 @@ services:
       POSTGRES_USER:
       POSTGRES_PASSWORD:
       POSTGRES_HOST:
-      # # Old DB TODO: Remove
-      # LEGACY_POSTGRES_NAME: ${LEGACY_POSTGRES_NAME:-postgres}
-      # LEGACY_POSTGRES_USER: ${LEGACY_POSTGRES_USER:-postgres}
-      # LEGACY_POSTGRES_PWD: ${LEGACY_POSTGRES_PWD:-postgres}
-      # LEGACY_POSTGRES_HOST: ${LEGACY_POSTGRES_HOST:-olddb}
-      # LEGACY_POSTGRES_PORT: ${LEGACY_POSTGRES_PORT:5433}
-      # # Misc
-      # ENABLE_MIGRATION: ${ENABLE_MIGRATION:-False}
     command: bash -c "/code/scripts/run_develop.sh"
     volumes:
       - ./:/code
@@ -50,9 +33,7 @@ services:
       - '7000:7000'
     depends_on:
       - db
-      # - olddb
 
 volumes:
   media:
   postgres-data:
-  # postgres-data-old:

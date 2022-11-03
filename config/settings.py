@@ -36,13 +36,6 @@ env = environ.Env(
     DJANGO_MEDIA_URL=(str, '/media/'),
     DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
     DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
-    # # Old db TODO: Remove
-    # LEGACY_POSTGRES_DB=str,
-    # LEGACY_POSTGRES_USER=str,
-    # LEGACY_POSTGRES_PASSWORD=str,
-    # LEGACY_POSTGRES_HOST=str,
-    # LEGACY_POSTGRES_PORT=(int, 5432),
-    # ENABLE_MIGRATION=(bool, False),
     # S3 bucket settings
     ENABLE_AWS_BUCKET=(bool, False),
     AWS_S3_ACCESS_KEY_ID=(str, None),
@@ -133,35 +126,6 @@ DATABASES = {
         'PORT': env('POSTGRES_PORT'),
     }
 }
-
-# TODO: Remove
-# ENABLE_MIGRATION = env('ENABLE_MIGRATION')
-# if ENABLE_MIGRATION:
-#     DATABASES.update({
-#         'idmc_platform': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': env('LEGACY_POSTGRES_DB'),
-#             'USER': env('LEGACY_POSTGRES_USER'),
-#             'PASSWORD': env('LEGACY_POSTGRES_PASSWORD'),
-#             'HOST': env('LEGACY_POSTGRES_HOST'),
-#             'PORT': env('LEGACY_POSTGRES_PORT'),
-#             'OPTIONS': {
-#                 'options': '-c search_path=data_platform'
-#             }
-#         },
-#         'idmc_public': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'NAME': env('LEGACY_POSTGRES_DB'),
-#             'USER': env('LEGACY_POSTGRES_USER'),
-#             'PASSWORD': env('LEGACY_POSTGRES_PASSWORD'),
-#             'HOST': env('LEGACY_POSTGRES_HOST'),
-#             'PORT': env('LEGACY_POSTGRES_PORT'),
-#             'OPTIONS': {
-#                 'options': '-c search_path=public'
-#             }
-#         }
-#     })
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
