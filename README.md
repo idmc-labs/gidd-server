@@ -3,9 +3,9 @@
 ## Run development server:
 Clone project form git and go to project directory
 
-Copy .env.example file to .env
+Copy .env.default file to .env and override there.
 ```bash
-cp .env.example .env
+cp .env.default .env
 ```
 
 Build and run docker
@@ -34,8 +34,8 @@ ALTER USER allochi WITH PASSWORD '<default-password-here>';
 
 ```bash
 # Migrate old data
-docker-compose exec server python manage.py migrate
-docker-compose exec server python manage.py migrate_old_data
+docker-compose exec server ./manage.py migrate
+docker-compose exec server bash -c 'ENABLE_MIGRATION=True ./manage.py migrate_old_data'
 ```
 
 ## Sync data by year
