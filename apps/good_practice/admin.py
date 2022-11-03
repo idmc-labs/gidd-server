@@ -1,39 +1,46 @@
 from django.contrib import admin
+from modeltranslation.admin import (
+    TranslationAdmin,
+    TranslationTabularInline
+)
 from apps.good_practice.models import (
     GoodPractice, Faq, Gallery, Tag, FocusArea, DriversOfDisplacement
 )
-from apps.good_practice.form import (
+from apps.good_practice.forms import (
     FaqForm, GoodPracticeForm, GalleryForm
 )
 
 
-class FaqAdmin(admin.ModelAdmin):
+@admin.register(Faq)
+class FaqAdmin(TranslationAdmin):
     form = FaqForm
     search_fields = ['question']
     list_display = ['question', 'answer']
 
 
-class GalleryAdminInline(admin.TabularInline):
-    autocomplete_fields = ['good_practice', ]
+class GalleryAdminInline(TranslationTabularInline):
+    autocomplete_fields = ['good_practice']
     form = GalleryForm
     model = Gallery
     extra = 0
 
 
-class TagAdmin(admin.ModelAdmin):
+@admin.register(Tag)
+class TagAdmin(TranslationAdmin):
     search_fields = ['name']
     list_display = [
         'name'
     ]
 
 
-class GoodPracticeAdmin(admin.ModelAdmin):
+@admin.register(GoodPractice)
+class GoodPracticeAdmin(TranslationAdmin):
     form = GoodPracticeForm
     search_fields = ['title']
     list_display = [
         'title', 'type', 'focus_areas', 'country_names', 'drivers_of_displacements', 'start_year', 'end_year'
     ]
-    inlines = [GalleryAdminInline, ]
+    inlines = [GalleryAdminInline]
     autocomplete_fields = ['countries', 'tags', 'focus_area', 'drivers_of_displacement']
 
     def drivers_of_displacements(self, obj):
@@ -46,22 +53,17 @@ class GoodPracticeAdmin(admin.ModelAdmin):
         return ", ".join([item.name for item in obj.countries.all()])
 
 
-class DriversOfDisplacementAdmin(admin.ModelAdmin):
+@admin.register(DriversOfDisplacement)
+class DriversOfDisplacementAdmin(TranslationAdmin):
     search_fields = ['name']
     list_display = [
         'name'
     ]
 
 
-class FocusAreaAdmin(admin.ModelAdmin):
+@admin.register(FocusArea)
+class FocusAreaAdmin(TranslationAdmin):
     search_fields = ['name']
     list_display = [
         'name'
     ]
-
-
-admin.site.register(Faq, FaqAdmin)
-admin.site.register(GoodPractice, GoodPracticeAdmin)
-admin.site.register(Tag, TagAdmin)
-admin.site.register(DriversOfDisplacement, DriversOfDisplacementAdmin)
-admin.site.register(FocusArea, FocusAreaAdmin)

@@ -9,30 +9,31 @@ from django.forms import ValidationError
 
 
 class FaqForm(forms.ModelForm):
-    answer = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Answer"), required=False)
-
     class Meta:
         model = Faq
         fields = '__all__'
+        widgets = {
+            'answer': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+        }
 
 
 class GoodPracticeForm(forms.ModelForm):
-    description = forms.CharField(widget=TinyMCE(attrs={'cols': 80, 'rows': 30}), label=_("Description"), required=False)
-    media_and_resource_links = forms.CharField(widget=TinyMCE(
-        attrs={'cols': 80, 'rows': 30}), label=_("Media and resource links"), required=False
-    )
-
     class Meta:
         model = GoodPractice
         fields = '__all__'
+        widgets = {
+            'description': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+            'media_and_resource_links': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+        }
 
 
 class GalleryForm(forms.ModelForm):
-    caption = forms.CharField(widget=TinyMCE(attrs={'cols': 30, 'rows': 10}), label=_("Caption"), required=False)
-
     class Meta:
         model = Gallery
         fields = '__all__'
+        widgets = {
+            'caption': TinyMCE(attrs={'cols': 80, 'rows': 30}),
+        }
 
     def clean_youtube_video_url(self):
         youtube_url = self.cleaned_data['youtube_video_url']

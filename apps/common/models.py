@@ -11,7 +11,7 @@ class StaticPage(models.Model):
     type = models.CharField(
         max_length=255, verbose_name=_('Static page type'), choices=StaticPageType.choices
     )
-    description = models.TextField(blank=True, verbose_name=_('Caption'), null=True)
+    description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
 
     class Meta:
         verbose_name = _('Static page')

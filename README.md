@@ -45,6 +45,14 @@ docker-compose exec server python manage.py sync_data year
 # eg docker-compose exec server python manage.py sync_data 2021
 ```
 
+## Model translation
+
+```bash
+docker-compose exec server ./manage.py migrate
+# Initialize new language fields (Do this if you don't see previous data)
+docker-compose exec server ./manage.py update_translation_fields
+```
+
 ## Migrate country background images
 Download country background images zip file, extract it, and move to media or bucket. Finally run this management command.
 
