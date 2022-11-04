@@ -45,12 +45,23 @@ docker-compose exec server python manage.py sync_data year
 # eg docker-compose exec server python manage.py sync_data 2021
 ```
 
+## Static translation
+```bash
+# Creation and upkeep language po files (for eg: fr)
+docker-compose exec server ./manage.py makemessages -l fr
+# Updating current language po files
+python3 manage.py makemessages -a
+# Compiles .po files to .mo files which will be used by django.
+docker-compose exec server ./manage.py compilemessages
+```
 ## Model translation
 
 ```bash
 docker-compose exec server ./manage.py migrate
 # Initialize new language fields (Do this if you don't see previous data)
 docker-compose exec server ./manage.py update_translation_fields
+# Detect new translatable fields or new available languages and sync database structure. Does not remove columns of removed languages or undeclared fields.
+docker-compose exec server ./manage.py sync_translation_fields
 ```
 
 ## Migrate country background images
