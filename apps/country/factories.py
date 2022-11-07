@@ -1,4 +1,3 @@
-
 import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
@@ -12,11 +11,11 @@ class CountryFactory(DjangoModelFactory):
     iso2 = fuzzy.FuzzyText(length=5)
     idmc_names = fuzzy.FuzzyText(length=15)
     idmc_continent = Country.Continent.EUROPE.value
-    idmc_region = Country.Region.SOUTH_EAST_ASIA.value
-    idmc_sub_region = Country.SubRegion.CARIBBEAN.value
-    wb_region = Country.Region.SOUTHERN_EUROPE.value
+    idmc_region = Country.IdmcRegion.SOUTH_EAST_ASIA.value
+    idmc_sub_region = Country.IdmcRegion.CARIBBEAN.value
+    wb_region = Country.IdmcRegion.SOUTHERN_EUROPE.value
     un_population_division_names = fuzzy.FuzzyText(length=5)
-    united_nations_region = Country.Region.SOUTH_EAST_ASIA.value
+    united_nations_region = Country.IdmcRegion.SOUTH_EAST_ASIA.value
     is_least_developed_country = True
     is_small_island_developing_state = True
     is_idmc_go_2013 = False

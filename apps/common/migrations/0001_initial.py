@@ -16,7 +16,7 @@ class Migration(migrations.Migration):
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('type', models.CharField(choices=[('good_practice_listing_page', 'Good practice listing page'), ('submit_good_practice', 'Submit good practice'), ('good_practice_cotact_information', 'Good practice cotact information')], max_length=255, verbose_name='Static page type')),
-                ('description', models.TextField(blank=True, null=True, verbose_name='Caption')),
+                ('description', models.TextField(blank=True, null=True, verbose_name='Description')),
             ],
             options={
                 'verbose_name': 'Static page',

@@ -25,20 +25,6 @@ OR
 cat full-db.sql  | docker-compose exec -T olddb psql -U postgres -d postgres
 ```
 
-### [Depreciated] Migrate old database to new database TODO: Remove this
-```bash
-# To migrate old db to new db first change the password of allochi and postgres
-# user in olddb
-docker-compose exec olddb psql -U postgres
-ALTER USER allochi WITH PASSWORD '<default-password-here>';
-```
-
-```bash
-# Migrate old data
-docker-compose exec server ./manage.py migrate
-docker-compose exec server bash -c 'ENABLE_MIGRATION=True ./manage.py migrate_old_data'
-```
-
 ## Sync data by year
 ```bash
 docker-compose exec server python manage.py sync_data year

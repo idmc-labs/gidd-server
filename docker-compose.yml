@@ -16,7 +16,7 @@ services:
     build:
       context: ./
     tty: true
-    environment:
+    environment:  # NOTE: .env is used to fill this values
       DEBUG:
       SECRET_KEY:
       CORS_ALLOWED_ORIGINS:

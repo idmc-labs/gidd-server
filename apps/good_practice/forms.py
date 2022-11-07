@@ -3,7 +3,7 @@ import re
 from apps.good_practice.models import (
     Faq, GoodPractice, Gallery
 )
-from django.utils.translation import ugettext_lazy as _
+from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
 from django.forms import ValidationError
 

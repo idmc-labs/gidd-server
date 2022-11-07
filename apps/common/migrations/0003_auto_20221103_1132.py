@@ -13,11 +13,11 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='staticpage',
             name='description_en',
-            field=models.TextField(blank=True, null=True, verbose_name='Caption'),
+            field=models.TextField(blank=True, null=True, verbose_name='Description'),
         ),
         migrations.AddField(
             model_name='staticpage',
             name='description_fr',
-            field=models.TextField(blank=True, null=True, verbose_name='Caption'),
+            field=models.TextField(blank=True, null=True, verbose_name='Description'),
         ),
     ]
