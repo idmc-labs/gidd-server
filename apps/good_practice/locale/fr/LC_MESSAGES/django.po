@@ -1,0 +1,180 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2022-11-04 04:38+0000\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+#: apps/good_practice/forms.py:43
+msgid "Please provide valid embeddable youtube url."
+msgstr ""
+
+#: apps/good_practice/models.py:6
+msgid "Question"
+msgstr ""
+
+#: apps/good_practice/models.py:7
+msgid "Answer"
+msgstr ""
+
+#: apps/good_practice/models.py:9 apps/good_practice/models.py:110
+#: apps/good_practice/models.py:133
+msgid "Is published?"
+msgstr ""
+
+#: apps/good_practice/models.py:13
+msgid "Frequently asked question"
+msgstr ""
+
+#: apps/good_practice/models.py:14
+msgid "Frequently asked questions"
+msgstr ""
+
+#: apps/good_practice/models.py:21 apps/good_practice/models.py:25
+#: apps/good_practice/models.py:103
+msgid "Tags"
+msgstr ""
+
+#: apps/good_practice/models.py:24
+msgid "Tag"
+msgstr ""
+
+#: apps/good_practice/models.py:32 apps/good_practice/models.py:43
+msgid "Name"
+msgstr ""
+
+#: apps/good_practice/models.py:35 apps/good_practice/models.py:93
+msgid "Drivers of displacement"
+msgstr ""
+
+#: apps/good_practice/models.py:36
+msgid "Drivers of displacements"
+msgstr ""
+
+#: apps/good_practice/models.py:46 apps/good_practice/models.py:100
+msgid "Focus area"
+msgstr ""
+
+#: apps/good_practice/models.py:47
+msgid "Focus areas"
+msgstr ""
+
+#: apps/good_practice/models.py:57
+msgid "Risk Reduction and Prevention (DRR, CCA and peacebuilding)"
+msgstr ""
+
+#: apps/good_practice/models.py:61
+msgid "Protection and assistance, and durable solutions"
+msgstr ""
+
+#: apps/good_practice/models.py:65
+msgid "Strengthening policy and legal frameworks"
+msgstr ""
+
+#: apps/good_practice/models.py:69
+msgid "Governance capacity and institutional set-up"
+msgstr ""
+
+#: apps/good_practice/models.py:73
+msgid "Displacement monitoring (data collection, analysis and systems)"
+msgstr ""
+
+#: apps/good_practice/models.py:77
+msgid "Promising"
+msgstr ""
+
+#: apps/good_practice/models.py:78
+msgid "Advanced"
+msgstr ""
+
+#: apps/good_practice/models.py:79
+msgid "Successful"
+msgstr ""
+
+#: apps/good_practice/models.py:81
+msgid "Title"
+msgstr ""
+
+#: apps/good_practice/models.py:82
+msgid "Description"
+msgstr ""
+
+#: apps/good_practice/models.py:83
+msgid "Media and resource links"
+msgstr ""
+
+#: apps/good_practice/models.py:85
+msgid "Countries"
+msgstr ""
+
+#: apps/good_practice/models.py:88
+msgid "Good practice type"
+msgstr ""
+
+#: apps/good_practice/models.py:90
+msgid "Implementing entity"
+msgstr ""
+
+#: apps/good_practice/models.py:96
+msgid "Stage"
+msgstr ""
+
+#: apps/good_practice/models.py:106
+msgid "Good practice image"
+msgstr ""
+
+#: apps/good_practice/models.py:107
+msgid "Created at"
+msgstr ""
+
+#: apps/good_practice/models.py:108
+msgid "Updated at"
+msgstr ""
+
+#: apps/good_practice/models.py:112
+msgid "Start year"
+msgstr ""
+
+#: apps/good_practice/models.py:113
+msgid "End year"
+msgstr ""
+
+#: apps/good_practice/models.py:114
+msgid "Total page viewed count"
+msgstr ""
+
+#: apps/good_practice/models.py:117 apps/good_practice/models.py:130
+msgid "Good practice"
+msgstr ""
+
+#: apps/good_practice/models.py:118
+msgid "Good practices"
+msgstr ""
+
+#: apps/good_practice/models.py:125
+msgid "Youtube video url"
+msgstr ""
+
+#: apps/good_practice/models.py:126
+msgid "Image"
+msgstr ""
+
+#: apps/good_practice/models.py:127
+msgid "Caption"
+msgstr ""
+
+#: apps/good_practice/models.py:137 apps/good_practice/models.py:138
+msgid "Gallery"
+msgstr ""

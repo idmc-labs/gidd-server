@@ -3,9 +3,9 @@
 ## Run development server:
 Clone project form git and go to project directory
 
-Copy .env.example file to .env
+Copy .env.default file to .env and override there.
 ```bash
-cp .env.example .env
+cp .env.default .env
 ```
 
 Build and run docker
@@ -13,7 +13,8 @@ Build and run docker
 docker-compose up --build
 ```
 
-## Import old db dump
+## Setup using old database
+### Import old db dump
 ```bash
 cat full-db.sql  | docker exec -i old_db_container psql -U postgres -d postgres
 ```
@@ -24,24 +25,29 @@ OR
 cat full-db.sql  | docker-compose exec -T olddb psql -U postgres -d postgres
 ```
 
-## Migrate old database to new database
-```bash
-# To migrate old db to new db first change the password of allochi and postgres
-# user in olddb
-docker-compose exec olddb psql -U postgres
-ALTER USER allochi WITH PASSWORD '<default-password-here>';
-```
-
-```bash
-# Migrate old data
-docker-compose exec server python manage.py migrate
-docker-compose exec server python manage.py migrate_old_data
-```
-
 ## Sync data by year
 ```bash
 docker-compose exec server python manage.py sync_data year
 # eg docker-compose exec server python manage.py sync_data 2021
+```
+
+## Static translation
+```bash
+# Creation and upkeep language po files (for eg: fr)
+docker-compose exec server ./manage.py makemessages -l fr
+# Updating current language po files
+python3 manage.py makemessages -a
+# Compiles .po files to .mo files which will be used by django.
+docker-compose exec server ./manage.py compilemessages
+```
+## Model translation
+
+```bash
+docker-compose exec server ./manage.py migrate
+# Initialize new language fields (Do this if you don't see previous data)
+docker-compose exec server ./manage.py update_translation_fields
+# Detect new translatable fields or new available languages and sync database structure. Does not remove columns of removed languages or undeclared fields.
+docker-compose exec server ./manage.py sync_translation_fields
 ```
 
 ## Migrate country background images

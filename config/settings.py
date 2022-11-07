@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 import environ
 from pathlib import Path
+from django.utils.translation import gettext_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,33 +22,25 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 env = environ.Env(
-    DEBUG=(bool, True),
-    SECRET_KEY=(str),
-    DJANGO_ALLOWED_HOST=(str, '*'),
-    DB_NAME=(str, 'postgres'),
-    DB_USER=(str, 'postgres'),
-    DB_PWD=(str, 'postgres'),
-    DB_HOST=(str, 'db'),
-    DB_PORT=(int, 5432),
-    CORS_ALLOWED_ORIGINS=(list, []),
+    DEBUG=(bool, False),
+    SECRET_KEY=str,
+    DJANGO_ALLOWED_HOST=(list, ['*']),
+    POSTGRES_DB=str,
+    POSTGRES_USER=str,
+    POSTGRES_PASSWORD=str,
+    POSTGRES_HOST=str,
+    POSTGRES_PORT=(int, 5432),
+    CORS_ALLOWED_ORIGINS=list,
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
     DJANGO_MEDIA_URL=(str, '/media/'),
     DJANGO_STATIC_ROOT=(str, os.path.join(BASE_DIR, "staticfiles")),
     DJANGO_MEDIA_ROOT=(str, os.path.join(BASE_DIR, "media")),
-    # Old db
-    DB_OLD_NAME=(str, 'idmc'),
-    DB_OLD_USER=(str, 'allochi'),
-    DB_OLD_PWD=(str, 'postgres'),
-    DB_OLD_HOST=(str, 'olddb'),
-    DB_OLD_PORT=(int, 5432),
-    ENABLE_MIGRATION=(bool, False),
-    USE_LOCAL_STORATE=(bool, True),
     # S3 bucket settings
     ENABLE_AWS_BUCKET=(bool, False),
-    AWS_S3_ACCESS_KEY_ID=(str, ''),
-    AWS_S3_SECRET_ACCESS_KEY=(str, ''),
+    AWS_S3_ACCESS_KEY_ID=(str, None),
+    AWS_S3_SECRET_ACCESS_KEY=(str, None),
     AWS_STORAGE_BUCKET_NAME=(str, ''),
     STATICFILES_LOCATION=(str, 'static'),
     MEDIAFILES_LOCATION=(str, 'media'),
@@ -55,14 +48,14 @@ env = environ.Env(
     AWS_STORAGE_BUCKET_NAME_MEDIA=(str, 'media'),
 )
 
-CORS_ALLOWED_ORIGINS = env('CORS_ALLOWED_ORIGINS')
+CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['server', env('DJANGO_ALLOWED_HOST')]
+ALLOWED_HOSTS = ['server', *env.list('DJANGO_ALLOWED_HOST')]
 
 # Local appsexit
 LOCAL_APPS = [
@@ -75,6 +68,9 @@ LOCAL_APPS = [
 # Application definition
 
 INSTALLED_APPS = [
+    # External App (This app has to defined before django.contrib.admin)
+    'modeltranslation',  # https://django-modeltranslation.readthedocs.io/en/latest/installation.html#installed-apps
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -93,6 +89,7 @@ MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -127,41 +124,13 @@ WSGI_APPLICATION = 'config.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': env('DB_NAME'),
-        'USER': env('DB_USER'),
-        'PASSWORD': env('DB_PWD'),
-        'HOST': env('DB_HOST'),
-        'PORT': env('DB_PORT'),
+        'NAME': env('POSTGRES_DB'),
+        'USER': env('POSTGRES_USER'),
+        'PASSWORD': env('POSTGRES_PASSWORD'),
+        'HOST': env('POSTGRES_HOST'),
+        'PORT': env('POSTGRES_PORT'),
     }
 }
-
-ENABLE_MIGRATION = env('ENABLE_MIGRATION')
-if ENABLE_MIGRATION:
-    DATABASES.update({
-        'idmc_platform': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DB_OLD_NAME'),
-            'USER': env('DB_OLD_USER'),
-            'PASSWORD': env('DB_OLD_PWD'),
-            'HOST': env('DB_OLD_HOST'),
-            'PORT': env('DB_OLD_PORT'),
-            'OPTIONS': {
-                'options': '-c search_path=data_platform'
-            }
-        },
-        'idmc_public': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': env('DB_OLD_NAME'),
-            'USER': env('DB_OLD_USER'),
-            'PASSWORD': env('DB_OLD_PWD'),
-            'HOST': env('DB_OLD_HOST'),
-            'PORT': env('DB_OLD_PORT'),
-            'OPTIONS': {
-                'options': '-c search_path=public'
-            }
-        }
-    })
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -186,72 +155,30 @@ AUTH_PASSWORD_VALIDATORS = [
 # https://docs.djangoproject.com/en/4.0/topics/i18n/
 
 LANGUAGE_CODE = 'en-us'
-
 TIME_ZONE = 'UTC'
-
 USE_I18N = True
-
+USE_L10N = True
 USE_TZ = True
 
+LANGUAGES = (
+    ('en', gettext_lazy('English')),
+    ('fr', gettext_lazy('French')),
+)
+MODELTRANSLATION_DEBUG = DEBUG
+MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
-
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-# STATICFILES_LOCATION = env('STATICFILES_LOCATION')
-# MEDIAFILES_LOCATION = env('MEDIAFILES_LOCATION')
-# AWS_STORAGE_BUCKET_NAME_STATIC = env('AWS_STORAGE_BUCKET_NAME_STATIC')
-# AWS_STORAGE_BUCKET_NAME_MEDIA = env('AWS_STORAGE_BUCKET_NAME_MEDIA')
-#
-# if DEBUG or env('USE_LOCAL_STORATE'):
-#     STATIC_URL = env('DJANGO_STATIC_URL')
-#     MEDIA_URL = env('DJANGO_MEDIA_URL')
-#     STATIC_ROOT = env('DJANGO_STATIC_ROOT')
-#     MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
-# elif not DEBUG and env('ENABLE_AWS_BUCKET'):
-#     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
-#     DEFAULT_FILE_STORAGE = "config.storage_backends.MediaStorage"
-#     # NOTE: Uncomment these settings if IAM roles is not used
-#     # AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
-#     # AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
-#     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
-#     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-#     AWS_S3_OBJECT_PARAMETERS = {
-#         'CacheControl': 'max-age=86400',
-#     }
-#     AWS_IS_GZIPPED = True
-#     GZIP_CONTENT_TYPES = [
-#         'text/css', 'text/javascript', 'application/javascript', 'application/x-javascript', 'image/svg+xml',
-#         'application/json',
-#     ]
-#
-#     # Static configuration
-#     STATICFILES_LOCATION = 'static'
-#     STATIC_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, STATICFILES_LOCATION)
-#     STATICFILES_STORAGE = 'config.storage_backends.StaticStorage'
-#
-#     # Media configuration
-#     MEDIAFILES_LOCATION = 'media'
-#     MEDIA_URL = "https://%s/%s/" % (AWS_S3_CUSTOM_DOMAIN, MEDIAFILES_LOCATION)
-#     DEFAULT_FILE_STORAGE = 'config.storage_backends.MediaStorage'
-#
-#     # Tinymce url
-#     TINYMCE_JS_URL = f'{STATIC_URL}tinymce/tinymce.min.js'
-
-
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 
-if DEBUG or env('USE_LOCAL_STORATE'):
-    STATIC_URL = env('DJANGO_STATIC_URL')
-    MEDIA_URL = env('DJANGO_MEDIA_URL')
-    STATIC_ROOT = env('DJANGO_STATIC_ROOT')
-    MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
-elif not DEBUG and env('ENABLE_AWS_BUCKET'):
+if env('ENABLE_AWS_BUCKET'):
     STATICFILES_STORAGE = "storages.backends.s3boto3.S3Boto3Storage"
     DEFAULT_FILE_STORAGE = "config.storage_backends.MediaStorage"
-    # NOTE: Uncomment these settings if IAM roles is not used
-    # AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
-    # AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
+    # Use IAM Roles if IAM Credentials aren't provided
+    if env('AWS_S3_ACCESS_KEY_ID') and env('AWS_S3_SECRET_ACCESS_KEY'):
+        AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
+        AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
     AWS_STORAGE_BUCKET_NAME = env('AWS_STORAGE_BUCKET_NAME')
     AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
     AWS_S3_OBJECT_PARAMETERS = {
@@ -260,6 +187,11 @@ elif not DEBUG and env('ENABLE_AWS_BUCKET'):
     STATIC_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/"
     TINYMCE_JS_URL = f'https://{AWS_S3_CUSTOM_DOMAIN}/tinymce/tinymce.min.js'
+else:
+    STATIC_URL = env('DJANGO_STATIC_URL')
+    STATIC_ROOT = env('DJANGO_STATIC_ROOT')
+    MEDIA_URL = env('DJANGO_MEDIA_URL')
+    MEDIA_ROOT = env('DJANGO_MEDIA_ROOT')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
