@@ -4,9 +4,6 @@ from apps.good_practice.factories import GoodPracticeFactory
 from config.tests import TestCase
 
 
-TEST_LANGUAGES = ('en', 'fr',)
-
-
 class GoodPracticeQueryTestCase(TestCase):
     def test_good_practices_query(self):
         query = """
@@ -30,7 +27,7 @@ class GoodPracticeQueryTestCase(TestCase):
         text_lang_fields = ('title', 'description', 'media_and_resource_links',)
         for good_practice in good_practices[:2]:
             for field in text_lang_fields:
-                for lang in TEST_LANGUAGES[1:]:
+                for lang in self.TEST_LANGUAGES[1:]:
                     setattr(
                         good_practice,
                         f"{field}_{lang}",
@@ -38,7 +35,7 @@ class GoodPracticeQueryTestCase(TestCase):
                     )
             good_practice.save()
         GoodPracticeFactory.create(is_published=False)
-        for lang in TEST_LANGUAGES:
+        for lang in self.TEST_LANGUAGES:
             resp = self.query_check(query, HTTP_ACCEPT_LANGUAGE=lang)
             with translation.override(lang):
                 assert {

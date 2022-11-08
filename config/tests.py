@@ -4,6 +4,8 @@ from django.test import TestCase as BaseTestCase
 
 
 class TestCase(BaseTestCase):
+    TEST_LANGUAGES = ('en', 'fr',)
+
     def force_login(self, user):
         self.client.force_login(user)
 
