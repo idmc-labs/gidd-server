@@ -17,164 +17,167 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
 #: apps/good_practice/forms.py:43
 msgid "Please provide valid embeddable youtube url."
-msgstr ""
+msgstr "Veuillez fournir une URL YouTube intégrable valide."
 
 #: apps/good_practice/models.py:6
 msgid "Question"
-msgstr ""
+msgstr "Question"
 
 #: apps/good_practice/models.py:7
 msgid "Answer"
-msgstr ""
+msgstr "Réponse"
 
 #: apps/good_practice/models.py:9 apps/good_practice/models.py:110
 #: apps/good_practice/models.py:133
 msgid "Is published?"
-msgstr ""
+msgstr "Est publié ?"
 
 #: apps/good_practice/models.py:13
 msgid "Frequently asked question"
-msgstr ""
+msgstr "Question fréquemment posée"
 
 #: apps/good_practice/models.py:14
 msgid "Frequently asked questions"
-msgstr ""
+msgstr "Questions fréquemment posées"
 
 #: apps/good_practice/models.py:21 apps/good_practice/models.py:25
 #: apps/good_practice/models.py:103
 msgid "Tags"
-msgstr ""
+msgstr "Étiquettes"
 
 #: apps/good_practice/models.py:24
 msgid "Tag"
-msgstr ""
+msgstr "Étiquette"
 
 #: apps/good_practice/models.py:32 apps/good_practice/models.py:43
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: apps/good_practice/models.py:35 apps/good_practice/models.py:93
 msgid "Drivers of displacement"
-msgstr ""
+msgstr "Facteurs de déplacement"
 
 #: apps/good_practice/models.py:36
 msgid "Drivers of displacements"
-msgstr ""
+msgstr "Facteurs de déplacements"
 
 #: apps/good_practice/models.py:46 apps/good_practice/models.py:100
 msgid "Focus area"
-msgstr ""
+msgstr "Domaine d'intérêt"
 
 #: apps/good_practice/models.py:47
 msgid "Focus areas"
-msgstr ""
+msgstr "Domaines d'intérêt"
 
 #: apps/good_practice/models.py:57
 msgid "Risk Reduction and Prevention (DRR, CCA and peacebuilding)"
 msgstr ""
+"Réduction des risques et prévention (RRC, CCA et consolidation de la paix)"
 
 #: apps/good_practice/models.py:61
 msgid "Protection and assistance, and durable solutions"
-msgstr ""
+msgstr "Protection et assistance, et solutions durables"
 
 #: apps/good_practice/models.py:65
 msgid "Strengthening policy and legal frameworks"
-msgstr ""
+msgstr "Renforcer les cadres politiques et juridiques"
 
 #: apps/good_practice/models.py:69
 msgid "Governance capacity and institutional set-up"
-msgstr ""
+msgstr "Capacité de gouvernance et structure institutionnelle"
 
 #: apps/good_practice/models.py:73
 msgid "Displacement monitoring (data collection, analysis and systems)"
 msgstr ""
+"Surveillance des déplacements (collecte de données, analyse et systèmes)"
 
 #: apps/good_practice/models.py:77
 msgid "Promising"
-msgstr ""
+msgstr "Prometteur"
 
 #: apps/good_practice/models.py:78
 msgid "Advanced"
-msgstr ""
+msgstr "Avancé"
 
 #: apps/good_practice/models.py:79
 msgid "Successful"
-msgstr ""
+msgstr "Succès"
 
 #: apps/good_practice/models.py:81
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: apps/good_practice/models.py:82
 msgid "Description"
-msgstr ""
+msgstr "Désignation"
 
 #: apps/good_practice/models.py:83
 msgid "Media and resource links"
-msgstr ""
+msgstr "Liens vers les médias et les ressources"
 
 #: apps/good_practice/models.py:85
 msgid "Countries"
-msgstr ""
+msgstr "Pays"
 
 #: apps/good_practice/models.py:88
 msgid "Good practice type"
-msgstr ""
+msgstr "Type de bonne pratique"
 
 #: apps/good_practice/models.py:90
 msgid "Implementing entity"
-msgstr ""
+msgstr "Entité d'exécution"
 
 #: apps/good_practice/models.py:96
 msgid "Stage"
-msgstr ""
+msgstr "Étape"
 
 #: apps/good_practice/models.py:106
 msgid "Good practice image"
-msgstr ""
+msgstr "Image de bonne pratique"
 
 #: apps/good_practice/models.py:107
 msgid "Created at"
-msgstr ""
+msgstr "Créé à"
 
 #: apps/good_practice/models.py:108
 msgid "Updated at"
-msgstr ""
+msgstr "Mis à jour à"
 
 #: apps/good_practice/models.py:112
 msgid "Start year"
-msgstr ""
+msgstr "Année de début"
 
 #: apps/good_practice/models.py:113
 msgid "End year"
-msgstr ""
+msgstr "Fin d'année"
 
 #: apps/good_practice/models.py:114
 msgid "Total page viewed count"
-msgstr ""
+msgstr "Nombre total de pages consultées"
 
 #: apps/good_practice/models.py:117 apps/good_practice/models.py:130
 msgid "Good practice"
-msgstr ""
+msgstr "Bonne pratique"
 
 #: apps/good_practice/models.py:118
 msgid "Good practices"
-msgstr ""
+msgstr "Bonnes pratiques"
 
 #: apps/good_practice/models.py:125
 msgid "Youtube video url"
-msgstr ""
+msgstr "URL de la vidéo YouTube"
 
 #: apps/good_practice/models.py:126
 msgid "Image"
-msgstr ""
+msgstr "Image"
 
 #: apps/good_practice/models.py:127
 msgid "Caption"
-msgstr ""
+msgstr "Légende"
 
 #: apps/good_practice/models.py:137 apps/good_practice/models.py:138
 msgid "Gallery"
-msgstr ""
+msgstr "Galerie"
