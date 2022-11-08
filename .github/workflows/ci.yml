@@ -66,6 +66,13 @@ jobs:
             exit 1;
           }
 
+      - name: 🤞 Run Test 🧪
+        env:
+          DOCKER_IMAGE_SERVER: ${{ steps.prep.outputs.tagged_image }}
+        run: |
+          docker-compose -f gh-docker-compose.yml run --rm server ./manage.py test --keepdb -v 2 config.tests.FakeTest.test_fake
+          docker-compose -f gh-docker-compose.yml run --rm server pytest -ra --reuse-db -v --durations=10
+
       - name: 🐳 Move docker cache (🧙 Hack fix)
         run: |
           rm -rf /tmp/.buildx-cache
