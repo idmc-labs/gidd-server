@@ -13,6 +13,7 @@ import os
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy
+from config import sentry
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -22,6 +23,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 env = environ.Env(
+    GIDD_ENVIRONMENT=(str, 'development'),
     DEBUG=(bool, False),
     SECRET_KEY=str,
     DJANGO_ALLOWED_HOST=(list, ['*']),
@@ -46,7 +48,12 @@ env = environ.Env(
     MEDIAFILES_LOCATION=(str, 'media'),
     AWS_STORAGE_BUCKET_NAME_STATIC=(str, 'static'),
     AWS_STORAGE_BUCKET_NAME_MEDIA=(str, 'media'),
+    # Sentry
+    SENTRY_DSN=(str, None),
+    SENTRY_SAMPLE_RATE=(float, 0.2),
 )
+
+GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -255,3 +262,25 @@ TINYMCE_DEFAULT_CONFIG = {
     "language": "en",
 }
 # TINYMCE_COMPRESSOR = True
+
+# Sentry Config
+SENTRY_DSN = env("SENTRY_DSN")
+SENTRY_SAMPLE_RATE = env("SENTRY_SAMPLE_RATE")
+SENTRY_ENABLED = False
+
+if SENTRY_DSN:
+    SENTRY_CONFIG = {
+        "dsn": SENTRY_DSN,
+        "send_default_pii": True,
+        'release': sentry.fetch_git_sha(BASE_DIR),
+        "environment": GIDD_ENVIRONMENT,
+        "debug": DEBUG,
+        "tags": {
+            "site": ",".join(set(ALLOWED_HOSTS)),
+        },
+    }
+    sentry.init_sentry(
+        app_type='web',
+        **SENTRY_CONFIG,
+    )
+    SENTRY_ENABLED = True
