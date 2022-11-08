@@ -1,6 +1,7 @@
 import datetime
 from django.core.files.storage import get_storage_class
 import strawberry
+from strawberry.enum import EnumType
 
 StorageClass = get_storage_class()
 
@@ -45,3 +46,13 @@ def round_and_remove_zero(num):
     if absolute_num < 10000:
         return sign * round(absolute_num / 100) * 100
     return sign * round(num / 1000) * 1000
+
+
+def get_enum_label(
+    enum_type: EnumType,
+    value: str,
+    default_description='',
+) -> str:
+    if value:
+        return enum_type(value).label
+    return default_description

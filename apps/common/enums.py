@@ -1,4 +1,5 @@
-from strawberry.enum import _process_enum
+import strawberry
 from .models import StaticPage
 
-StaticPageTypeEnum = _process_enum(StaticPage.Type, "StaticPageTypeEnum", "Static page types")
+
+StaticPageTypeEnum = strawberry.enum(StaticPage.Type, name="StaticPageTypeEnum")

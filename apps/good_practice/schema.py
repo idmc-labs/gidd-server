@@ -116,7 +116,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
 
 
 @sync_to_async
-def get_graphql_objects(info, qs) -> List[GoodPracticeType]:
+def get_graphql_objects(qs) -> List[GoodPracticeType]:
     return [
         GoodPracticeType(
             **good_practice_data
@@ -160,7 +160,6 @@ class Query:
     @strawberry.field
     async def good_practices(
         self,
-        info: Info,
         pagination: OffsetPaginationInput,
         ordering: GoodPracticeOrder,
         filters: Optional[GoodPracticeFilter] = None,
@@ -174,7 +173,7 @@ class Query:
 
         paginated_queryset = pagination_apply(pagination, ordered_qyeryset)
 
-        results = await get_graphql_objects(info, paginated_queryset)
+        results = await get_graphql_objects(paginated_queryset)
 
         total_count = await get_qs_count(ordered_qyeryset)
 

@@ -27,10 +27,10 @@ class CommonQueryTestCase(TestCase):
             ('fr', static_page_1.description_fr),
         ]:
             resp = self.query_check(query, HTTP_ACCEPT_LANGUAGE=lang)
-            assert resp["data"]["staticPages"] == [
+            assert [
                 dict(
                     id=str(static_page_1.id),
                     type=static_page_1.type.name,
                     description=description,
                 )
-            ], (lang, static_page_1.description)
+            ] == resp["data"]["staticPages"], (lang, static_page_1.description)

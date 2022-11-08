@@ -25,7 +25,7 @@ from .enums import (
     SubRegionEnum,
     GoodPracticeRegionEnum,
 )
-from utils import FileFieldType, build_url
+from utils import FileFieldType, build_url, get_enum_label
 
 
 @strawberry.django.type(OverView, pagination=True)
@@ -143,27 +143,27 @@ class CountryType:
 
     @strawberry.field
     async def idmc_continent_label(self, info: Info) -> Optional[str]:
-        return ContinentEnum(self.idmc_continent).label if self.idmc_continent else ""
+        return get_enum_label(ContinentEnum, self.idmc_continent)
 
     @strawberry.field
     async def idmc_region_label(self, info: Info) -> str:
-        return IdmcRegionEnum(self.idmc_region).label if self.idmc_region else ""
+        return get_enum_label(IdmcRegionEnum, self.idmc_region)
 
     @strawberry.field
     async def idmc_sub_region_label(self, info: Info) -> str:
-        return SubRegionEnum(self.idmc_sub_region).label if self.idmc_sub_region else ""
+        return get_enum_label(SubRegionEnum, self.idmc_sub_region)
 
     @strawberry.field
     async def wb_region_label(self, info: Info) -> str:
-        return WbRegionEnum(self.wb_region).label if self.wb_region else ""
+        return get_enum_label(WbRegionEnum, self.wb_region)
 
     @strawberry.field
     async def good_practice_region_label(self, info: Info) -> str:
-        return GoodPracticeRegionEnum(self.good_practice_region).label if self.good_practice_region else ""
+        return get_enum_label(GoodPracticeRegionEnum, self.good_practice_region)
 
     @strawberry.field
     async def united_nations_region_label(self, info: Info) -> str:
-        return UnitedNationsRegionEnum(self.united_nations_region).label if self.united_nations_region else ""
+        return get_enum_label(UnitedNationsRegionEnum, self.united_nations_region)
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
