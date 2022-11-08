@@ -25,6 +25,10 @@ services:
       POSTGRES_USER:
       POSTGRES_PASSWORD:
       POSTGRES_HOST:
+      # AWS
+      AWS_TRANSLATE_ACCESS_KEY:
+      AWS_TRANSLATE_SECRET_KEY:
+      AWS_TRANSLATE_REGION:
     command: bash -c "/code/scripts/run_develop.sh"
     volumes:
       - ./:/code

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import sys
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy
@@ -23,6 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 env = environ.Env(
+    PYTEST_XDIST_WORKER=(str, None),
     GIDD_ENVIRONMENT=(str, 'development'),
     DEBUG=(bool, False),
     SECRET_KEY=str,
@@ -51,6 +53,10 @@ env = environ.Env(
     # Sentry
     SENTRY_DSN=(str, None),
     SENTRY_SAMPLE_RATE=(float, 0.2),
+    # AWS Translation
+    AWS_TRANSLATE_ACCESS_KEY=(str, None),
+    AWS_TRANSLATE_SECRET_KEY=(str, None),
+    AWS_TRANSLATE_REGION=(str, None),
 )
 
 GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
@@ -61,6 +67,20 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+
+# See if we are inside a test environment
+TESTING = any([
+    arg in sys.argv for arg in [
+        'test',
+        'pytest',
+        'py.test',
+        '/usr/local/bin/pytest',
+        '/usr/local/bin/py.test',
+        '/usr/local/lib/python3.6/dist-packages/py/test.py',
+    ]
+    # Provided by pytest-xdist (If pytest is used)
+]) or env('PYTEST_XDIST_WORKER') is not None
+
 
 ALLOWED_HOSTS = ['server', *env.list('DJANGO_ALLOWED_HOST')]
 
@@ -172,6 +192,7 @@ LANGUAGES = (
     ('en', gettext_lazy('English')),
     ('fr', gettext_lazy('French')),
 )
+AVAILABLE_LANGUAGES = [lang for lang, _ in LANGUAGES]
 MODELTRANSLATION_DEBUG = DEBUG
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
@@ -284,3 +305,8 @@ if SENTRY_DSN:
         **SENTRY_CONFIG,
     )
     SENTRY_ENABLED = True
+
+# AWS Translation
+AWS_TRANSLATE_ACCESS_KEY = env('AWS_TRANSLATE_ACCESS_KEY')
+AWS_TRANSLATE_SECRET_KEY = env('AWS_TRANSLATE_SECRET_KEY')
+AWS_TRANSLATE_REGION = env('AWS_TRANSLATE_REGION')

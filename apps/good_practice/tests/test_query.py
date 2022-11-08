@@ -1,4 +1,6 @@
 from django.utils import translation
+from modeltranslation.utils import build_localized_fieldname
+
 from apps.good_practice.models import GoodPractice
 from apps.good_practice.factories import GoodPracticeFactory
 from config.tests import TestCase
@@ -30,7 +32,7 @@ class GoodPracticeQueryTestCase(TestCase):
                 for lang in self.TEST_LANGUAGES[1:]:
                     setattr(
                         good_practice,
-                        f"{field}_{lang}",
+                        build_localized_fieldname(field, lang),
                         f"[{lang}] {getattr(good_practice, field)}",
                     )
             good_practice.save()

@@ -27,6 +27,7 @@ starlette = "^0.20.0"
 Shapely = "^1.8.2"
 django-modeltranslation = "^0.18.5"
 sentry-sdk = "^1.10.1"
+polib = "^1.1.1"
 
 [tool.poetry.dev-dependencies]
 ipython = "*"
