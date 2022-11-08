@@ -5,6 +5,9 @@ import sentry_sdk
 from django.conf import settings
 from strawberry.types import ExecutionResult
 
+# NOTE: Quick dirty fix.
+from .graphql_overrides import *  # noqa
+
 from apps.country.schema import Query as CountryQuery
 from apps.good_practice.schema import Query as GoodPracticeQuery
 from apps.good_practice.mutations import Mutation as GoodPracticeMutation
