@@ -14,9 +14,9 @@
             text-transform: uppercase;
             color: white;
             content: "{{ GIDD_ENVIRONMENT }}";
-            {% if GIDD_ENVIRONMENT == 'prod' or GIDD_ENVIRONMENT == 'beta' %}
+            {% if GIDD_ENVIRONMENT == 'PROD' %}
             background-color: red;
-            {% elif GIDD_ENVIRONMENT == 'alpha' %}
+            {% elif GIDD_ENVIRONMENT == 'STAGING' %}
             background-color: orange;
             {% else %}
             background-color: grey;

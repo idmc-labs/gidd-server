@@ -17,6 +17,7 @@ services:
       context: ./
     tty: true
     environment:  # NOTE: .env is used to fill this values
+      GIDD_ENVIRONMENT: "DEVELOPMENT"
       DEBUG:
       SECRET_KEY:
       CORS_ALLOWED_ORIGINS:

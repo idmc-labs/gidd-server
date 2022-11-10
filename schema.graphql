@@ -81,7 +81,7 @@ type ConflictType {
   country(pagination: OffsetPaginationInput): CountryListType
 }
 
-"""Continent enum"""
+"""An enumeration."""
 enum ContinentEnum {
   EUROPE
   OCEANIA
@@ -344,7 +344,7 @@ input GoodPracticeOrder {
   updatedAt: Ordering
 }
 
-"""good practice regions"""
+"""An enumeration."""
 enum GoodPracticeRegion {
   THE_AMERICAS
   SUB_SAHARAN_AFRICA
@@ -397,7 +397,7 @@ input IDFilterLookup {
   iRegex: String
 }
 
-"""idmc country regions"""
+"""An enumeration."""
 enum IdmcRegionEnum {
   AUSTRALIA_AND_NZ
   CARIBBEAN
@@ -487,9 +487,9 @@ type PaginationBaseType {
 }
 
 type Query {
-  conflicts(pagination: OffsetPaginationInput, filters: ConflictFilter): [ConflictListType!]!
-  disasters(pagination: OffsetPaginationInput, filters: DisasterFilter): [DisasterListType!]!
-  countries(pagination: OffsetPaginationInput, filters: CountryFilter): [CountryListType!]!
+  conflicts(filters: ConflictFilter, pagination: OffsetPaginationInput): [ConflictListType!]!
+  disasters(filters: DisasterFilter, pagination: OffsetPaginationInput): [DisasterListType!]!
+  countries(filters: CountryFilter, pagination: OffsetPaginationInput): [CountryListType!]!
   conflict(pk: ID): ConflictType!
   disaster(pk: ID): DisasterType!
   country(pk: ID = null, iso3: String = null): CountryType!
@@ -500,11 +500,11 @@ type Query {
   faqs: [FaqListType!]!
   goodPractices(pagination: OffsetPaginationInput!, ordering: GoodPracticeOrder!, filters: GoodPracticeFilter = null): PaginationBaseType!
   goodPracticeFilterChoices: GoodPracticeFilterChoiceType!
-  staticPages(pagination: OffsetPaginationInput, filters: StaticPageFilter): [StaticPageListType!]!
+  staticPages(filters: StaticPageFilter, pagination: OffsetPaginationInput): [StaticPageListType!]!
   staticPage(pk: ID): StaticPageType!
 }
 
-"""Stage types"""
+"""An enumeration."""
 enum StageTypeEnum {
   PROMISING
   ADVANCED
@@ -527,7 +527,7 @@ type StaticPageType {
   description: String
 }
 
-"""Static page types"""
+"""An enumeration."""
 enum StaticPageTypeEnum {
   GOOD_PRACTICE_LISTING_PAGE
   SUBMIT_GOOD_PRACTICE
@@ -554,7 +554,7 @@ input StrFilterLookup {
   iRegex: String
 }
 
-"""country sub regions"""
+"""An enumeration."""
 enum SubRegionEnum {
   CARIBBEAN
   LATIN_AMERICA
@@ -572,7 +572,7 @@ type TimeSeriesStatisticsType {
   total: Int!
 }
 
-"""Good practice types"""
+"""An enumeration."""
 enum TypeEnum {
   RISK_REDUCTION_AND_PREVENTION
   PROTECTION_AND_ASSISTANCE_AND_DURABLE_SOLUTIONS
@@ -581,7 +581,7 @@ enum TypeEnum {
   DISPLACEMENT_MONITORING
 }
 
-"""united nations country regions"""
+"""An enumeration."""
 enum UnitedNationsRegionEnum {
   ASIA
   SOUTHERN_ASIA
@@ -604,7 +604,7 @@ enum UnitedNationsRegionEnum {
   NORTHERN_EUROPE
 }
 
-"""wb country regions"""
+"""An enumeration."""
 enum WbRegionEnum {
   EAST_ASIA_AND_PACIFIC
   EUROPE_AND_CENTRAL_ASIA

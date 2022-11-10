@@ -25,7 +25,7 @@ APPS_DIR = os.path.join(BASE_DIR, 'apps')
 
 env = environ.Env(
     PYTEST_XDIST_WORKER=(str, None),
-    GIDD_ENVIRONMENT=(str, 'development'),
+    GIDD_ENVIRONMENT=(str, 'DEVELOPMENT'),  # PROD, STAGING, DEVELOPMENT
     DEBUG=(bool, False),
     SECRET_KEY=str,
     DJANGO_ALLOWED_HOST=(list, ['*']),
