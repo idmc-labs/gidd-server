@@ -20,7 +20,6 @@ from apps.good_practice.gh_filters import GoodPracticeFilter
 from strawberry_django.filters import apply as filter_apply
 from strawberry_django.pagination import apply as pagination_apply, OffsetPaginationInput
 from strawberry_django.ordering import apply as ordering_apply
-from django.forms.models import model_to_dict
 from strawberry.types import Info
 
 
@@ -116,22 +115,25 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     )
 
 
-def format_types(info, obj):
-    result = model_to_dict(obj)
-    result.pop('countries')
-    result.pop('image')
-    result.pop('tags')
-    result.pop('drivers_of_displacement')
-    result.pop('focus_area')
-    return result
-
-
 @sync_to_async
 def get_graphql_objects(info, qs) -> List[GoodPracticeType]:
     return [
         GoodPracticeType(
-            **format_types(info, good_practice)
-        ) for good_practice in qs
+            **good_practice_data
+        ) for good_practice_data in qs.values(
+            "description",
+            "end_year",
+            "id",
+            "implementing_entity",
+            "is_published",
+            "media_and_resource_links",
+            "page_viewed_count",
+            "published_date",
+            "stage",
+            "start_year",
+            "title",
+            "type",
+        )
     ]
 
 
@@ -159,9 +161,9 @@ class Query:
     async def good_practices(
         self,
         info: Info,
-        filters: Optional[GoodPracticeFilter],
         pagination: OffsetPaginationInput,
         ordering: GoodPracticeOrder,
+        filters: Optional[GoodPracticeFilter] = None,
     ) -> PaginationBaseType:
         qs = await good_practice_qs(GoodPractice)
 

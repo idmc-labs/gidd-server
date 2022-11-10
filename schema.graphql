@@ -498,7 +498,7 @@ type Query {
   faq(pk: ID!): FaqType!
   goodPractice(pk: ID!): GoodPracticeType!
   faqs: [FaqListType!]!
-  goodPractices(filters: GoodPracticeFilter, pagination: OffsetPaginationInput!, ordering: GoodPracticeOrder!): PaginationBaseType!
+  goodPractices(pagination: OffsetPaginationInput!, ordering: GoodPracticeOrder!, filters: GoodPracticeFilter = null): PaginationBaseType!
   goodPracticeFilterChoices: GoodPracticeFilterChoiceType!
   staticPages(pagination: OffsetPaginationInput, filters: StaticPageFilter): [StaticPageListType!]!
   staticPage(pk: ID): StaticPageType!
