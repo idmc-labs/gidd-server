@@ -78,6 +78,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'corsheaders',
+    'strawberry.django',
     'rest_framework',
     'django_filters',
     'tinymce',
