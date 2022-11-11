@@ -35,6 +35,7 @@ env = environ.Env(
     POSTGRES_HOST=str,
     POSTGRES_PORT=(int, 5432),
     CORS_ALLOWED_ORIGINS=list,
+    CSRF_TRUSTED_ORIGINS=list,  # https://gidd-idmc.dev.datafriendlyspace.org
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
@@ -227,6 +228,8 @@ else:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
