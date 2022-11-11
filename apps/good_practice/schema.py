@@ -1,6 +1,17 @@
 import strawberry
 from typing import List, Optional
 from django.db.models import Max, Min
+from django.utils import translation
+from modeltranslation.utils import build_localized_fieldname
+from apps.country.models import Country
+from asgiref.sync import sync_to_async
+from apps.good_practice.gh_filters import GoodPracticeFilter
+from strawberry_django.filters import apply as filter_apply
+from strawberry_django.pagination import apply as pagination_apply, OffsetPaginationInput
+from strawberry_django.ordering import apply as ordering_apply
+from strawberry.types import Info
+
+from .models import GoodPractice, Faq
 from .types import (
     FaqType,
     FaqListType,
@@ -13,14 +24,6 @@ from .types import (
     DriversOfDisplacementType,
     FocusAreaType,
 )
-from .models import GoodPractice, Faq
-from apps.country.models import Country
-from asgiref.sync import sync_to_async
-from apps.good_practice.gh_filters import GoodPracticeFilter
-from strawberry_django.filters import apply as filter_apply
-from strawberry_django.pagination import apply as pagination_apply, OffsetPaginationInput
-from strawberry_django.ordering import apply as ordering_apply
-from strawberry.types import Info
 
 
 def faq_obj(pk) -> FaqType:
@@ -54,6 +57,7 @@ def good_practice_qs(model) -> List[GoodPracticeType]:
 
 @sync_to_async
 def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
+    active_language = translation.get_language()
     good_practice_qs = GoodPractice.objects.filter(is_published=True)
     types = list(
         good_practice_qs.filter(type__isnull=False).distinct().values_list('type', flat=True)
@@ -78,11 +82,14 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         drivers_of_displacement=[
             DriversOfDisplacementType(
-                name=driver_of_displacement['drivers_of_displacement__name'],
-                id=driver_of_displacement['drivers_of_displacement__id'],
-            ) for driver_of_displacement in good_practice_qs.filter(drivers_of_displacement__isnull=False).distinct(
+                id=_id,
+                name=name,
+            ) for _id, name in good_practice_qs.filter(drivers_of_displacement__isnull=False).distinct(
                 'drivers_of_displacement__name'
-            ).order_by().values('drivers_of_displacement__id', 'drivers_of_displacement__name')
+            ).order_by().values_list(
+                'drivers_of_displacement__id',
+                f"drivers_of_displacement__{build_localized_fieldname('name', active_language)}",
+            )
         ],
         stage=[
             EnumChoiceType(
@@ -92,11 +99,14 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         focus_area=[
             FocusAreaType(
-                name=focus_area['focus_area__name'],
-                id=focus_area['focus_area__id'],
-            ) for focus_area in good_practice_qs.filter(focus_area__isnull=False).distinct(
+                id=_id,
+                name=name,
+            ) for _id, name in good_practice_qs.filter(focus_area__isnull=False).distinct(
                 'focus_area__name'
-            ).order_by().values('focus_area__id', 'focus_area__name')
+            ).order_by().values_list(
+                'focus_area__id',
+                f"focus_area__{build_localized_fieldname('name', active_language)}",
+            )
         ],
         regions=[
             EnumChoiceType(
