@@ -75,7 +75,7 @@ msgstr "Domaines d'intérêt"
 #: apps/good_practice/models.py:57
 msgid "Risk Reduction and Prevention (DRR, CCA and peacebuilding)"
 msgstr ""
-"Réduction des risques et prévention (RRC, CCA et consolidation de la paix)"
+"Réduction et prévention des risques"
 
 #: apps/good_practice/models.py:61
 msgid "Protection and assistance, and durable solutions"
@@ -83,16 +83,16 @@ msgstr "Protection et assistance, et solutions durables"
 
 #: apps/good_practice/models.py:65
 msgid "Strengthening policy and legal frameworks"
-msgstr "Renforcer les cadres politiques et juridiques"
+msgstr "Politiques, stratégies et cadres juridiques"
 
 #: apps/good_practice/models.py:69
 msgid "Governance capacity and institutional set-up"
-msgstr "Capacité de gouvernance et structure institutionnelle"
+msgstr "Capacité de gouvernance et structure institutionnelle "
 
 #: apps/good_practice/models.py:73
 msgid "Displacement monitoring (data collection, analysis and systems)"
 msgstr ""
-"Surveillance des déplacements (collecte de données, analyse et systèmes)"
+"Suivi des déplacements (collecte de données, analyse et systèmes)"
 
 #: apps/good_practice/models.py:77
 msgid "Promising"
@@ -104,7 +104,7 @@ msgstr "Avancé"
 
 #: apps/good_practice/models.py:79
 msgid "Successful"
-msgstr "Succès"
+msgstr "Réussi"
 
 #: apps/good_practice/models.py:81
 msgid "Title"

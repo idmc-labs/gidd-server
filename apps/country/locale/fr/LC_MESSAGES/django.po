@@ -145,7 +145,7 @@ msgstr "Asie de l'Ouest"
 
 #: apps/country/models.py:40
 msgid "East asia and pacific"
-msgstr "Asie de l'Est et Pacifique"
+msgstr "Asie de l’Est et Pacifique"
 
 #: apps/country/models.py:41 apps/country/models.py:82
 msgid "Europe and Central Asia"
@@ -241,7 +241,7 @@ msgstr "Caucase du Sud"
 
 #: apps/country/models.py:77
 msgid "The Americas"
-msgstr "Les Amériques"
+msgstr "Amériques"
 
 #: apps/country/models.py:80
 msgid "Middle East and North Africa"
