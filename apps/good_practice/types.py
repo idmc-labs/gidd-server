@@ -75,6 +75,8 @@ class GoodPracticeType:
     page_viewed_count: auto
     implementing_entity: auto
 
+    is_translated: bool
+
     @strawberry.field
     async def image(self, info: Info) -> Optional[FileFieldType]:
         result = await info.context["good_practice_image_loader"].load(self.id)

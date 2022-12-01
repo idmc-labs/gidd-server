@@ -129,20 +129,22 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
 def get_graphql_objects(qs) -> List[GoodPracticeType]:
     return [
         GoodPracticeType(
-            **good_practice_data
+            is_translated=good_practice_data.pop('title_fr') not in [None, ''],
+            **good_practice_data,
         ) for good_practice_data in qs.values(
-            "description",
-            "end_year",
-            "id",
-            "implementing_entity",
-            "is_published",
-            "media_and_resource_links",
-            "page_viewed_count",
-            "published_date",
-            "stage",
-            "start_year",
-            "title",
-            "type",
+            'id',
+            'description',
+            'end_year',
+            'implementing_entity',
+            'is_published',
+            'media_and_resource_links',
+            'page_viewed_count',
+            'published_date',
+            'stage',
+            'start_year',
+            'title',
+            'title_fr',
+            'type',
         )
     ]
 

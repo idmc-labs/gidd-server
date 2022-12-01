@@ -367,6 +367,7 @@ type GoodPracticeType {
   endYear: Int
   pageViewedCount: Int!
   implementingEntity: String!
+  isTranslated: Boolean!
   countries: [CountryType!]!
   driverOfDisplacement: [DriversOfDisplacementType!]
   focusArea: [FocusAreaType!]

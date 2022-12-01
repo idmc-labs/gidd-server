@@ -120,6 +120,9 @@ class GoodPractice(models.Model):
     def __str__(self):
         return self.title
 
+    def is_translated(self):
+        return self.title_fr not in [None, '']
+
 
 class Gallery(models.Model):
     youtube_video_url = models.URLField(null=True, blank=True, max_length=255, verbose_name=_('Youtube video url'))
