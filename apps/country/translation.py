@@ -1,12 +1,12 @@
 from modeltranslation.translator import register, TranslationOptions
 
 from .models import (
-    StaticPage,
+    Country,
 )
 
 
-@register(StaticPage)
-class StaticPageTO(TranslationOptions):
+@register(Country)
+class CountryTO(TranslationOptions):
     fields = (
-        'description',
+        'name',
     )
