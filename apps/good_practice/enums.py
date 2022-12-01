@@ -1,11 +1,5 @@
-from strawberry.enum import _process_enum
+import strawberry
 from .models import GoodPractice
 
-TypeEnum = _process_enum(
-    GoodPractice.Type, "TypeEnum", "Good practice types"
-)
-StageTypeEnum = _process_enum(
-    GoodPractice.StageType,
-    "StageTypeEnum",
-    "Stage types"
-)
+TypeEnum = strawberry.enum(GoodPractice.Type, name="TypeEnum")
+StageTypeEnum = strawberry.enum(GoodPractice.StageType, name="StageTypeEnum")

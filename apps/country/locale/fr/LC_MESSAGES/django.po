@@ -17,385 +17,386 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
 #: apps/country/forms.py:10 apps/country/forms.py:28
 msgid "Description"
-msgstr ""
+msgstr "Désignation"
 
 #: apps/country/forms.py:30 apps/country/models.py:145
 msgid "Essential links"
-msgstr ""
+msgstr "Liens essentiels"
 
 #: apps/country/forms.py:33 apps/country/models.py:148
 msgid "Contact person description"
-msgstr ""
+msgstr "Description du contact"
 
 #: apps/country/forms.py:36 apps/country/models.py:151
 msgid "Internal displacement description"
-msgstr ""
+msgstr "Description du déplacement interne"
 
 #: apps/country/forms.py:39 apps/country/models.py:154
 msgid "Displacement data description"
-msgstr ""
+msgstr "Description des données de déplacement"
 
 #: apps/country/models.py:10 apps/country/models.py:52
 msgid "Europe"
-msgstr ""
+msgstr "Europe"
 
 #: apps/country/models.py:11
 msgid "Oceania"
-msgstr ""
+msgstr "Océanie"
 
 #: apps/country/models.py:12 apps/country/models.py:58
 msgid "Americas"
-msgstr ""
+msgstr "Amériques"
 
 #: apps/country/models.py:13 apps/country/models.py:54
 msgid "Africa"
-msgstr ""
+msgstr "Afrique"
 
 #: apps/country/models.py:14 apps/country/models.py:50
 msgid "Asia"
-msgstr ""
+msgstr "Asie"
 
 #: apps/country/models.py:15
 msgid "Antarctica"
-msgstr ""
+msgstr "Antarctique"
 
 #: apps/country/models.py:18
 msgid "Australia and NZ"
-msgstr ""
+msgstr "Australie et Nouvelle-Zélande"
 
 #: apps/country/models.py:19 apps/country/models.py:71
 msgid "Caribbean"
-msgstr ""
+msgstr "Caraïbes"
 
 #: apps/country/models.py:20
 msgid "Central Africa"
-msgstr ""
+msgstr "Afrique centrale"
 
 #: apps/country/models.py:21
 msgid "Central Asia"
-msgstr ""
+msgstr "Asie centrale"
 
 #: apps/country/models.py:22
 msgid "East Asia"
-msgstr ""
+msgstr "Asie de l'Est"
 
 #: apps/country/models.py:23
 msgid "Eastern Europe"
-msgstr ""
+msgstr "Europe de l'Est"
 
 #: apps/country/models.py:24
 msgid "Horn of Africa"
-msgstr ""
+msgstr "Corne de l'Afrique"
 
 #: apps/country/models.py:25 apps/country/models.py:72
 msgid "Latin America"
-msgstr ""
+msgstr "Amérique latine"
 
 #: apps/country/models.py:26
 msgid "Melanesia"
-msgstr ""
+msgstr "Mélanésie"
 
 #: apps/country/models.py:27
 msgid "Micronesia"
-msgstr ""
+msgstr "Micronésie"
 
 #: apps/country/models.py:28
 msgid "North America"
-msgstr ""
+msgstr "Amérique du Nord"
 
 #: apps/country/models.py:29
 msgid "Northern Africa"
-msgstr ""
+msgstr "Afrique du Nord"
 
 #: apps/country/models.py:30
 msgid "North, West and Central Europe"
-msgstr ""
+msgstr "Europe du Nord, de l'Ouest et Europe centrale"
 
 #: apps/country/models.py:31
 msgid "Polynesia"
-msgstr ""
+msgstr "Polynésie"
 
 #: apps/country/models.py:32 apps/country/models.py:46
 #: apps/country/models.py:79
 msgid "South Asia"
-msgstr ""
+msgstr "Asie du Sud"
 
 #: apps/country/models.py:33
 msgid "South-East Asia"
-msgstr ""
+msgstr "Asie du Sud-Est"
 
 #: apps/country/models.py:34
 msgid "Southern Africa"
-msgstr ""
+msgstr "Afrique australe"
 
 #: apps/country/models.py:35
 msgid "Southern Europe"
-msgstr ""
+msgstr "Europe du Sud"
 
 #: apps/country/models.py:36
 msgid "Western Africa"
-msgstr ""
+msgstr "Afrique de l'Ouest"
 
 #: apps/country/models.py:37
 msgid "Western Asia"
-msgstr ""
+msgstr "Asie de l'Ouest"
 
 #: apps/country/models.py:40
 msgid "East asia and pacific"
-msgstr ""
+msgstr "Asie de l’Est et Pacifique"
 
 #: apps/country/models.py:41 apps/country/models.py:82
 msgid "Europe and Central Asia"
-msgstr ""
+msgstr "Europe et Asie centrale"
 
 #: apps/country/models.py:42
 msgid "high income oecd member"
-msgstr ""
+msgstr "membre de l'ocde à revenu"
 
 #: apps/country/models.py:43
 msgid "high income non oecd member"
-msgstr ""
+msgstr "non-membre de l'ocde à revenu"
 
 #: apps/country/models.py:44
 msgid "Latin America and the Caribbean"
-msgstr ""
+msgstr "Amérique latine et Caraïbes"
 
 #: apps/country/models.py:45
 msgid "Middle east and north africa"
-msgstr ""
+msgstr "Moyen-Orient et Afrique du Nord"
 
 #: apps/country/models.py:47 apps/country/models.py:78
 msgid "Sub-Saharan Africa"
-msgstr ""
+msgstr "Afrique subsaharienne"
 
 #: apps/country/models.py:51
 msgid "Southren asia"
-msgstr ""
+msgstr "Asie du Sud"
 
 #: apps/country/models.py:53
 msgid "Europe and southern asia"
-msgstr ""
+msgstr "Europe et Asie du Sud"
 
 #: apps/country/models.py:55
 msgid "oceania"
-msgstr ""
+msgstr "océanie"
 
 #: apps/country/models.py:56
 msgid "Sub saharan africa"
-msgstr ""
+msgstr "Afrique subsaharienne"
 
 #: apps/country/models.py:57
 msgid "middle africa"
-msgstr ""
+msgstr "Afrique centrale"
 
 #: apps/country/models.py:59
 msgid "latin america and the caribbean"
-msgstr ""
+msgstr "amérique latine et caraïbes"
 
 #: apps/country/models.py:60
 msgid "South america"
-msgstr ""
+msgstr "Amérique du Sud"
 
 #: apps/country/models.py:61
 msgid "Australia and new zealand"
-msgstr ""
+msgstr "Australie et Nouvelle-Zélande"
 
 #: apps/country/models.py:62
 msgid "Western europe"
-msgstr ""
+msgstr "Europe de l'Ouest"
 
 #: apps/country/models.py:63
 msgid "Central america"
-msgstr ""
+msgstr "Amérique centrale"
 
 #: apps/country/models.py:64
 msgid "northern america"
-msgstr ""
+msgstr "amérique du nord"
 
 #: apps/country/models.py:65
 msgid "South eastern asia"
-msgstr ""
+msgstr "Asie du Sud-Est"
 
 #: apps/country/models.py:66
 msgid "Eastern africa"
-msgstr ""
+msgstr "Afrique de l'Est"
 
 #: apps/country/models.py:67
 msgid "Eastern asia"
-msgstr ""
+msgstr "Asie de l'Est"
 
 #: apps/country/models.py:68
 msgid "Northern europe"
-msgstr ""
+msgstr "Europe du Nord"
 
 #: apps/country/models.py:73
 msgid "Middle East"
-msgstr ""
+msgstr "Moyen-Orient"
 
 #: apps/country/models.py:74
 msgid "South caucasus"
-msgstr ""
+msgstr "Caucase du Sud"
 
 #: apps/country/models.py:77
 msgid "The Americas"
-msgstr ""
+msgstr "Amériques"
 
 #: apps/country/models.py:80
 msgid "Middle East and North Africa"
-msgstr ""
+msgstr "Moyen-Orient et Afrique du Nord"
 
 #: apps/country/models.py:81
 msgid "East Asia and the Pacific"
-msgstr ""
+msgstr "Asie de l'Est et Pacifique"
 
 #: apps/country/models.py:84
 msgid "Name"
-msgstr ""
+msgstr "Nom"
 
 #: apps/country/models.py:85
 msgid "Iso3"
-msgstr ""
+msgstr "ISO 3"
 
 #: apps/country/models.py:86
 msgid "Iso2"
-msgstr ""
+msgstr "ISO 2"
 
 #: apps/country/models.py:87
 msgid "Idmc names"
-msgstr ""
+msgstr "Noms Idmc"
 
 #: apps/country/models.py:89
 msgid "Idmc continent"
-msgstr ""
+msgstr "Continent IDMC"
 
 #: apps/country/models.py:93
 msgid "Idmc region"
-msgstr ""
+msgstr "Région Idmc"
 
 #: apps/country/models.py:97
 msgid "Idmc sub region"
-msgstr ""
+msgstr "Sous-région Idmc"
 
 #: apps/country/models.py:101
 msgid "Wb region"
-msgstr ""
+msgstr "Région Web"
 
 #: apps/country/models.py:105
 msgid "Unpopulation division name"
-msgstr ""
+msgstr "Nom de la division d'inpopulation"
 
 #: apps/country/models.py:108
 msgid "United nations region"
-msgstr ""
+msgstr "Région des Nations Unies"
 
 #: apps/country/models.py:112
 msgid "Good practice region"
-msgstr ""
+msgstr "Région de bonnes pratiques"
 
 #: apps/country/models.py:116
 msgid "Is least developed country?"
-msgstr ""
+msgstr "Est-ce le pays le moins avancé ?"
 
 #: apps/country/models.py:119
 msgid "Is small island developing state?"
-msgstr ""
+msgstr "Un petit État insulaire est-il en développement ?"
 
 #: apps/country/models.py:122
 msgid "Is idmc go 2013?"
-msgstr ""
+msgstr "Est-ce que IDMC Go 2013 ?"
 
 #: apps/country/models.py:125
 msgid "Is conflict affected since 1970?"
-msgstr ""
+msgstr "Le conflit est-il affecté depuis 1970 ?"
 
 #: apps/country/models.py:128
 msgid "Is country office nrc?"
-msgstr ""
+msgstr "Le bureau de pays est-il du CNRC ?"
 
 #: apps/country/models.py:131
 msgid "Is country office iom?"
-msgstr ""
+msgstr "Le bureau national est-il de l'OIM ?"
 
 #: apps/country/models.py:134
 msgid "Bounding Box"
-msgstr ""
+msgstr "Boîte de délimitation"
 
 #: apps/country/models.py:138
 msgid "Center point"
-msgstr ""
+msgstr "Point central"
 
 #: apps/country/models.py:143
 msgid "Country title"
-msgstr ""
+msgstr "Titre du pays"
 
 #: apps/country/models.py:144 apps/country/models.py:217
 msgid "Country description"
-msgstr ""
+msgstr "Description du pays"
 
 #: apps/country/models.py:160 apps/country/models.py:215
 #: apps/country/models.py:237 apps/country/models.py:257
 #: apps/country/models.py:302
 msgid "Country"
-msgstr ""
+msgstr "Pays"
 
 #: apps/country/models.py:161
 msgid "Countries"
-msgstr ""
+msgstr "Pays"
 
 #: apps/country/models.py:218
 msgid "year"
-msgstr ""
+msgstr "année"
 
 #: apps/country/models.py:219
 msgid "Updated at"
-msgstr ""
+msgstr "Mis à jour à"
 
 #: apps/country/models.py:221
 msgid "Is published?"
-msgstr ""
+msgstr "Est publié ?"
 
 #: apps/country/models.py:227
 msgid "Country overview"
-msgstr ""
+msgstr "Aperçu du pays"
 
 #: apps/country/models.py:228
 msgid "Country overviews"
-msgstr ""
+msgstr "Aperçus par pays"
 
 #: apps/country/models.py:247
 msgid "Country additional information"
-msgstr ""
+msgstr "Informations supplémentaires sur le pays"
 
 #: apps/country/models.py:248
 msgid "Country additional informations"
-msgstr ""
+msgstr "Informations supplémentaires sur le pays"
 
 #: apps/country/models.py:292
 msgid "Conflict"
-msgstr ""
+msgstr "conflit"
 
 #: apps/country/models.py:293
 msgid "Conflicts"
-msgstr ""
+msgstr "Les conflits"
 
 #: apps/country/models.py:324
 msgid "Disaster"
-msgstr ""
+msgstr "Désastre"
 
 #: apps/country/models.py:325
 msgid "Disasters"
-msgstr ""
+msgstr "Les catastrophes"
 
 #: apps/country/models.py:333
 msgid "Title"
-msgstr ""
+msgstr "Titre"
 
 #: apps/country/models.py:338
 msgid "Snapshot file"
-msgstr ""
+msgstr "Fichier instantané"
 
 #: apps/country/models.py:339
 msgid "Snapshot files"
-msgstr ""
+msgstr "Fichiers de clichés"

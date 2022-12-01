@@ -20,11 +20,12 @@ services:
       # https://github.com/pytest-dev/pytest/issues/7443
       PYTEST_ADDOPTS: "--color=yes"
       CORS_ALLOWED_ORIGINS: http://localhost:3000
+      CSRF_TRUSTED_ORIGINS: http://localhost:3000
       DEBUG: "true"
       SECRET_KEY: "XXXXXXXXXXXXXXXXXXXXXXXXXX"
       EMAIL_FROM: dev.gidd.org
       # From db.environment
-      POSTGRES_DB: gidd
+      POSTGRES_DB: postgres
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       POSTGRES_HOST: db

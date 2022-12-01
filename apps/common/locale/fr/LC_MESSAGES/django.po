@@ -17,30 +17,31 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
 #: apps/common/models.py:7
 msgid "Good practice listing page"
-msgstr ""
+msgstr "Page de liste des bonnes pratiques"
 
 #: apps/common/models.py:8
 msgid "Submit good practice"
-msgstr ""
+msgstr "Soumettre les bonnes pratiques"
 
 #: apps/common/models.py:9
 msgid "Good practice contact information"
-msgstr ""
+msgstr "Informations de contact relatives aux bonnes pratiques"
 
 #: apps/common/models.py:12
 msgid "Static page type"
-msgstr ""
+msgstr "Type de page statique"
 
 #: apps/common/models.py:14
 msgid "Description"
-msgstr ""
+msgstr "Désignation"
 
 #: apps/common/models.py:17
 msgid "Static page"
-msgstr ""
+msgstr "Page statique"
 
 #: apps/common/models.py:18
 msgid "Static pages"
-msgstr ""
+msgstr "Pages statiques"

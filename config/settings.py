@@ -10,18 +10,22 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 import os
+import sys
 import environ
 from pathlib import Path
 from django.utils.translation import gettext_lazy
+from config import sentry
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
+APPS_DIR = os.path.join(BASE_DIR, 'apps')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 env = environ.Env(
+    PYTEST_XDIST_WORKER=(str, None),
+    GIDD_ENVIRONMENT=(str, 'DEVELOPMENT'),  # PROD, STAGING, DEVELOPMENT
     DEBUG=(bool, False),
     SECRET_KEY=str,
     DJANGO_ALLOWED_HOST=(list, ['*']),
@@ -31,6 +35,7 @@ env = environ.Env(
     POSTGRES_HOST=str,
     POSTGRES_PORT=(int, 5432),
     CORS_ALLOWED_ORIGINS=list,
+    CSRF_TRUSTED_ORIGINS=list,  # https://gidd-idmc.dev.datafriendlyspace.org
     TIME_ZONE=(str, 'Asia/Kathmandu'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
@@ -46,7 +51,16 @@ env = environ.Env(
     MEDIAFILES_LOCATION=(str, 'media'),
     AWS_STORAGE_BUCKET_NAME_STATIC=(str, 'static'),
     AWS_STORAGE_BUCKET_NAME_MEDIA=(str, 'media'),
+    # Sentry
+    SENTRY_DSN=(str, None),
+    SENTRY_SAMPLE_RATE=(float, 0.2),
+    # AWS Translation
+    AWS_TRANSLATE_ACCESS_KEY=(str, None),
+    AWS_TRANSLATE_SECRET_KEY=(str, None),
+    AWS_TRANSLATE_REGION=(str, None),
 )
+
+GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -54,6 +68,20 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = env('DEBUG')
+
+# See if we are inside a test environment
+TESTING = any([
+    arg in sys.argv for arg in [
+        'test',
+        'pytest',
+        'py.test',
+        '/usr/local/bin/pytest',
+        '/usr/local/bin/py.test',
+        '/usr/local/lib/python3.6/dist-packages/py/test.py',
+    ]
+    # Provided by pytest-xdist (If pytest is used)
+]) or env('PYTEST_XDIST_WORKER') is not None
+
 
 ALLOWED_HOSTS = ['server', *env.list('DJANGO_ALLOWED_HOST')]
 
@@ -103,7 +131,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(APPS_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -111,6 +139,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'config.context_processor.gidd',
             ],
         },
     },
@@ -165,6 +194,7 @@ LANGUAGES = (
     ('en', gettext_lazy('English')),
     ('fr', gettext_lazy('French')),
 )
+AVAILABLE_LANGUAGES = [lang for lang, _ in LANGUAGES]
 MODELTRANSLATION_DEBUG = DEBUG
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
 MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
@@ -198,6 +228,8 @@ else:
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS')
 
 CORS_ALLOW_CREDENTIALS = True
 CORS_URLS_REGEX = r'(^/api/.*$)|(^/media/.*$)|(^/graphql/$)'
@@ -255,3 +287,30 @@ TINYMCE_DEFAULT_CONFIG = {
     "language": "en",
 }
 # TINYMCE_COMPRESSOR = True
+
+# Sentry Config
+SENTRY_DSN = env("SENTRY_DSN")
+SENTRY_SAMPLE_RATE = env("SENTRY_SAMPLE_RATE")
+SENTRY_ENABLED = False
+
+if SENTRY_DSN:
+    SENTRY_CONFIG = {
+        "dsn": SENTRY_DSN,
+        "send_default_pii": True,
+        'release': sentry.fetch_git_sha(BASE_DIR),
+        "environment": GIDD_ENVIRONMENT,
+        "debug": DEBUG,
+        "tags": {
+            "site": ",".join(set(ALLOWED_HOSTS)),
+        },
+    }
+    sentry.init_sentry(
+        app_type='web',
+        **SENTRY_CONFIG,
+    )
+    SENTRY_ENABLED = True
+
+# AWS Translation
+AWS_TRANSLATE_ACCESS_KEY = env('AWS_TRANSLATE_ACCESS_KEY')
+AWS_TRANSLATE_SECRET_KEY = env('AWS_TRANSLATE_SECRET_KEY')
+AWS_TRANSLATE_REGION = env('AWS_TRANSLATE_REGION')

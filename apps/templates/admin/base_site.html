@@ -1,0 +1,26 @@
+{% extends "admin/base.html" %}
+
+{% block extrastyle %}
+    {{block.super}}
+    <style type="text/css">
+        body:before {
+            display: block;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+            line-height: 25px;
+            text-align: center;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: white;
+            content: "{{ GIDD_ENVIRONMENT }}";
+            {% if GIDD_ENVIRONMENT == 'PROD' %}
+            background-color: red;
+            {% elif GIDD_ENVIRONMENT == 'STAGING' %}
+            background-color: orange;
+            {% else %}
+            background-color: grey;
+            {% endif %}
+        }
+    </style>
+{% endblock %}

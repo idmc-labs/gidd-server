@@ -1,5 +1,6 @@
 import strawberry
 from typing import List
+
 from .types import (
     StaticPageType,
     StaticPageListType,

@@ -81,6 +81,7 @@ class Country(models.Model):
         EAST_ASIA_AND_THE_PACIFIC = 'east_asia_and_the_pacific', _('East Asia and the Pacific')
         EUROPE_AND_CENTRAL_ASIA = 'europe_and_central_asia', _('Europe and Central Asia')
 
+    id: int
     name = models.CharField(max_length=255, verbose_name=_('Name'))
     iso3 = models.CharField(max_length=10, verbose_name=_('Iso3'))
     iso2 = models.CharField(max_length=255, verbose_name=_('Iso2'))

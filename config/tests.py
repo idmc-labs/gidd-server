@@ -4,6 +4,8 @@ from django.test import TestCase as BaseTestCase
 
 
 class TestCase(BaseTestCase):
+    TEST_LANGUAGES = ('en', 'fr',)
+
     def force_login(self, user):
         self.client.force_login(user)
 
@@ -49,3 +51,12 @@ class TestCase(BaseTestCase):
         """
         content = resp.json()
         self.assertIn("errors", list(content.keys()), msg or content)
+
+
+class FakeTest(TestCase):
+    """
+    This test is for running migrations only
+    docker-compose run --rm server ./manage.py test -v 2 --pattern="config/tests/test_fake.py"
+    """
+    def test_fake(self):
+        pass

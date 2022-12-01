@@ -15,7 +15,7 @@ from .enums import (
 from apps.country.types import CountryType
 import strawberry_django
 from typing import Optional
-from utils import FileFieldType, build_url
+from utils import FileFieldType, build_url, get_enum_label
 from strawberry.types import Info
 
 
@@ -75,6 +75,8 @@ class GoodPracticeType:
     page_viewed_count: auto
     implementing_entity: auto
 
+    is_translated: bool
+
     @strawberry.field
     async def image(self, info: Info) -> Optional[FileFieldType]:
         result = await info.context["good_practice_image_loader"].load(self.id)
@@ -102,11 +104,11 @@ class GoodPracticeType:
 
     @strawberry.field
     async def type_label(self, info: Info) -> Optional[str]:
-        return TypeEnum(self.type).label if self.type else ""
+        return get_enum_label(TypeEnum, self.type)
 
     @strawberry.field
     async def stage_label(self, info: Info) -> str:
-        return StageTypeEnum(self.stage).label if self.stage else ""
+        return get_enum_label(StageTypeEnum, self.stage)
 
 
 @strawberry_django.ordering.order(GoodPractice)

@@ -18,7 +18,6 @@ from strawberry.dataloader import DataLoader
 
 
 class CustomAsyncGraphQLView(AsyncGraphQLView):
-
     async def get_context(self, request: Request, response: Optional[Response]) -> Any:
         return {
             'request': request,
