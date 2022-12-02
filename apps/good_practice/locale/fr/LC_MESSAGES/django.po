@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-04 04:38+0000\n"
+"POT-Creation-Date: 2022-12-01 09:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgid "Answer"
 msgstr "Réponse"
 
 #: apps/good_practice/models.py:9 apps/good_practice/models.py:110
-#: apps/good_practice/models.py:133
+#: apps/good_practice/models.py:136
 msgid "Is published?"
 msgstr "Est publié ?"
 
@@ -158,26 +158,30 @@ msgstr "Fin d'année"
 msgid "Total page viewed count"
 msgstr "Nombre total de pages consultées"
 
-#: apps/good_practice/models.py:117 apps/good_practice/models.py:130
+#: apps/good_practice/models.py:116
+msgid "Is public?"
+msgstr ""
+
+#: apps/good_practice/models.py:120 apps/good_practice/models.py:133
 msgid "Good practice"
 msgstr "Bonne pratique"
 
-#: apps/good_practice/models.py:118
+#: apps/good_practice/models.py:121
 msgid "Good practices"
 msgstr "Bonnes pratiques"
 
-#: apps/good_practice/models.py:125
+#: apps/good_practice/models.py:128
 msgid "Youtube video url"
 msgstr "URL de la vidéo YouTube"
 
-#: apps/good_practice/models.py:126
+#: apps/good_practice/models.py:129
 msgid "Image"
 msgstr "Image"
 
-#: apps/good_practice/models.py:127
+#: apps/good_practice/models.py:130
 msgid "Caption"
 msgstr "Légende"
 
-#: apps/good_practice/models.py:137 apps/good_practice/models.py:138
+#: apps/good_practice/models.py:140 apps/good_practice/models.py:141
 msgid "Gallery"
 msgstr "Galerie"

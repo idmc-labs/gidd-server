@@ -45,7 +45,7 @@ urlpatterns = [
 # Enable graphiql in development server only
 if settings.DEBUG:
     urlpatterns.append(path("graphiql/", CustomAsyncGraphQLView.as_view(schema=schema)))
-admin.site.site_header = "GIDD administration"
+admin.site.site_header = "IDMC Country Profile and Global Repository Admin"
 
 # Static and media file urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

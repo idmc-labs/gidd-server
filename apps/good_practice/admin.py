@@ -38,7 +38,7 @@ class GoodPracticeAdmin(TranslationAdmin):
     form = GoodPracticeForm
     search_fields = ['title']
     list_display = [
-        'title', 'type', 'focus_areas', 'country_names', 'drivers_of_displacements', 'start_year', 'end_year'
+        'id', 'title', 'type', 'focus_areas', 'country_names', 'drivers_of_displacements', 'start_year', 'end_year'
     ]
     inlines = [GalleryAdminInline]
     autocomplete_fields = ['countries', 'tags', 'focus_area', 'drivers_of_displacement']

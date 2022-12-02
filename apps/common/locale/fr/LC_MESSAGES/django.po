@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2022-11-04 04:38+0000\n"
+"POT-Creation-Date: 2022-12-01 09:11+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,18 +30,18 @@ msgstr "Soumettre les bonnes pratiques"
 msgid "Good practice contact information"
 msgstr "Informations de contact relatives aux bonnes pratiques"
 
-#: apps/common/models.py:12
+#: apps/common/models.py:11
 msgid "Static page type"
 msgstr "Type de page statique"
 
-#: apps/common/models.py:14
+#: apps/common/models.py:12
 msgid "Description"
 msgstr "Désignation"
 
-#: apps/common/models.py:17
+#: apps/common/models.py:15
 msgid "Static page"
 msgstr "Page statique"
 
-#: apps/common/models.py:18
+#: apps/common/models.py:16
 msgid "Static pages"
 msgstr "Pages statiques"

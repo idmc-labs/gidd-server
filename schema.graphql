@@ -187,6 +187,31 @@ type CountryType {
   wbRegionLabel: String!
 }
 
+"""Input data for `createGoodPractice` mutation"""
+input CreateGoodPracticeInput {
+  type: TypeEnum!
+  stage: StageTypeEnum!
+  startYear: Int!
+  countries: [Int!]!
+  driversOfDisplacement: [Int!]!
+  focusArea: [Int!]!
+  tags: [Int!]!
+  endYear: Int = null
+  implementingEntity: String = null
+  implementingEntityFr: String = null
+  image: Upload = null
+  description: String = null
+  descriptionFr: String = null
+  publishedDate: DateTime = null
+  mediaAndResourceLinks: String = null
+  mediaAndResourceLinksFr: String = null
+  title: String = null
+  titleFr: String = null
+  captcha: String = null
+}
+
+union CreateGoodPracticePayload = GoodPracticeType | OperationInfo
+
 """Date (isoformat)"""
 scalar Date
 
@@ -304,6 +329,11 @@ type GalleryType {
   image: FileFieldType
 }
 
+"""
+The `ID` scalar type represents a unique identifier, often used to refetch an object or as key for a cache. The ID type appears in a JSON response as a String; however, it is not intended to be human-readable. When expected as an input type, any string (such as `"4"`) or integer (such as `4`) input value will be accepted as an ID.
+"""
+scalar GlobalID @specifiedBy(url: "https://relay.dev/graphql/objectidentification.htm")
+
 input GoodPracticeFilter {
   search: String
   types: [TypeEnum!]
@@ -314,6 +344,7 @@ input GoodPracticeFilter {
   focusArea: [ID!]
   startYear: Int
   endYear: Int
+  isPublic: Boolean
   recommendedGoodPractice: ID
 }
 
@@ -342,6 +373,11 @@ input GoodPracticeOrder {
   pageViewedCount: Ordering
   publishedDate: Ordering
   updatedAt: Ordering
+}
+
+type GoodPracticePageViewCountType implements Node {
+  id: GlobalID!
+  pageViewedCount: Int!
 }
 
 """An enumeration."""
@@ -427,13 +463,23 @@ input IncrementPageViewedCountInput {
   id: ID!
 }
 
-union IncrementPageViewedCountPayload = GoodPracticeType | OperationInfo
+union IncrementPageViewedCountPayload = GoodPracticePageViewCountType | OperationInfo
 
 type Mutation {
   incrementPageViewedCount(
     """Input data for `incrementPageViewedCount` mutation"""
     input: IncrementPageViewedCountInput!
   ): IncrementPageViewedCountPayload!
+  createGoodPractice(
+    """Input data for `createGoodPractice` mutation"""
+    input: CreateGoodPracticeInput!
+  ): CreateGoodPracticePayload!
+}
+
+"""An object with a Globally Unique ID"""
+interface Node {
+  """The Globally Unique ID of this object"""
+  id: GlobalID!
 }
 
 input OffsetPaginationInput {
@@ -604,6 +650,8 @@ enum UnitedNationsRegionEnum {
   EASTERN_ASIA
   NORTHERN_EUROPE
 }
+
+scalar Upload
 
 """An enumeration."""
 enum WbRegionEnum {

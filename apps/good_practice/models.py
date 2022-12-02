@@ -10,8 +10,8 @@ class Faq(models.Model):
     )
 
     class Meta:
-        verbose_name = _('Frequently asked question')
-        verbose_name_plural = _('Frequently asked questions')
+        verbose_name = _('HOMEPAGE-Frequently asked question')
+        verbose_name_plural = _('HOMEPAGE-Frequently asked questions')
 
     def __str__(self):
         return self.question
@@ -32,8 +32,8 @@ class DriversOfDisplacement(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
 
     class Meta:
-        verbose_name = _('Drivers of displacement')
-        verbose_name_plural = _('Drivers of displacements')
+        verbose_name = _('Filters-Drivers of displacement')
+        verbose_name_plural = _('Filters-Drivers of displacements')
 
     def __str__(self):
         return self.name
@@ -43,8 +43,8 @@ class FocusArea(models.Model):
     name = models.CharField(max_length=255, verbose_name=_('Name'))
 
     class Meta:
-        verbose_name = _('Focus area')
-        verbose_name_plural = _('Focus areas')
+        verbose_name = _('Filters-Focus area')
+        verbose_name_plural = _('Filters-Focus areas')
 
     def __str__(self):
         return self.name
@@ -112,10 +112,13 @@ class GoodPractice(models.Model):
     start_year = models.BigIntegerField(verbose_name=_('Start year'))
     end_year = models.BigIntegerField(blank=True, null=True, verbose_name=_('End year'))
     page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
+    is_public = models.BooleanField(
+        editable=False, default=False, verbose_name=_('Is public?')
+    )
 
     class Meta:
-        verbose_name = _('Good practice')
-        verbose_name_plural = _('Good practices')
+        verbose_name = _('PAGES-Good Practices page')
+        verbose_name_plural = _('PAGES-Good Practices pages')
 
     def __str__(self):
         return self.title
