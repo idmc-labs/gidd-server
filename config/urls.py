@@ -22,12 +22,15 @@ from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from apps.country.views import (
     CountryViewSet,
     ConflictViewSet,
     DisasterViewSet,
     CountryAdditionalInfoViewSet
 )
+
+from apps.common import views
 
 router = DefaultRouter()
 router.register("countries", CountryViewSet, "countries-view")
@@ -42,6 +45,15 @@ urlpatterns = [
     path("graphql/", CustomAsyncGraphQLView.as_view(schema=schema, graphiql=False)),
     path('api/', include(router.urls)),
     path('tinymce/', include('tinymce.urls')),
+
+    path('admin/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path("password_reset", views.password_reset_request, name="password_reset"),
+    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(
+        template_name='password_reset_done.html'), name='password_reset_done'),
+    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
+        template_name="password_reset_confirm.html"), name='password_reset_confirm'),
+    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
+        template_name='password_reset_complete.html'), name='password_reset_complete'),
 ]
 # Enable graphiql in development server only
 if settings.DEBUG:
