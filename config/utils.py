@@ -1,5 +1,7 @@
 from django.conf import settings
 import requests
+from strawberry import UNSET
+from dataclasses import asdict
 
 HCAPTCHA_VERIFY_URL = 'https://hcaptcha.com/siteverify'
 
@@ -18,3 +20,9 @@ def validate_hcaptcha(captcha):
 
     response_json = response.json()
     return response_json['success']
+
+
+def get_values_list_from_dataclass(data_class):
+    if data_class:
+        return asdict(data_class)
+    return {}

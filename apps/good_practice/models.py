@@ -113,7 +113,8 @@ class GoodPractice(models.Model):
     end_year = models.BigIntegerField(blank=True, null=True, verbose_name=_('End year'))
     page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
     is_public = models.BooleanField(
-        editable=False, default=False, verbose_name=_('Is public?')
+        editable=False, default=False, verbose_name=_('Is public?'),
+        help_text=_('When a public submits a good practice it should be true which is immutable.'),
     )
 
     class Meta:
