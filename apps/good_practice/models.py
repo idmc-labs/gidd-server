@@ -117,6 +117,10 @@ class GoodPractice(models.Model):
         help_text=_('When a public submits a good practice it should be true which is immutable.'),
     )
 
+    @property
+    def errors(self):
+        return []
+
     class Meta:
         verbose_name = _('PAGES - Good practices page')
         verbose_name_plural = _('PAGES - Good practices pages')

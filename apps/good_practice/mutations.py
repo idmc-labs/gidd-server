@@ -16,20 +16,25 @@ from apps.good_practice.models import GoodPractice
 from apps.good_practice.types import GoodPracticeType
 
 from config.utils import get_values_list_from_dataclass
-
+from strawberry_django_plus.types import OperationInfo
 
 from .serializers import GoodPracticeSerializer
-from django.core.exceptions import ValidationError
+from strawberry_utils.error_types import _CustomErrorType, mutation_is_not_valid
 
 
-@gql.django.type(GoodPractice)
-class GoodPracticePageViewCountType(gql.Node):
+@strawberry.type
+class BaseInputType:
+    ok: bool
+    errors: Optional[List[_CustomErrorType]]
+
+
+class GoodPracticePageViewCountType(BaseInputType):
     id: gql.auto
     page_viewed_count: gql.auto
 
 
-@gql.django.input(GoodPractice)
-class GoodPracticeInputType():
+@strawberry.input
+class GoodPracticeInputType:
     type: TypeEnum
     stage: StageTypeEnum
     start_year: int
@@ -37,69 +42,41 @@ class GoodPracticeInputType():
     drivers_of_displacement: List[str]
     focus_area: List[str]
     tags: List[str]
-    end_year: gql.auto
-    implementing_entity: gql.auto
+    end_year: datetime.date
+    implementing_entity: str
     implementing_entity_fr: Optional[str]
     # image: gql.auto
-    description: gql.auto
+    description: Optional[str]
     description_fr: Optional[str]
-    published_date: gql.auto
-    media_and_resource_links: gql.auto
+    published_date: datetime.date
+    media_and_resource_links: Optional[str]
     media_and_resource_links_fr: Optional[str]
-    title: gql.auto
+    title: str
     title_fr: Optional[str]
     # captcha: gql.auto
 
-@strawberry.type()
-class ErrorFieldType:
-    field: str
-    message: str
-
-class MyError(Exception):
-    def __init__(self, field, message):
-        self.message = message
-        self.field = field
-    def __str__(self):
-        return self.field
 
 @strawberry.type
-class ValidationErrorType:
-    field: str
-    message: List[str]
-
-
-@gql.type
 class Mutation:
-    @gql.django.input_mutation
+    @strawberry.mutation
     def increment_page_viewed_count(self, info, id: gql.ID) -> GoodPracticePageViewCountType:
         obj = GoodPractice.objects.get(id=id)
         obj.page_viewed_count = obj.page_viewed_count + 1
         obj.save()
         return obj
 
-    @gql.django.input_mutation
+    @strawberry.mutation
     def create_good_practice(
         self,
         info,
-        type: GoodPracticeInputType
-    ) -> Union[GoodPracticeType, ValidationErrorType]:
-        return ValidationErrorType(
-            field='country',
-            message=['Invalid country']
-        )
-
-        type = get_values_list_from_dataclass(type)
-        print("Type", type)
-        serializer = GoodPracticeSerializer(
-            data=type,
-            context={'request': info.context}
-        )
-        print("************", serializer.is_valid())
-        print("************", serializer.errors)
-        if serializer.is_valid():
-            instance = serializer.save()
-            return instance
-        return serializer.errors
+        input: GoodPracticeInputType,
+    ) -> Union[GoodPracticeType, BaseInputType]:
+        data = vars(input)
+        serializer = GoodPracticeSerializer(data=data)
+        if errors := mutation_is_not_valid(serializer):
+            return BaseInputType(errors=errors, ok=False)
+        instance = serializer.save()
+        return instance
         # pass
 
 
