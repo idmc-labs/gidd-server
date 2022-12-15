@@ -341,6 +341,7 @@ type GoodPracticeFilterCountryChoiceType {
 input GoodPracticeInputType {
   startYear: Int!
   endYear: Int!
+  captcha: String!
   type: TypeEnum!
   stage: StageTypeEnum!
   countries: [ID!]!
