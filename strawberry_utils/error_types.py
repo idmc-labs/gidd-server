@@ -118,6 +118,5 @@ def mutation_is_not_valid(serializer) -> List[dict]:
     """
     if not serializer.is_valid():
         errors = serializer_error_to_error_types(serializer.errors, serializer.initial_data)
-        return errors
         return [dict(each) for each in errors]
     return []
