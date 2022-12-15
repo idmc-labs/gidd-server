@@ -1,6 +1,5 @@
 from rest_framework import serializers
 from django.db.models import ImageField
-from rest_framework.exceptions import ValidationError
 from .models import GoodPractice
 from config.utils import validate_hcaptcha
 
@@ -44,14 +43,13 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
     def validate_image(self, image):
         MAX_FILE_SIZE = 2 * 1024
         if image.size > MAX_FILE_SIZE:
-            raise ValidationError("File size should be less than 2MB")
+            raise serializers.ValidationError("File size should be less than 2MB")
 
     def validate_captcha(self, captcha):
         if not validate_hcaptcha(captcha):
             raise serializers.ValidationError(
                 'Invalid captcha'
             )
-
 
     def create(self, validated_data):
         drivers_of_displacements = validated_data.pop('drivers_of_displacement')
