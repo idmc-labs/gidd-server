@@ -1,35 +1,16 @@
 import strawberry
-from typing import List, Optional, TypeVar, Generic
+from typing import List, Optional
+from asgiref.sync import sync_to_async
 from strawberry.file_uploads import Upload
-from strawberry_django_plus import gql
-
 from .enums import (
     TypeEnum,
     StageTypeEnum,
 )
 from apps.good_practice.models import GoodPractice
 from apps.good_practice.types import GoodPracticeType
-
 from .serializers import GoodPracticeSerializer
-from strawberry_utils.error_types import CustomErrorType, mutation_is_not_valid
-from asgiref.sync import sync_to_async
-
-
-MutationVar = TypeVar('MutationVar')
-
-
-@strawberry.type
-class MutationResponse(Generic[MutationVar]):
-    ok: bool
-    errors: Optional[CustomErrorType]
-    data: Optional[MutationVar]
-
-
-@strawberry.type
-class Response:
-    ok: bool
-    errors: Optional[CustomErrorType]
-    data: Optional[GoodPracticeType]
+from strawberry_utils.error_types import mutation_is_not_valid
+from config.mutations import MutationResponse
 
 
 @strawberry.type
@@ -75,7 +56,8 @@ class GoodPracticeInputType:
 @strawberry.type
 class Mutation:
     @strawberry.mutation
-    def increment_page_viewed_count(self, info, id: gql.ID) -> GoodPracticePageViewCountType:
+    @sync_to_async
+    def increment_page_viewed_count(self, info, id: strawberry.ID) -> GoodPracticePageViewCountType:
         obj = GoodPractice.objects.get(id=id)
         obj.page_viewed_count = obj.page_viewed_count + 1
         obj.save()

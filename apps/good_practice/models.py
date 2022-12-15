@@ -114,12 +114,8 @@ class GoodPractice(models.Model):
     page_viewed_count = models.BigIntegerField(default=0, verbose_name=_('Total page viewed count'))
     is_public = models.BooleanField(
         editable=False, default=False, verbose_name=_('Is public?'),
-        help_text=_('When a public submits a good practice it should be true which is immutable.'),
+        help_text=_('It indicates if a good practice is submitted without authentication.'),
     )
-
-    @property
-    def errors(self):
-        return []
 
     class Meta:
         verbose_name = _('PAGES - Good practices page')

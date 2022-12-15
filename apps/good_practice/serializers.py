@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from django.db.models import ImageField
 from .models import GoodPractice
-from config.utils import validate_hcaptcha
+from config.hcaptcha import validate_hcaptcha
 
 
 class GoodPracticeSerializer(serializers.ModelSerializer):
