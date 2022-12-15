@@ -348,7 +348,7 @@ input GoodPracticeInputType {
   driversOfDisplacement: [ID!]!
   focusArea: [ID!]!
   tags: [ID!]!
-  image: Upload!
+  image: Upload
   titleEn: String = null
   descriptionEn: String = null
   mediaAndResourceLinksEn: String = null
