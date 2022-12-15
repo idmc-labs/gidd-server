@@ -44,6 +44,9 @@ class GoodPracticeInputType:
     start_year: int
     end_year: int
 
+    # Captcha
+    captcha: str
+
     # Enum fields
     type: TypeEnum
     stage: StageTypeEnum
