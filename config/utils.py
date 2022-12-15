@@ -1,6 +1,5 @@
 from django.conf import settings
 import requests
-from strawberry import UNSET
 from dataclasses import asdict
 
 HCAPTCHA_VERIFY_URL = 'https://hcaptcha.com/siteverify'

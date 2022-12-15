@@ -4,9 +4,6 @@ from rest_framework.exceptions import ValidationError
 from .models import GoodPractice
 
 
-MEGABYTE_LIMIT = 2
-
-
 class GoodPracticeSerializer(serializers.ModelSerializer):
     image = ImageField()
 
