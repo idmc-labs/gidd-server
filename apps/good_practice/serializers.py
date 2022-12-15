@@ -42,7 +42,7 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
 
     def validate_image(self, image):
         MAX_FILE_SIZE = 2 * 1024
-        if image.size > MAX_FILE_SIZE:
+        if image and image.size > MAX_FILE_SIZE:
             raise serializers.ValidationError("File size should be less than 2MB")
 
     def validate_captcha(self, captcha):
@@ -52,6 +52,7 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
             )
 
     def create(self, validated_data):
+        validated_data.pop('captcha')
         drivers_of_displacements = validated_data.pop('drivers_of_displacement')
         countries = validated_data.pop('countries')
         focus_areas = validated_data.pop('focus_area')
