@@ -11,7 +11,7 @@ from strawberry_django.pagination import apply as pagination_apply, OffsetPagina
 from strawberry_django.ordering import apply as ordering_apply
 from strawberry.types import Info
 
-from .models import GoodPractice, Faq
+from .models import GoodPractice, Faq, Tag
 from .types import (
     FaqType,
     FaqListType,
@@ -23,6 +23,7 @@ from .types import (
     EnumChoiceType,
     DriversOfDisplacementType,
     FocusAreaType,
+    TagType,
 )
 
 
@@ -122,6 +123,15 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         start_year=good_practice_qs.aggregate(Min('start_year'))['start_year__min'],
         end_year=good_practice_qs.aggregate(Max('end_year'))['end_year__max'],
+        tags=[
+            TagType(
+                id=id,
+                name=name,
+            ) for id, name in Tag.objects.values_list(
+                'id',
+                f"{build_localized_fieldname('name', active_language)}",
+            )
+        ],
     )
 
 

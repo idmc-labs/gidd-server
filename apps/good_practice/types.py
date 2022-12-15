@@ -143,6 +143,7 @@ class GoodPracticeFilterChoiceType:
     focus_area: Optional[List[FocusAreaType]]
     regions: Optional[List[EnumChoiceType]]
     countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
+    tags: Optional[List[TagType]]
     start_year: int
     end_year: int
 
