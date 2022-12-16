@@ -5,9 +5,12 @@ from apps.country.models import (
     Country, CountryAdditionalInfo,
     Conflict, Disaster, OverView,
     SnapshotFile,
+    FigureAnalysis,
 )
 from apps.country.forms import (
-    OverviewForm, CountryForm
+    OverviewForm,
+    CountryForm,
+    FigureAnalysisForm,
 )
 
 
@@ -15,6 +18,13 @@ class OverViewInline(admin.TabularInline):
     autocomplete_fields = ['country', ]
     model = OverView
     form = OverviewForm
+    extra = 0
+
+
+class FigureAnalysisInline(admin.TabularInline):
+    autocomplete_fields = ['country', ]
+    model = FigureAnalysis
+    form = FigureAnalysisForm
     extra = 0
 
 
@@ -44,7 +54,7 @@ class CountryAdmin(VersionAdmin, TranslationAdmin):
         'idmc_region',
         'idmc_sub_region',
     ]
-    inlines = [OverViewInline, ]
+    inlines = [OverViewInline, FigureAnalysisInline, ]
 
 
 class CountryAdditionalInfoAdmin(admin.ModelAdmin):
