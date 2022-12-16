@@ -20,11 +20,11 @@ from .types import (
     GoodPracticeOrder,
     GoodPracticeFilterChoiceType,
     GoodPracticeFilterCountryChoiceType,
-    EnumChoiceType,
     DriversOfDisplacementType,
     FocusAreaType,
     TagType,
 )
+from config.enums import GenericEnumValue, generate_enum_name_and_label
 
 
 def faq_obj(pk) -> FaqType:
@@ -76,7 +76,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     ).distinct().values('countries').order_by().values('countries__id', 'countries__name')
     return GoodPracticeFilterChoiceType(
         type=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=GoodPractice.Type(type).name,
                 label=GoodPractice.Type(type).label
             ) for type in types
@@ -93,7 +93,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             )
         ],
         stage=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=GoodPractice.StageType(type).name,
                 label=GoodPractice.StageType(type).label
             ) for type in stages
@@ -110,7 +110,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             )
         ],
         regions=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=Country.GoodPracticeRegion(type).name,
                 label=Country.GoodPracticeRegion(type).label
             ) for type in regions
@@ -218,3 +218,11 @@ class Query:
     focus_areas: List[FocusAreaType] = strawberry.django.field(
         pagination=True
     )
+
+    @strawberry.field
+    def good_practice_type_enums(self) -> List[GenericEnumValue[GoodPractice.Type]]:
+        return generate_enum_name_and_label(GoodPractice.Type)
+
+    @strawberry.field
+    def good_practice_stage_type_enums(self) -> List[GenericEnumValue[GoodPractice.StageType]]:
+        return generate_enum_name_and_label(GoodPractice.StageType)

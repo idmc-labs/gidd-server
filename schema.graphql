@@ -273,11 +273,6 @@ type DriversOfDisplacementType {
   name: String!
 }
 
-type EnumChoiceType {
-  name: String!
-  label: String!
-}
-
 type FaqListType {
   id: ID!
   question: String!
@@ -322,11 +317,11 @@ input GoodPracticeFilter {
 }
 
 type GoodPracticeFilterChoiceType {
-  type: [EnumChoiceType!]
+  type: [TypeEnumGenericEnumValue!]
   driversOfDisplacement: [DriversOfDisplacementType!]
-  stage: [EnumChoiceType!]
+  stage: [StageTypeEnumGenericEnumValue!]
   focusArea: [FocusAreaType!]
-  regions: [EnumChoiceType!]
+  regions: [GoodPracticeRegionGenericEnumValue!]
   countries: [GoodPracticeFilterCountryChoiceType!]
   tags: [TagType!]
   startYear: Int!
@@ -383,6 +378,11 @@ enum GoodPracticeRegion {
   MIDDLE_EAST_AND_NORTH_AFRICA
   EAST_ASIA_AND_THE_PACIFIC
   EUROPE_AND_CENTRAL_ASIA
+}
+
+type GoodPracticeRegionGenericEnumValue {
+  name: String!
+  label: String!
 }
 
 type GoodPracticeType {
@@ -503,6 +503,8 @@ type Query {
   faqs: [FaqListType!]!
   goodPractices(pagination: OffsetPaginationInput!, ordering: GoodPracticeOrder!, filters: GoodPracticeFilter = null): PaginationBaseType!
   goodPracticeFilterChoices: GoodPracticeFilterChoiceType!
+  goodPracticeTypeEnums: [TypeEnumGenericEnumValue!]!
+  goodPracticeStageTypeEnums: [StageTypeEnumGenericEnumValue!]!
   staticPages(filters: StaticPageFilter, pagination: OffsetPaginationInput): [StaticPageListType!]!
   staticPage(pk: ID): StaticPageType!
 }
@@ -512,6 +514,11 @@ enum StageTypeEnum {
   PROMISING
   ADVANCED
   SUCCESSFUL
+}
+
+type StageTypeEnumGenericEnumValue {
+  name: String!
+  label: String!
 }
 
 input StaticPageFilter {
@@ -582,6 +589,11 @@ enum TypeEnum {
   STRENGTHENING_POLICY_AND_LEGAL_FRAMEWORKS
   GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP
   DISPLACEMENT_MONITORING
+}
+
+type TypeEnumGenericEnumValue {
+  name: String!
+  label: String!
 }
 
 """An enumeration."""
