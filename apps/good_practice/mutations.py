@@ -38,7 +38,7 @@ class GoodPracticeInputType:
     focus_area: List[strawberry.ID]
     tags: List[strawberry.ID]
 
-    image: Optional[Upload]
+    image: Optional[Upload] = None
 
     # English fields
     title_en: Optional[str] = None
