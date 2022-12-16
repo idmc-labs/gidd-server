@@ -14,6 +14,7 @@ from .types import (
     CategoryStatisticsType,
     ConflictStatisticsType,
     DisasterCountryType,
+    FigureAnalysisType,
 )
 from apps.country.models import Disaster, Conflict
 from django.db.models import Value, Sum, F, Count, CharField, Case, When, IntegerField
@@ -102,6 +103,7 @@ class Query:
     conflict: ConflictType = strawberry.django.field()
     disaster: DisasterType = strawberry.django.field()
     country: CountryType = strawberry.django.field()
+    figure_analysis: List[FigureAnalysisType] = strawberry.django.field()
 
     @strawberry.field
     def country(self, pk: Optional[strawberry.ID] = None, iso3: Optional[str] = None) -> CountryType:
