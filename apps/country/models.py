@@ -341,3 +341,56 @@ class SnapshotFile(models.Model):
 
     def __str__(self):
         return str(self.title)
+
+
+class FigureAnalysis(models.Model):
+    class CrisisType(models.TextChoices):
+        CONFLICT = ('conflict', _('Conflict'))
+        DISASTER = ('disaster', _('Disaster'))
+
+    country = models.ForeignKey(
+        'country.Country',
+        related_name='countries',
+        on_delete=models.PROTECT,
+        verbose_name=_('Country'),
+    )
+    year = models.IntegerField(_('year'), choices=year_choices(), default=current_year())
+    crisis_type = models.CharField(
+        max_length=255, verbose_name=_('Crisis type'), choices=CrisisType.choices
+    )
+
+    # Conflict fields
+    nd_figures = models.BigIntegerField(verbose_name=_('New displacement figures'))
+    nd_methodology_and_sources = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('New displacement methodology and sources'),
+    )
+    nd_caveats_and_challenges = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('New displacement caveats and challenges'),
+    )
+
+    # Disaster fields
+    idp_figures = models.BigIntegerField(verbose_name=_('Internal displacement figures'))
+    idp_methodology_and_sources = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Internal displacment methodology and sources'),
+    )
+    idp_caveats_and_challenges = models.TextField(
+        null=True,
+        blank=True,
+        verbose_name=_('Internal displacment caveats and challenges'),
+    )
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+
+    class Meta:
+        verbose_name = _('Figure analysis')
+        verbose_name_plural = _('Figures analysis')
+        unique_together = [['year', 'country', 'crisis_type']]
+
+    def __str__(self):
+        return str(self.year)
