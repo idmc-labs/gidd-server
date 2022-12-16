@@ -348,7 +348,7 @@ input GoodPracticeInputType {
   driversOfDisplacement: [ID!]!
   focusArea: [ID!]!
   tags: [ID!]!
-  image: Upload
+  image: Upload = null
   titleEn: String = null
   descriptionEn: String = null
   mediaAndResourceLinksEn: String = null
@@ -495,6 +495,9 @@ type Query {
   country(pk: ID = null, iso3: String = null): CountryType!
   disasterStatistics(filters: DisasterStatisticsFilter!): DisasterStatisticsType!
   conflictStatistics(filters: ConflictStatisticsFilter!): ConflictStatisticsType!
+  tags(pagination: OffsetPaginationInput): [TagType!]!
+  driversOfDisplacements(pagination: OffsetPaginationInput): [DriversOfDisplacementType!]!
+  focusAreas(pagination: OffsetPaginationInput): [FocusAreaType!]!
   faq(pk: ID!): FaqType!
   goodPractice(pk: ID!): GoodPracticeType!
   faqs: [FaqListType!]!

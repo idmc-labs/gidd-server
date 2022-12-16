@@ -208,3 +208,13 @@ class Query:
     async def good_practice_filter_choices(self) -> GoodPracticeFilterChoiceType:
         options = await get_good_practice_filter_options()
         return options
+
+    tags: List[TagType] = strawberry.django.field(pagination=True)
+
+    drivers_of_displacements: List[DriversOfDisplacementType] = strawberry.django.field(
+        pagination=True
+    )
+
+    focus_areas: List[FocusAreaType] = strawberry.django.field(
+        pagination=True
+    )
