@@ -8,12 +8,14 @@ from .models import (
     Conflict,
     Disaster,
     OverView,
+    FigureAnalysis,
 )
 from .gh_filters import (
     CountryFilter,
     CountryAdditionalInfoFilter,
     ConflictFilter,
     DisasterFilter,
+    FigureAnalysisFilter,
 )
 from typing import List, Optional
 from strawberry.types import Info
@@ -24,6 +26,7 @@ from .enums import (
     UnitedNationsRegionEnum,
     SubRegionEnum,
     GoodPracticeRegionEnum,
+    CrisisTypeEnum,
 )
 from utils import FileFieldType, build_url, get_enum_label
 
@@ -289,3 +292,19 @@ class ConflictInputType:
     children_born_to_idps_since: auto
     idp_deaths_since: auto
     country: CountryInputType
+
+
+@strawberry.django.type(FigureAnalysis, pagination=True, filters=FigureAnalysisFilter)
+class FigureAnalysisType:
+    id: auto
+    country: CountryType
+    year: auto
+    crisis_type: CrisisTypeEnum
+    nd_figures: auto
+    nd_methodology_and_sources: auto
+    nd_caveats_and_challenges: auto
+    idp_figures: auto
+    idp_methodology_and_sources: auto
+    idp_caveats_and_challenges: auto
+    created_at: auto
+    updated_at: auto
