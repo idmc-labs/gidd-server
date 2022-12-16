@@ -187,6 +187,12 @@ type CountryType {
   wbRegionLabel: String!
 }
 
+"""An enumeration."""
+enum CrisisType {
+  CONFLICT
+  DISASTER
+}
+
 """A generic type to return error messages"""
 scalar CustomErrorType
 
@@ -283,6 +289,27 @@ type FaqType {
   id: ID!
   question: String!
   answer: String!
+}
+
+input FigureAnalysisFilter {
+  year: Int
+  crisisTypes: [CrisisType!]
+  countries: [ID!]
+}
+
+type FigureAnalysisType {
+  id: ID!
+  country: CountryType!
+  year: Int!
+  crisisType: CrisisType!
+  ndFigures: Int!
+  ndMethodologyAndSources: String
+  ndCaveatsAndChallenges: String
+  idpFigures: Int!
+  idpMethodologyAndSources: String
+  idpCaveatsAndChallenges: String
+  createdAt: DateTime!
+  updatedAt: DateTime!
 }
 
 type FileFieldType {
@@ -493,6 +520,7 @@ type Query {
   conflict(pk: ID): ConflictType!
   disaster(pk: ID): DisasterType!
   country(pk: ID = null, iso3: String = null): CountryType!
+  figureAnalysis(filters: FigureAnalysisFilter, pagination: OffsetPaginationInput): [FigureAnalysisType!]!
   disasterStatistics(filters: DisasterStatisticsFilter!): DisasterStatisticsType!
   conflictStatistics(filters: ConflictStatisticsFilter!): ConflictStatisticsType!
   tags(pagination: OffsetPaginationInput): [TagType!]!
