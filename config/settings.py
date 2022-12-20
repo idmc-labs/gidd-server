@@ -37,7 +37,7 @@ env = environ.Env(
     CORS_ALLOWED_ORIGINS=list,
     CSRF_TRUSTED_ORIGINS=list,  # https://gidd-idmc.dev.datafriendlyspace.org
     TIME_ZONE=(str, 'Asia/Kathmandu'),
-    DOMAIN_URL=(str, 'http://localhost:7000'),
+    APP_DOMAIN=(str, 'http://localhost:7000'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
     DJANGO_MEDIA_URL=(str, '/media/'),
@@ -60,10 +60,17 @@ env = environ.Env(
     AWS_TRANSLATE_SECRET_KEY=(str, None),
     AWS_TRANSLATE_REGION=(str, None),
     HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
+
+    DEFAULT_FROM_EMAIL=(str, None),
+    USE_AWS_SES=(bool, False),
+    # -- If not provided IAM Role will be used
+    AWS_SES_REGION_NAME=(str, None),
+    AWS_SES_ACCESS_KEY_ID=(str, None),
+    AWS_SES_SECRET_ACCESS_KEY=(str, None),
 )
 
 GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
-DOMAIN_URL = env('DOMAIN_URL')
+APP_DOMAIN = env('APP_DOMAIN')
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -321,22 +328,10 @@ AWS_TRANSLATE_SECRET_KEY = env('AWS_TRANSLATE_SECRET_KEY')
 AWS_TRANSLATE_REGION = env('AWS_TRANSLATE_REGION')
 
 
-# Email Configuration
-AWS_ENVIRONMENT = env('AWS_ENVIRONMENT')
-DEFAULT_FROM_EMAIL = env('DEFAULT_FROM_EMAIL')
-
-# Celery config
-BROKER_URL = env("REDIS_URL")
-CELERY_TIMEZONE = env('TIME_ZONE')
-CELERY_TASK_TRACK_STARTED = True
-CELERY_TASK_TIME_LIMIT = 30 * 60
-
-
-if DEBUG:
+if env('USE_AWS_SES'):
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
+    AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
+    AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
+else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
-elif not AWS_ENVIRONMENT:  # if deployed environment is other than aws
-    EMAIL_BACKEND = 'django_ses.SESBackend'
-    AWS_S3_ACCESS_KEY_ID = env('AWS_S3_ACCESS_KEY_ID')
-    AWS_S3_SECRET_ACCESS_KEY = env('AWS_S3_SECRET_ACCESS_KEY')
-else:   # if deployed environment is aws
-    EMAIL_BACKEND = 'django_ses.SESBackend'

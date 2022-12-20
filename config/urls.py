@@ -14,8 +14,8 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
 from django.utils.translation import gettext_lazy as _
+from django.urls import path, include, reverse_lazy
 from config.graphql import CustomAsyncGraphQLView
 from config.schema import schema
 from rest_framework.routers import DefaultRouter
@@ -48,12 +48,13 @@ urlpatterns = [
 
     path('admin/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path("password_reset", views.password_reset_request, name="password_reset"),
-    path('password_reset/done/', auth_views.PasswordResetDoneView.as_view(
-        template_name='password_reset_done.html'), name='password_reset_done'),
-    path('reset/<uidb64>/<token>/', auth_views.PasswordResetConfirmView.as_view(
-        template_name="password_reset_confirm.html"), name='password_reset_confirm'),
-    path('reset/done/', auth_views.PasswordResetCompleteView.as_view(
-        template_name='password_reset_complete.html'), name='password_reset_complete'),
+    path(
+        r'^password/reset/<uidb64>/<token>/$',
+        auth_views.PasswordResetConfirmView.as_view(
+            success_url=reverse_lazy('login'),
+        ),
+        name='password_reset_confirm'
+    ),
 ]
 # Enable graphiql in development server only
 if settings.DEBUG:

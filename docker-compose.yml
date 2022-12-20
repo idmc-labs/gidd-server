@@ -10,13 +10,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
 
-  redis:
-    image: redis:5
-    volumes:
-      - redis-data:/data
-
   server:
-    restart: always
+    restart: unless-stopped
     image: gidd-server/server
     build:
       context: ./
@@ -44,7 +39,6 @@ services:
       - '7000:7000'
     depends_on:
       - db
-      - redis
 
 volumes:
   media:
