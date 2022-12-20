@@ -59,7 +59,6 @@ env = environ.Env(
     AWS_TRANSLATE_ACCESS_KEY=(str, None),
     AWS_TRANSLATE_SECRET_KEY=(str, None),
     AWS_TRANSLATE_REGION=(str, None),
-    HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
 
     DEFAULT_FROM_EMAIL=(str, None),
     USE_AWS_SES=(bool, False),
@@ -67,6 +66,8 @@ env = environ.Env(
     AWS_SES_REGION_NAME=(str, None),
     AWS_SES_ACCESS_KEY_ID=(str, None),
     AWS_SES_SECRET_ACCESS_KEY=(str, None),
+    HCAPTCHA_SITE_KEY=(str, '10000000-ffff-ffff-ffff-000000000001'),
+    HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
 )
 
 GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
@@ -335,3 +336,5 @@ if env('USE_AWS_SES'):
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+HCAPTCHA_SITE_KEY = env('HCAPTCHA_SITE_KEY')
