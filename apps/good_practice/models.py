@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils.translation import gettext_lazy as _
+from config.custom_fields import clean_text_fields
 
 
 class Faq(models.Model):
@@ -126,6 +127,10 @@ class GoodPractice(models.Model):
 
     def is_translated(self):
         return self.title_fr not in [None, '']
+
+    def save(self, *args, **kwargs):
+        clean_text_fields(self, 'description', 'media_and_resource_links')
+        return super().save(*args, **kwargs)
 
 
 class Gallery(models.Model):
