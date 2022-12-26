@@ -41,7 +41,7 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
         )
 
     def validate_image(self, image):
-        MAX_FILE_SIZE = 2 * 1024
+        MAX_FILE_SIZE = 2 * 1024 * 1024
         if image and image.size > MAX_FILE_SIZE:
             raise serializers.ValidationError("File size should be less than 2MB")
 
