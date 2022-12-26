@@ -37,6 +37,7 @@ env = environ.Env(
     CORS_ALLOWED_ORIGINS=list,
     CSRF_TRUSTED_ORIGINS=list,  # https://gidd-idmc.dev.datafriendlyspace.org
     TIME_ZONE=(str, 'Asia/Kathmandu'),
+    APP_DOMAIN=(str, 'http://localhost:7000'),
     # Static, Media configs
     DJANGO_STATIC_URL=(str, '/static/'),
     DJANGO_MEDIA_URL=(str, '/media/'),
@@ -58,10 +59,19 @@ env = environ.Env(
     AWS_TRANSLATE_ACCESS_KEY=(str, None),
     AWS_TRANSLATE_SECRET_KEY=(str, None),
     AWS_TRANSLATE_REGION=(str, None),
+
+    DEFAULT_FROM_EMAIL=(str, None),
+    USE_AWS_SES=(bool, False),
+    # -- If not provided IAM Role will be used
+    AWS_SES_REGION_NAME=(str, None),
+    AWS_SES_ACCESS_KEY_ID=(str, None),
+    AWS_SES_SECRET_ACCESS_KEY=(str, None),
+    HCAPTCHA_SITE_KEY=(str, '10000000-ffff-ffff-ffff-000000000001'),
     HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
 )
 
 GIDD_ENVIRONMENT = env('GIDD_ENVIRONMENT')
+APP_DOMAIN = env('APP_DOMAIN')
 
 CORS_ALLOWED_ORIGINS = env.list('CORS_ALLOWED_ORIGINS')
 # SECURITY WARNING: keep the secret key used in production secret!
@@ -317,3 +327,14 @@ if SENTRY_DSN:
 AWS_TRANSLATE_ACCESS_KEY = env('AWS_TRANSLATE_ACCESS_KEY')
 AWS_TRANSLATE_SECRET_KEY = env('AWS_TRANSLATE_SECRET_KEY')
 AWS_TRANSLATE_REGION = env('AWS_TRANSLATE_REGION')
+
+
+if env('USE_AWS_SES'):
+    EMAIL_BACKEND = 'django_ses.SESBackend'
+    AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
+    AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
+    AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
+else:
+    EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+
+HCAPTCHA_SITE_KEY = env('HCAPTCHA_SITE_KEY')

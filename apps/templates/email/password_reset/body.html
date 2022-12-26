@@ -1,0 +1,32 @@
+{% extends "email/generic_email.html" %}
+{% block content %}
+
+<tr>
+    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">
+            We received a request to reset the password for your account for this email address.
+            To initiate the password reset process for your account, click the link below.
+        </div>
+    </td>
+    </tr>
+    <tr>
+    <td align="left" vertical-align="middle" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+        <table border="0" cellpadding="0" cellspacing="0" role="presentation" style="border-collapse:separate;line-height:100%;">
+        <tbody><tr>
+            <td align="center" bgcolor="#2e58ff" role="presentation" style="border:none;border-radius:30px;cursor:auto;mso-padding-alt:10px 25px;background:#2e58ff;" valign="middle">
+            <a href="{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}" style="display: inline-block; background: #2e58ff; color: #ffffff; font-family: Helvetica, Arial, sans-serif; font-size: 14px; font-weight: bold; line-height: 30px; margin: 0; text-decoration: none; text-transform: uppercase; padding: 10px 25px; mso-padding-alt: 0px; border-radius: 30px;" target="_blank">
+                Reset Password
+                </a>
+            </td>
+        </tr>
+        </tbody></table>
+    </td>
+    </tr>
+    <tr>
+    <td align="left" style="font-size:0px;padding:10px 25px;word-break:break-word;">
+        <div style="font-family:Helvetica, Arial, sans-serif;font-size:18px;font-weight:400;line-height:24px;text-align:left;color:#434245;">If you are having trouble with the button above, copy and paste the URL below into your web browser. <a href="{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}">{{ domain }}{% url 'password_reset_confirm' uidb64=uid token=token %}</a></div>
+
+    </td>
+</tr>
+
+{% endblock %}

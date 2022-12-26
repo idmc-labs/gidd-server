@@ -14,20 +14,23 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
 from django.utils.translation import gettext_lazy as _
+from django.urls import path, include, reverse_lazy
 from config.graphql import CustomAsyncGraphQLView
 from config.schema import schema
 from rest_framework.routers import DefaultRouter
 from rest_framework_nested.routers import NestedDefaultRouter
 from django.conf import settings
 from django.conf.urls.static import static
+from django.contrib.auth import views as auth_views
 from apps.country.views import (
     CountryViewSet,
     ConflictViewSet,
     DisasterViewSet,
     CountryAdditionalInfoViewSet
 )
+
+from apps.common import views
 
 router = DefaultRouter()
 router.register("countries", CountryViewSet, "countries-view")
@@ -42,6 +45,16 @@ urlpatterns = [
     path("graphql/", CustomAsyncGraphQLView.as_view(schema=schema, graphiql=False)),
     path('api/', include(router.urls)),
     path('tinymce/', include('tinymce.urls')),
+
+    path('admin/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
+    path("password_reset", views.password_reset_request, name="password_reset"),
+    path(
+        r'^password/reset/<uidb64>/<token>/$',
+        auth_views.PasswordResetConfirmView.as_view(
+            success_url=reverse_lazy('login'),
+        ),
+        name='password_reset_confirm'
+    ),
 ]
 # Enable graphiql in development server only
 if settings.DEBUG:
