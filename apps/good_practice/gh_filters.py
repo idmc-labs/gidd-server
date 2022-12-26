@@ -24,6 +24,7 @@ class GoodPracticeFilter:
     focus_area: List[strawberry.ID] | None
     start_year: int | None
     end_year: int | None
+    is_public: bool
     recommended_good_practice: strawberry.ID
 
     def filter_search(self, queryset):

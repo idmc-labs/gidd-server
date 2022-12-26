@@ -2,7 +2,12 @@ from factory import fuzzy, LazyAttribute
 from factory.django import DjangoModelFactory
 from django.utils import timezone
 
-from .models import GoodPractice
+from .models import (
+    GoodPractice,
+    Tag,
+    FocusArea,
+    DriversOfDisplacement,
+)
 
 
 class GoodPracticeFactory(DjangoModelFactory):
@@ -15,3 +20,24 @@ class GoodPracticeFactory(DjangoModelFactory):
 
     class Meta:
         model = GoodPractice
+
+
+class TagFactory(DjangoModelFactory):
+    name = fuzzy.FuzzyText(length=15)
+
+    class Meta:
+        model = Tag
+
+
+class FocusAreaFactory(DjangoModelFactory):
+    name = fuzzy.FuzzyText(length=15)
+
+    class Meta:
+        model = FocusArea
+
+
+class DriversOfDisplacementFactory(DjangoModelFactory):
+    name = fuzzy.FuzzyText(length=15)
+
+    class Meta:
+        model = DriversOfDisplacement

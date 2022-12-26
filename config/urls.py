@@ -15,6 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.utils.translation import gettext_lazy as _
 from config.graphql import CustomAsyncGraphQLView
 from config.schema import schema
 from rest_framework.routers import DefaultRouter
@@ -45,7 +46,7 @@ urlpatterns = [
 # Enable graphiql in development server only
 if settings.DEBUG:
     urlpatterns.append(path("graphiql/", CustomAsyncGraphQLView.as_view(schema=schema)))
-admin.site.site_header = "GIDD administration"
+admin.site.site_header = _('IDMC Country Profile and Global Repository Admin')
 
 # Static and media file urls
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

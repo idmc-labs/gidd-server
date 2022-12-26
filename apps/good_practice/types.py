@@ -13,10 +13,12 @@ from .enums import (
     StageTypeEnum,
 )
 from apps.country.types import CountryType
+from apps.country.models import Country
 import strawberry_django
 from typing import Optional
 from utils import FileFieldType, build_url, get_enum_label
 from strawberry.types import Info
+from config.enums import GenericEnumValue
 
 
 @strawberry.django.type(Faq, pagination=True)
@@ -130,19 +132,14 @@ class GoodPracticeFilterCountryChoiceType:
 
 
 @strawberry.type
-class EnumChoiceType:
-    name: str
-    label: str
-
-
-@strawberry.type
 class GoodPracticeFilterChoiceType:
-    type: Optional[List[EnumChoiceType]]
+    type: Optional[List[GenericEnumValue[GoodPractice.Type]]]
     drivers_of_displacement: Optional[List[DriversOfDisplacementType]]
-    stage: Optional[List[EnumChoiceType]]
+    stage: Optional[List[GenericEnumValue[GoodPractice.StageType]]]
     focus_area: Optional[List[FocusAreaType]]
-    regions: Optional[List[EnumChoiceType]]
+    regions: Optional[List[GenericEnumValue[Country.GoodPracticeRegion]]]
     countries: Optional[List[GoodPracticeFilterCountryChoiceType]]
+    tags: Optional[List[TagType]]
     start_year: int
     end_year: int
 

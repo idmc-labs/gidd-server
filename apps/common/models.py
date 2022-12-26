@@ -12,8 +12,8 @@ class StaticPage(models.Model):
     description = models.TextField(blank=True, verbose_name=_('Description'), null=True)
 
     class Meta:
-        verbose_name = _('Static page')
-        verbose_name_plural = _('Static pages')
+        verbose_name = _('HOMEPAGE - Introduction and Contact information')
+        verbose_name_plural = _('HOMEPAGE - Introduction and Contact information')
 
     def __str__(self):
         return self.type

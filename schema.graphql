@@ -187,6 +187,9 @@ type CountryType {
   wbRegionLabel: String!
 }
 
+"""A generic type to return error messages"""
+scalar CustomErrorType
+
 """Date (isoformat)"""
 scalar Date
 
@@ -270,11 +273,6 @@ type DriversOfDisplacementType {
   name: String!
 }
 
-type EnumChoiceType {
-  name: String!
-  label: String!
-}
-
 type FaqListType {
   id: ID!
   question: String!
@@ -314,16 +312,18 @@ input GoodPracticeFilter {
   focusArea: [ID!]
   startYear: Int
   endYear: Int
+  isPublic: Boolean
   recommendedGoodPractice: ID
 }
 
 type GoodPracticeFilterChoiceType {
-  type: [EnumChoiceType!]
+  type: [TypeEnumGenericEnumValue!]
   driversOfDisplacement: [DriversOfDisplacementType!]
-  stage: [EnumChoiceType!]
+  stage: [StageTypeEnumGenericEnumValue!]
   focusArea: [FocusAreaType!]
-  regions: [EnumChoiceType!]
+  regions: [GoodPracticeRegionGenericEnumValue!]
   countries: [GoodPracticeFilterCountryChoiceType!]
+  tags: [TagType!]
   startYear: Int!
   endYear: Int!
 }
@@ -331,6 +331,27 @@ type GoodPracticeFilterChoiceType {
 type GoodPracticeFilterCountryChoiceType {
   id: ID!
   name: String!
+}
+
+input GoodPracticeInputType {
+  startYear: Int!
+  endYear: Int!
+  captcha: String!
+  type: TypeEnum!
+  stage: StageTypeEnum!
+  countries: [ID!]!
+  driversOfDisplacement: [ID!]!
+  focusArea: [ID!]!
+  tags: [ID!]!
+  image: Upload = null
+  titleEn: String = null
+  descriptionEn: String = null
+  mediaAndResourceLinksEn: String = null
+  implementingEntityEn: String = null
+  titleFr: String = null
+  descriptionFr: String = null
+  mediaAndResourceLinksFr: String = null
+  implementingEntityFr: String = null
 }
 
 input GoodPracticeOrder {
@@ -344,6 +365,11 @@ input GoodPracticeOrder {
   updatedAt: Ordering
 }
 
+type GoodPracticePageViewCountType {
+  id: ID!
+  pageViewedCount: Int!
+}
+
 """An enumeration."""
 enum GoodPracticeRegion {
   THE_AMERICAS
@@ -352,6 +378,11 @@ enum GoodPracticeRegion {
   MIDDLE_EAST_AND_NORTH_AFRICA
   EAST_ASIA_AND_THE_PACIFIC
   EUROPE_AND_CENTRAL_ASIA
+}
+
+type GoodPracticeRegionGenericEnumValue {
+  name: String!
+  label: String!
 }
 
 type GoodPracticeType {
@@ -376,6 +407,12 @@ type GoodPracticeType {
   stageLabel: String!
   tags: [TagType!]
   typeLabel: String
+}
+
+type GoodPracticeTypeMutationResponse {
+  ok: Boolean!
+  errors: CustomErrorType
+  data: GoodPracticeType
 }
 
 input IDFilterLookup {
@@ -422,52 +459,14 @@ enum IdmcRegionEnum {
   WESTERN_ASIA
 }
 
-"""Input data for `incrementPageViewedCount` mutation"""
-input IncrementPageViewedCountInput {
-  id: ID!
-}
-
-union IncrementPageViewedCountPayload = GoodPracticeType | OperationInfo
-
 type Mutation {
-  incrementPageViewedCount(
-    """Input data for `incrementPageViewedCount` mutation"""
-    input: IncrementPageViewedCountInput!
-  ): IncrementPageViewedCountPayload!
+  incrementPageViewedCount(id: ID!): GoodPracticePageViewCountType!
+  createGoodPractice(input: GoodPracticeInputType!): GoodPracticeTypeMutationResponse!
 }
 
 input OffsetPaginationInput {
   offset: Int! = 0
   limit: Int! = -1
-}
-
-"""Multiple messages returned by an operation."""
-type OperationInfo {
-  """List of messages returned by the operation."""
-  messages: [OperationMessage!]!
-}
-
-"""An error that happened while executing an operation."""
-type OperationMessage {
-  """The kind of this message."""
-  kind: OperationMessageKind!
-
-  """The error message."""
-  message: String!
-
-  """
-  The field that caused the error, or `null` if it isn't associated with any particular field.
-  """
-  field: String
-}
-
-"""The kind of the returned message."""
-enum OperationMessageKind {
-  INFO
-  WARNING
-  ERROR
-  PERMISSION
-  VALIDATION
 }
 
 enum Ordering {
@@ -496,11 +495,16 @@ type Query {
   country(pk: ID = null, iso3: String = null): CountryType!
   disasterStatistics(filters: DisasterStatisticsFilter!): DisasterStatisticsType!
   conflictStatistics(filters: ConflictStatisticsFilter!): ConflictStatisticsType!
+  tags(pagination: OffsetPaginationInput): [TagType!]!
+  driversOfDisplacements(pagination: OffsetPaginationInput): [DriversOfDisplacementType!]!
+  focusAreas(pagination: OffsetPaginationInput): [FocusAreaType!]!
   faq(pk: ID!): FaqType!
   goodPractice(pk: ID!): GoodPracticeType!
   faqs: [FaqListType!]!
   goodPractices(pagination: OffsetPaginationInput!, ordering: GoodPracticeOrder!, filters: GoodPracticeFilter = null): PaginationBaseType!
   goodPracticeFilterChoices: GoodPracticeFilterChoiceType!
+  goodPracticeTypeEnums: [TypeEnumGenericEnumValue!]!
+  goodPracticeStageTypeEnums: [StageTypeEnumGenericEnumValue!]!
   staticPages(filters: StaticPageFilter, pagination: OffsetPaginationInput): [StaticPageListType!]!
   staticPage(pk: ID): StaticPageType!
 }
@@ -510,6 +514,11 @@ enum StageTypeEnum {
   PROMISING
   ADVANCED
   SUCCESSFUL
+}
+
+type StageTypeEnumGenericEnumValue {
+  name: String!
+  label: String!
 }
 
 input StaticPageFilter {
@@ -582,6 +591,11 @@ enum TypeEnum {
   DISPLACEMENT_MONITORING
 }
 
+type TypeEnumGenericEnumValue {
+  name: String!
+  label: String!
+}
+
 """An enumeration."""
 enum UnitedNationsRegionEnum {
   ASIA
@@ -604,6 +618,8 @@ enum UnitedNationsRegionEnum {
   EASTERN_ASIA
   NORTHERN_EUROPE
 }
+
+scalar Upload
 
 """An enumeration."""
 enum WbRegionEnum {

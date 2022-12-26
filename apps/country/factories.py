@@ -2,7 +2,7 @@ import factory
 from factory import fuzzy
 from factory.django import DjangoModelFactory
 
-from .models import Country, CountryAdditionalInfo
+from apps.country.models import Country, CountryAdditionalInfo
 
 
 class CountryFactory(DjangoModelFactory):

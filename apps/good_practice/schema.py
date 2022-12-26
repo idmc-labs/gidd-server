@@ -11,7 +11,7 @@ from strawberry_django.pagination import apply as pagination_apply, OffsetPagina
 from strawberry_django.ordering import apply as ordering_apply
 from strawberry.types import Info
 
-from .models import GoodPractice, Faq
+from .models import GoodPractice, Faq, Tag
 from .types import (
     FaqType,
     FaqListType,
@@ -20,10 +20,11 @@ from .types import (
     GoodPracticeOrder,
     GoodPracticeFilterChoiceType,
     GoodPracticeFilterCountryChoiceType,
-    EnumChoiceType,
     DriversOfDisplacementType,
     FocusAreaType,
+    TagType,
 )
+from config.enums import GenericEnumValue, generate_enum_name_and_label
 
 
 def faq_obj(pk) -> FaqType:
@@ -75,7 +76,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
     ).distinct().values('countries').order_by().values('countries__id', 'countries__name')
     return GoodPracticeFilterChoiceType(
         type=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=GoodPractice.Type(type).name,
                 label=GoodPractice.Type(type).label
             ) for type in types
@@ -92,7 +93,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             )
         ],
         stage=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=GoodPractice.StageType(type).name,
                 label=GoodPractice.StageType(type).label
             ) for type in stages
@@ -109,7 +110,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             )
         ],
         regions=[
-            EnumChoiceType(
+            GenericEnumValue(
                 name=Country.GoodPracticeRegion(type).name,
                 label=Country.GoodPracticeRegion(type).label
             ) for type in regions
@@ -122,6 +123,15 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
         ],
         start_year=good_practice_qs.aggregate(Min('start_year'))['start_year__min'],
         end_year=good_practice_qs.aggregate(Max('end_year'))['end_year__max'],
+        tags=[
+            TagType(
+                id=id,
+                name=name,
+            ) for id, name in Tag.objects.values_list(
+                'id',
+                f"{build_localized_fieldname('name', active_language)}",
+            )
+        ],
     )
 
 
@@ -198,3 +208,21 @@ class Query:
     async def good_practice_filter_choices(self) -> GoodPracticeFilterChoiceType:
         options = await get_good_practice_filter_options()
         return options
+
+    tags: List[TagType] = strawberry.django.field(pagination=True)
+
+    drivers_of_displacements: List[DriversOfDisplacementType] = strawberry.django.field(
+        pagination=True
+    )
+
+    focus_areas: List[FocusAreaType] = strawberry.django.field(
+        pagination=True
+    )
+
+    @strawberry.field
+    def good_practice_type_enums(self) -> List[GenericEnumValue[GoodPractice.Type]]:
+        return generate_enum_name_and_label(GoodPractice.Type)
+
+    @strawberry.field
+    def good_practice_stage_type_enums(self) -> List[GenericEnumValue[GoodPractice.StageType]]:
+        return generate_enum_name_and_label(GoodPractice.StageType)
