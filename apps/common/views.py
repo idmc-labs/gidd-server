@@ -36,6 +36,6 @@ def password_reset_request(request):
 
     return render(
         request=request,
-        template_name="email/password_reset/password_reset.html",
+        template_name="password_reset.html",
         context={"password_reset_form": password_reset_form}
     )
