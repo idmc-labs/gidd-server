@@ -1,7 +1,7 @@
 from apps.country.models import (
     CountryAdditionalInfo, OverView, Country, FigureAnalysis
 )
-from django.db.models import Count, F
+from django.db.models import Count
 from collections import defaultdict
 from typing import List
 from asgiref.sync import sync_to_async
@@ -40,7 +40,6 @@ def good_practices_count_load(keys: List[int]):
 
 
 def figure_analysis_load(keys: List[int]):
-    from .types import FigureAnalysisListType, FigureAnalysisType
     qs = FigureAnalysis.objects.filter(
         country_id__in=keys
     )

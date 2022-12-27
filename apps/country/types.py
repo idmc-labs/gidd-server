@@ -9,14 +9,12 @@ from .models import (
     Conflict,
     Disaster,
     OverView,
-    FigureAnalysis,
 )
 from .gh_filters import (
     CountryFilter,
     CountryAdditionalInfoFilter,
     ConflictFilter,
     DisasterFilter,
-    FigureAnalysisFilter,
 )
 from typing import List, Optional
 from strawberry.types import Info
