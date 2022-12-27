@@ -1,8 +1,7 @@
-
 from apps.country.models import (
-    CountryAdditionalInfo, OverView, Country
+    CountryAdditionalInfo, OverView, Country, FigureAnalysis
 )
-from django.db.models import Count
+from django.db.models import Count, F
 from collections import defaultdict
 from typing import List
 from asgiref.sync import sync_to_async
@@ -40,6 +39,18 @@ def good_practices_count_load(keys: List[int]):
     return [_map[key] for key in keys]
 
 
+def figure_analysis_load(keys: List[int]):
+    from .types import FigureAnalysisListType, FigureAnalysisType
+    qs = FigureAnalysis.objects.filter(
+        country_id__in=keys
+    )
+    _map = defaultdict(list)
+    for figure_analysis in qs:
+        _map[figure_analysis.country_id].append(figure_analysis)
+    return [_map[key] for key in keys]
+
+
 load_country_additonal_info = sync_to_async(country_additonal_info_load)
 load_country_overviews = sync_to_async(country_overviews_load)
 load_good_practices_count = sync_to_async(good_practices_count_load)
+load_figure_analysis = sync_to_async(figure_analysis_load)

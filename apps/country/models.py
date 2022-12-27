@@ -350,7 +350,7 @@ class FigureAnalysis(models.Model):
 
     country = models.ForeignKey(
         'country.Country',
-        related_name='countries',
+        related_name='figure_analysis',
         on_delete=models.PROTECT,
         verbose_name=_('Country'),
     )

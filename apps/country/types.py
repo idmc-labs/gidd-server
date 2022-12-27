@@ -1,5 +1,6 @@
 # types.py
 import strawberry
+import datetime
 from strawberry import auto, ID
 import strawberry_django
 from .models import (
@@ -95,6 +96,21 @@ class DisasterStatisticsType:
     categories: List[CategoryStatisticsType]
 
 
+@strawberry.type
+class FigureAnalysisType:
+    id: strawberry.ID
+    year: int
+    crisis_type: CrisisTypeEnum
+    nd_figures: int
+    nd_methodology_and_sources: str
+    nd_caveats_and_challenges: str
+    idp_figures: int
+    idp_methodology_and_sources: str
+    idp_caveats_and_challenges: str
+    created_at: datetime.date
+    updated_at: datetime.date
+
+
 @strawberry.django.type(Country)
 class CountryType:
     id: auto
@@ -167,6 +183,10 @@ class CountryType:
     @strawberry.field
     async def united_nations_region_label(self, info: Info) -> str:
         return get_enum_label(UnitedNationsRegionEnum, self.united_nations_region)
+
+    @strawberry.field
+    async def figure_analysis(self, info: Info) -> Optional[List[FigureAnalysisType]]:
+        return await info.context['figure_analysis_loader'].load(self.id)
 
 
 @strawberry.django.type(Country, pagination=True, filters=CountryFilter)
@@ -292,19 +312,3 @@ class ConflictInputType:
     children_born_to_idps_since: auto
     idp_deaths_since: auto
     country: CountryInputType
-
-
-@strawberry.django.type(FigureAnalysis, pagination=True, filters=FigureAnalysisFilter)
-class FigureAnalysisType:
-    id: auto
-    country: CountryType
-    year: auto
-    crisis_type: CrisisTypeEnum
-    nd_figures: auto
-    nd_methodology_and_sources: auto
-    nd_caveats_and_challenges: auto
-    idp_figures: auto
-    idp_methodology_and_sources: auto
-    idp_caveats_and_challenges: auto
-    created_at: auto
-    updated_at: auto

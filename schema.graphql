@@ -137,6 +137,7 @@ type CountryListType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  figureAnalysis: [FigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -177,6 +178,7 @@ type CountryType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  figureAnalysis: [FigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -291,25 +293,18 @@ type FaqType {
   answer: String!
 }
 
-input FigureAnalysisFilter {
-  year: Int
-  crisisTypes: [CrisisType!]
-  countries: [ID!]
-}
-
 type FigureAnalysisType {
   id: ID!
-  country: CountryType!
   year: Int!
   crisisType: CrisisType!
   ndFigures: Int!
-  ndMethodologyAndSources: String
-  ndCaveatsAndChallenges: String
+  ndMethodologyAndSources: String!
+  ndCaveatsAndChallenges: String!
   idpFigures: Int!
-  idpMethodologyAndSources: String
-  idpCaveatsAndChallenges: String
-  createdAt: DateTime!
-  updatedAt: DateTime!
+  idpMethodologyAndSources: String!
+  idpCaveatsAndChallenges: String!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type FileFieldType {
@@ -520,7 +515,6 @@ type Query {
   conflict(pk: ID): ConflictType!
   disaster(pk: ID): DisasterType!
   country(pk: ID = null, iso3: String = null): CountryType!
-  figureAnalysis(filters: FigureAnalysisFilter, pagination: OffsetPaginationInput): [FigureAnalysisType!]!
   disasterStatistics(filters: DisasterStatisticsFilter!): DisasterStatisticsType!
   conflictStatistics(filters: ConflictStatisticsFilter!): ConflictStatisticsType!
   tags(pagination: OffsetPaginationInput): [TagType!]!
