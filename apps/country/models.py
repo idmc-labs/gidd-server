@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.postgres.fields import ArrayField
 from django.utils.translation import gettext_lazy as _
 from utils import year_choices, current_year
+import config.custom_fields  # noqa F401 NOTE this is added to sanitize the text fields through out the project
 
 
 class Country(models.Model):
@@ -350,7 +351,7 @@ class FigureAnalysis(models.Model):
 
     country = models.ForeignKey(
         'country.Country',
-        related_name='countries',
+        related_name='figure_analysis',
         on_delete=models.PROTECT,
         verbose_name=_('Country'),
     )

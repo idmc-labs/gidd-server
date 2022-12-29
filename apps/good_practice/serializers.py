@@ -57,9 +57,7 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
         countries = validated_data.pop('countries')
         focus_areas = validated_data.pop('focus_area')
         tags = validated_data.pop('tags')
-
         instance = super().create(validated_data)
-
         if drivers_of_displacements:
             instance.drivers_of_displacement.set(drivers_of_displacements)
         if countries:

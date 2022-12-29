@@ -91,12 +91,31 @@ class GoodPracticeMutation(TestCase):
                 titleEn='some text title en',
                 implementingEntityEn='some text implementing entity en',
                 mediaAndResourceLinksEn='some text media and resource links en',
-                descriptionEn='some text description en',
                 # Fr fields
                 titleFr='some text title fr',
                 implementingEntityFr='some text implementing entity fr',
                 mediaAndResourceLinksFr='some text media and resource links fr',
                 descriptionFr='some text description fr',
+                descriptionEn='''
+                    <script>
+                        function myFunction() {
+                        document.getElementById("demo").innerHTML = "Paragraph changed.";
+                        }
+                    </script>
+                    </head>
+                    <body>
+
+                        <h1>Demo JavaScript in Head</h1>
+                        <h2> Test Heading </h2>
+                        <i> Italic </i>
+                        <b> Bold </b>
+                        <span> Test span </span>
+
+
+                        <p id="demo">A Paragraph.</p>
+
+                        <button type="button" onclick="myFunction()">Try it</button>
+                '''
             )
 
             response = self.client.post(
@@ -140,4 +159,8 @@ class GoodPracticeMutation(TestCase):
             self.assertEqual(input_variable['implementingEntityEn'], data['implementingEntity'])
             self.assertEqual(input_variable['mediaAndResourceLinksEn'], data['mediaAndResourceLinks'])
             self.assertEqual(input_variable['mediaAndResourceLinksEn'], data['mediaAndResourceLinks'])
-            self.assertEqual(input_variable['descriptionEn'], data['description'])
+            expected_description = (
+                '<h1>Demo JavaScript in Head</h1> <h2> Test Heading </h2> <em> Italic </em> '
+                '<strong> Bold </strong>  Test span  <p>A Paragraph.</p> Try it'
+            )
+            self.assertEqual(data['description'].strip(), expected_description.strip())
