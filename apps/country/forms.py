@@ -1,6 +1,8 @@
 from django import forms
 from apps.country.models import (
-    OverView, Country
+    OverView,
+    Country,
+    FigureAnalysis,
 )
 from django.utils.translation import gettext_lazy as _
 from tinymce.widgets import TinyMCE
@@ -41,4 +43,39 @@ class CountryForm(forms.ModelForm):
 
     class Meta:
         model = Country
+        fields = '__all__'
+
+
+class FigureAnalysisForm(forms.ModelForm):
+    nd_methodology_and_sources = forms.CharField(
+        widget=TinyMCE(
+            attrs={'cols': 80, 'rows': 30}
+        ),
+        label=_('New displacement methodology and sources'),
+        required=False
+    )
+    nd_caveats_and_challenges = forms.CharField(
+        widget=TinyMCE(
+            attrs={'cols': 80, 'rows': 30}
+        ),
+        label=_('New displacement caveats and challenges'),
+        required=False
+    )
+    idp_methodology_and_sources = forms.CharField(
+        widget=TinyMCE(
+            attrs={'cols': 80, 'rows': 30}
+        ),
+        label=_('Internal displacment methodology and sources'),
+        required=False
+    )
+    idp_caveats_and_challenges = forms.CharField(
+        widget=TinyMCE(
+            attrs={'cols': 80, 'rows': 30}
+        ),
+        label=_('Internal displacment caveats and challenges'),
+        required=False
+    )
+
+    class Meta:
+        model = FigureAnalysis
         fields = '__all__'

@@ -3,6 +3,7 @@ from apps.country.dataloaders import (
     load_country_additonal_info,
     load_country_overviews,
     load_good_practices_count,
+    load_figure_analysis,
 )
 from apps.good_practice.dataloaders import (
     load_gallery, load_good_practice_country,
@@ -30,4 +31,5 @@ class CustomAsyncGraphQLView(AsyncGraphQLView):
             'good_practice_tags_loader': DataLoader(load_fn=load_good_practice_tags),
             'good_practice_driver_of_displacement_loader': DataLoader(load_fn=load_good_practice_driver_of_displacement),
             'good_practice_focus_area_loader': DataLoader(load_fn=load_good_practice_focus_area),
+            'figure_analysis_loader': DataLoader(load_fn=load_figure_analysis),
         }

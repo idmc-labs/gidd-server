@@ -6,9 +6,10 @@ from .models import (
     CountryAdditionalInfo,
     Conflict,
     Disaster,
+    FigureAnalysis,
 )
 from typing import List
-from .enums import IdmcRegionEnum
+from .enums import IdmcRegionEnum, CrisisTypeEnum
 
 
 @strawberry.django.filters.filter(Country, lookups=True)
@@ -127,3 +128,20 @@ class DisasterStatisticsFilter:
         from .types import disaster_statistics_qs
         qs = super().qs
         return disaster_statistics_qs(qs)
+
+
+@strawberry.django.filters.filter(FigureAnalysis)
+class FigureAnalysisFilter:
+    year: auto
+    crisis_types: List[CrisisTypeEnum]
+    countries: List[strawberry.ID]
+
+    def filter_countries(self, queryset):
+        if not self.countries:
+            return queryset
+        return queryset.filter(country__in=self.countries)
+
+    def filter_crisis_types(self, queryset):
+        if not self.crisis_types:
+            return queryset
+        return queryset.filter(crisis_type__in=self.crisis_types)

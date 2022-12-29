@@ -137,6 +137,7 @@ type CountryListType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  figureAnalysis: [FigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -177,6 +178,7 @@ type CountryType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [CountryAdditionalInfoType!]!
+  figureAnalysis: [FigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -185,6 +187,12 @@ type CountryType {
   overviews: [OverViewType!]!
   unitedNationsRegionLabel: String!
   wbRegionLabel: String!
+}
+
+"""An enumeration."""
+enum CrisisType {
+  CONFLICT
+  DISASTER
 }
 
 """A generic type to return error messages"""
@@ -283,6 +291,20 @@ type FaqType {
   id: ID!
   question: String!
   answer: String!
+}
+
+type FigureAnalysisType {
+  id: ID!
+  year: Int!
+  crisisType: CrisisType!
+  ndFigures: Int!
+  ndMethodologyAndSources: String!
+  ndCaveatsAndChallenges: String!
+  idpFigures: Int!
+  idpMethodologyAndSources: String!
+  idpCaveatsAndChallenges: String!
+  createdAt: Date!
+  updatedAt: Date!
 }
 
 type FileFieldType {
