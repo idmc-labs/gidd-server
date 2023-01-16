@@ -335,6 +335,7 @@ if env('USE_AWS_SES'):
     AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')
     AWS_SES_ACCESS_KEY_ID = env('AWS_SES_ACCESS_KEY_ID')
     AWS_SES_SECRET_ACCESS_KEY = env('AWS_SES_SECRET_ACCESS_KEY')
+    AWS_SES_REGION_ENDPOINT = env('AWS_SES_REGION_ENDPOINT')
 else:
     EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
 
