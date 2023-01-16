@@ -67,7 +67,7 @@ def send_mail(
         email_text_template_name,
         context,
         settings.DEFAULT_FROM_EMAIL,
-        user.email,
+        user.username,
     )
 
 
