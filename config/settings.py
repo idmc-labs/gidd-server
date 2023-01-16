@@ -65,6 +65,7 @@ env = environ.Env(
     # -- If not provided IAM Role will be used
     AWS_SES_REGION_NAME=(str, None),
     AWS_SES_ACCESS_KEY_ID=(str, None),
+    AWS_SES_REGION_ENDPOINT=(str, None),
     AWS_SES_SECRET_ACCESS_KEY=(str, None),
     HCAPTCHA_SITE_KEY=(str, '10000000-ffff-ffff-ffff-000000000001'),
     HCAPTCHA_SECRET=(str, '0x0000000000000000000000000000000000000000'),
