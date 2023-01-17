@@ -49,7 +49,7 @@ urlpatterns = [
     path('admin/login/', auth_views.LoginView.as_view(template_name='login.html'), name='login'),
     path("password_reset", views.password_reset_request, name="password_reset"),
     path(
-        r'^password/reset/<uidb64>/<token>/$',
+        'password/reset/<uidb64>/<token>/',
         auth_views.PasswordResetConfirmView.as_view(
             success_url=reverse_lazy('login'),
         ),

@@ -74,8 +74,8 @@ def send_mail(
 def send_password_reset_mail(user, context=None):
     send_mail(
         'email/password_reset/subject.txt',
-        'email/password_reset/body.txt',
         'email/password_reset/body.html',
+        'email/password_reset/body.txt',
         user,
         context,
     )
