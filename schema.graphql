@@ -359,12 +359,12 @@ input GoodPracticeInputType {
   startYear: Int!
   endYear: Int!
   captcha: String!
-  type: TypeEnum!
-  stage: StageTypeEnum!
+  type: String
+  stage: String
   countries: [ID!]!
-  driversOfDisplacement: [ID!]!
-  focusArea: [ID!]!
-  tags: [ID!]!
+  driversOfDisplacement: [ID!]
+  focusArea: [ID!]
+  tags: [ID!]
   image: Upload = null
   titleEn: String = null
   descriptionEn: String = null
@@ -411,8 +411,8 @@ type GoodPracticeType {
   id: ID!
   title: String!
   description: String
-  type: TypeEnum!
-  stage: StageTypeEnum
+  type: String!
+  stage: String!
   isPublished: Boolean!
   publishedDate: DateTime
   mediaAndResourceLinks: String

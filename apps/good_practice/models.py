@@ -86,22 +86,22 @@ class GoodPractice(models.Model):
         'country.Country', related_name='country_good_practice', verbose_name=_('Countries')
     )
     type = models.CharField(
-        max_length=255, verbose_name=_('Good practice type'), choices=Type.choices
+        max_length=255, verbose_name=_('Good practice type'), choices=Type.choices, blank=True,
     )
     implementing_entity = models.CharField(blank=True, max_length=255, verbose_name=_('Implementing entity'))
     drivers_of_displacement = models.ManyToManyField(
         'good_practice.DriversOfDisplacement', related_name='good_practice',
-        verbose_name=_('Drivers of displacement'), blank=True
+        verbose_name=_('Drivers of displacement'), blank=True,
     )
     stage = models.CharField(
-        max_length=255, verbose_name=_('Stage'), choices=StageType.choices, null=True, blank=True
+        max_length=255, verbose_name=_('Stage'), choices=StageType.choices, blank=True,
     )
     focus_area = models.ManyToManyField(
         'good_practice.FocusArea', related_name='good_practice',
         verbose_name=_('Focus area'), blank=True
     )
     tags = models.ManyToManyField(
-        'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags'), blank=True
+        'good_practice.Tag', related_name='good_practice', verbose_name=_('Tags'), blank=True,
     )
     published_date = models.DateTimeField(blank=True, null=True)
     image = models.FileField(upload_to='good_practice/', null=True, blank=True, verbose_name=_('Good practice image'))

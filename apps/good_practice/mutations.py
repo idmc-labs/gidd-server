@@ -29,14 +29,14 @@ class GoodPracticeInputType:
     captcha: str
 
     # Enum fields
-    type: TypeEnum
-    stage: StageTypeEnum
+    type: Optional[str]
+    stage: Optional[str]
 
     # M2M fields
     countries: List[strawberry.ID]
-    drivers_of_displacement: List[strawberry.ID]
-    focus_area: List[strawberry.ID]
-    tags: List[strawberry.ID]
+    drivers_of_displacement: Optional[List[strawberry.ID]]
+    focus_area: Optional[List[strawberry.ID]]
+    tags: Optional[List[strawberry.ID]]
 
     image: Optional[Upload] = None
 

@@ -67,8 +67,8 @@ class GoodPracticeType:
     id: auto
     title: auto
     description: auto
-    type: TypeEnum
-    stage: StageTypeEnum
+    type: str
+    stage: str
     is_published: auto
     published_date: auto
     media_and_resource_links: auto
