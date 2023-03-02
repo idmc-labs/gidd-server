@@ -40,6 +40,21 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
             "under_review",
         )
 
+    def validate(self, data):
+        error_dict = {}
+        if not (data['title_en'] or data['title_fr']):
+            error_dict['title_en'] = "Please select title in English"
+            error_dict['title_fr'] = "Please select title in French"
+        if not (data["description_en"] or data["description_fr"]):
+            error_dict['description_en'] = "Please select description in English"
+            error_dict['description_fr'] = "Please select description in French"
+        if not (data["implementing_entity_fr"] or data["implementing_entity_en"]):
+            error_dict['implementing_entity_en'] = "Please select Implementing entity in English"
+            error_dict['implementing_entity_fr'] = "Please select Implementing entity in French"
+        if error_dict:
+            raise serializers.ValidationError(error_dict)
+        return data
+
     def validate_image(self, image):
         MAX_FILE_SIZE = 2 * 1024 * 1024
         if image and image.size > MAX_FILE_SIZE:

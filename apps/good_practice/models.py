@@ -175,7 +175,7 @@ class GoodPractice(models.Model):
         null=True,
         max_length=2000,
     )
-    under_review = models.BooleanField(default=False)
+    under_review = models.BooleanField(default=True)
 
     class Meta:
         verbose_name = _("PAGES - Good practices page")

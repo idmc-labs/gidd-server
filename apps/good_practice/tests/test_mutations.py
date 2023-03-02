@@ -32,8 +32,8 @@ class GoodPracticeMutation(TestCase):
 
     def test_create_goodpractice(self):
         create_mutation = """
-            mutation CreateGoodPractice ($input: GoodPracticeInputType!) {
-              createGoodPractice(input: $input) {
+            mutation PublicCreateGoodPractice ($input: GoodPracticeInputType!) {
+              publicCreateGoodPractice(input: $input) {
                 errors
                 ok
                 data {
@@ -140,8 +140,7 @@ class GoodPracticeMutation(TestCase):
             response = self.query_check(
                 create_mutation, variables={"input": input_variable}
             )
-            print(response)
-            data = response["data"]["createGoodPractice"]["data"]
+            data = response["data"]["publicCreateGoodPractice"]["data"]
 
             # Test int fields
             self.assertEqual(input_variable["endYear"], data["endYear"])

@@ -365,10 +365,10 @@ input GoodPracticeInputType {
   driversOfDisplacement: [ID!]
   focusArea: [ID!]
   tags: [ID!]
-  titleEn: String!
-  descriptionEn: String!
+  titleEn: String = null
+  descriptionEn: String = null
   mediaAndResourceLinksEn: String = null
-  implementingEntityEn: String!
+  implementingEntityEn: String = null
   titleFr: String = null
   descriptionFr: String = null
   mediaAndResourceLinksFr: String = null
@@ -377,7 +377,7 @@ input GoodPracticeInputType {
   contactEmail: String!
   whatMakesThisPromisingPractice: String = null
   descriptionOfKeyLessonsLearned: String = null
-  underReview: Boolean!
+  underReview: Boolean = true
 }
 
 input GoodPracticeOrder {
@@ -492,7 +492,7 @@ enum IdmcRegionEnum {
 
 type Mutation {
   incrementPageViewedCount(id: ID!): GoodPracticePageViewCountType!
-  createGoodPractice(input: GoodPracticeInputType!): GoodPracticeTypeMutationResponse!
+  publicCreateGoodPractice(input: GoodPracticeInputType!): GoodPracticeTypeMutationResponse!
 }
 
 input OffsetPaginationInput {

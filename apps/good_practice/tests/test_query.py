@@ -1,6 +1,7 @@
 from django.utils import translation
 from modeltranslation.utils import build_localized_fieldname
 
+from apps.good_practice.models import GoodPractice
 from apps.good_practice.factories import GoodPracticeFactory
 from config.tests import TestCase
 
@@ -51,10 +52,10 @@ class GoodPracticeQueryTestCase(TestCase):
                             title=gp.title,
                             description=gp.description,
                             mediaAndResourceLinks=gp.media_and_resource_links,
-                            type=gp.type,
-                            typeLabel=gp.type,
-                            stage=gp.stage,
-                            stageLabel=gp.stage,
+                            type=GoodPractice.Type(gp.type),
+                            typeLabel=GoodPractice.Type(gp.type).label,
+                            stage=GoodPractice.StageType(gp.stage),
+                            stageLabel=GoodPractice.StageType(gp.stage).label,
                         )
                         for gp in good_practices
                     ],

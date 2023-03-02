@@ -28,10 +28,6 @@ class GoodPracticeInputType:
     # Captcha
     captcha: str
 
-    # Enum fields
-    # type: Optional[str]
-    # stage: Optional[str]
-
     type: Optional[TypeEnum] = GoodPractice.Type.UNKNOWN
     stage: Optional[StageTypeEnum] = GoodPractice.StageType.UNKNOWN
 
@@ -42,10 +38,10 @@ class GoodPracticeInputType:
     tags: Optional[List[strawberry.ID]]
 
     # English fields
-    title_en: str = None
-    description_en: str
+    title_en: Optional[str] = None
+    description_en: Optional[str] = None
     media_and_resource_links_en: Optional[str] = None
-    implementing_entity_en: str
+    implementing_entity_en: Optional[str] = None
 
     # French fields
     title_fr: Optional[str] = None
@@ -57,7 +53,8 @@ class GoodPracticeInputType:
     contact_email: str
     what_makes_this_promising_practice: Optional[str] = None
     description_of_key_lessons_learned: Optional[str] = None
-    under_review: bool
+
+    under_review: Optional[bool] = True
 
 
 @strawberry.type
@@ -74,7 +71,7 @@ class Mutation:
 
     @strawberry.mutation
     @sync_to_async
-    def create_good_practice(
+    def public_create_good_practice(
         self,
         info,
         input: GoodPracticeInputType,

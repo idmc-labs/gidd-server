@@ -211,7 +211,7 @@ LANGUAGES = (
 AVAILABLE_LANGUAGES = [lang for lang, _ in LANGUAGES]
 MODELTRANSLATION_DEBUG = DEBUG
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'fr')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
