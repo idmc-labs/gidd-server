@@ -1,25 +1,25 @@
 from django.contrib import admin
-from modeltranslation.admin import (
-    TranslationAdmin,
-    TranslationTabularInline
-)
+from modeltranslation.admin import TranslationAdmin, TranslationTabularInline
 from apps.good_practice.models import (
-    GoodPractice, Faq, Gallery, Tag, FocusArea, DriversOfDisplacement
+    GoodPractice,
+    Faq,
+    Gallery,
+    Tag,
+    FocusArea,
+    DriversOfDisplacement,
 )
-from apps.good_practice.forms import (
-    FaqForm, GoodPracticeForm, GalleryForm
-)
+from apps.good_practice.forms import FaqForm, GoodPracticeForm, GalleryForm
 
 
 @admin.register(Faq)
 class FaqAdmin(TranslationAdmin):
     form = FaqForm
-    search_fields = ['question']
-    list_display = ['question', 'answer']
+    search_fields = ["question"]
+    list_display = ["question", "answer"]
 
 
 class GalleryAdminInline(TranslationTabularInline):
-    autocomplete_fields = ['good_practice']
+    autocomplete_fields = ["good_practice"]
     form = GalleryForm
     model = Gallery
     extra = 0
@@ -27,21 +27,27 @@ class GalleryAdminInline(TranslationTabularInline):
 
 @admin.register(Tag)
 class TagAdmin(TranslationAdmin):
-    search_fields = ['name']
-    list_display = [
-        'name'
-    ]
+    search_fields = ["name"]
+    list_display = ["name"]
 
 
 @admin.register(GoodPractice)
 class GoodPracticeAdmin(TranslationAdmin):
     form = GoodPracticeForm
-    search_fields = ['title']
+    list_filter = ("under_review",)
+    search_fields = ["title"]
     list_display = [
-        'id', 'title', 'type', 'focus_areas', 'country_names', 'drivers_of_displacements', 'start_year', 'end_year'
+        "id",
+        "title",
+        "type",
+        "focus_areas",
+        "country_names",
+        "drivers_of_displacements",
+        "start_year",
+        "end_year",
     ]
     inlines = [GalleryAdminInline]
-    autocomplete_fields = ['countries', 'tags', 'focus_area', 'drivers_of_displacement']
+    autocomplete_fields = ["countries", "tags", "focus_area", "drivers_of_displacement"]
 
     def drivers_of_displacements(self, obj):
         return ", ".join([item.name for item in obj.drivers_of_displacement.all()])
@@ -55,15 +61,11 @@ class GoodPracticeAdmin(TranslationAdmin):
 
 @admin.register(DriversOfDisplacement)
 class DriversOfDisplacementAdmin(TranslationAdmin):
-    search_fields = ['name']
-    list_display = [
-        'name'
-    ]
+    search_fields = ["name"]
+    list_display = ["name"]
 
 
 @admin.register(FocusArea)
 class FocusAreaAdmin(TranslationAdmin):
-    search_fields = ['name']
-    list_display = [
-        'name'
-    ]
+    search_fields = ["name"]
+    list_display = ["name"]

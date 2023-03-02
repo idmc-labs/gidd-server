@@ -4,15 +4,14 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0008_alter_goodpractice_type'),
+        ("good_practice", "0008_alter_goodpractice_type"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='goodpractice',
-            name='published_date',
+            model_name="goodpractice",
+            name="published_date",
             field=models.DateTimeField(blank=True, null=True),
         ),
     ]

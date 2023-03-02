@@ -357,7 +357,7 @@ type GoodPracticeFilterCountryChoiceType {
 
 input GoodPracticeInputType {
   startYear: Int!
-  endYear: Int!
+  endYear: Int = null
   captcha: String!
   type: String
   stage: String
@@ -365,15 +365,19 @@ input GoodPracticeInputType {
   driversOfDisplacement: [ID!]
   focusArea: [ID!]
   tags: [ID!]
-  image: Upload = null
-  titleEn: String = null
-  descriptionEn: String = null
+  titleEn: String!
+  descriptionEn: String!
   mediaAndResourceLinksEn: String = null
-  implementingEntityEn: String = null
+  implementingEntityEn: String!
   titleFr: String = null
   descriptionFr: String = null
   mediaAndResourceLinksFr: String = null
   implementingEntityFr: String = null
+  contactName: String!
+  contactEmail: String!
+  whatMakesThisPromisingPractice: String = null
+  descriptionOfKeyLessonsLearned: String = null
+  underReview: Boolean!
 }
 
 input GoodPracticeOrder {
@@ -420,6 +424,11 @@ type GoodPracticeType {
   endYear: Int
   pageViewedCount: Int!
   implementingEntity: String!
+  contactName: String!
+  contactEmail: String!
+  whatMakesThisPromisingPractice: String
+  descriptionOfKeyLessonsLearned: String
+  underReview: Boolean!
   isTranslated: Boolean!
   countries: [CountryType!]!
   driverOfDisplacement: [DriversOfDisplacementType!]
@@ -640,8 +649,6 @@ enum UnitedNationsRegionEnum {
   EASTERN_ASIA
   NORTHERN_EUROPE
 }
-
-scalar Upload
 
 """An enumeration."""
 enum WbRegionEnum {

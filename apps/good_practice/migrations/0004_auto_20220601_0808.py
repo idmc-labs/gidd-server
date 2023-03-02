@@ -4,26 +4,37 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0003_auto_20220531_0852'),
+        ("good_practice", "0003_auto_20220531_0852"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Tag',
+            name="Tag",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='Tags')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="Tags")),
             ],
             options={
-                'verbose_name': 'Tag',
-                'verbose_name_plural': 'Tags',
+                "verbose_name": "Tag",
+                "verbose_name_plural": "Tags",
             },
         ),
         migrations.AddField(
-            model_name='goodpractice',
-            name='tags',
-            field=models.ManyToManyField(related_name='good_practice', to='good_practice.Tag', verbose_name='Tags'),
+            model_name="goodpractice",
+            name="tags",
+            field=models.ManyToManyField(
+                related_name="good_practice",
+                to="good_practice.Tag",
+                verbose_name="Tags",
+            ),
         ),
     ]

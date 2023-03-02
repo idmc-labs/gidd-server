@@ -11,33 +11,33 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
     class Meta:
         model = GoodPractice
         fields = (
-            'start_year',
-            'end_year',
-            'image',
-
+            "start_year",
+            "end_year",
+            "image",
             # Enum fields
-            'type',
-            'stage',
-
+            "type",
+            "stage",
             # M2M fields
-            'countries',
-            'drivers_of_displacement',
-            'focus_area',
-            'tags',
-
+            "countries",
+            "drivers_of_displacement",
+            "focus_area",
+            "tags",
             # English fields
-            'title_en',
-            'description_en',
-            'media_and_resource_links_en',
-            'implementing_entity_en',
-
+            "title_en",
+            "description_en",
+            "media_and_resource_links_en",
+            "implementing_entity_en",
             # French fields
-            'title_fr',
-            'description_fr',
-            'media_and_resource_links_fr',
-            'implementing_entity_fr',
-
-            'captcha',
+            "title_fr",
+            "description_fr",
+            "media_and_resource_links_fr",
+            "implementing_entity_fr",
+            "captcha",
+            "contact_name",
+            "contact_email",
+            "what_makes_this_promising_practice",
+            "description_of_key_lessons_learned",
+            "under_review",
         )
 
     def validate_image(self, image):
@@ -47,16 +47,14 @@ class GoodPracticeSerializer(serializers.ModelSerializer):
 
     def validate_captcha(self, captcha):
         if not validate_hcaptcha(captcha):
-            raise serializers.ValidationError(
-                'Invalid captcha'
-            )
+            raise serializers.ValidationError("Invalid captcha")
 
     def create(self, validated_data):
-        validated_data.pop('captcha')
-        drivers_of_displacements = validated_data.pop('drivers_of_displacement')
-        countries = validated_data.pop('countries')
-        focus_areas = validated_data.pop('focus_area')
-        tags = validated_data.pop('tags')
+        validated_data.pop("captcha")
+        drivers_of_displacements = validated_data.pop("drivers_of_displacement")
+        countries = validated_data.pop("countries")
+        focus_areas = validated_data.pop("focus_area")
+        tags = validated_data.pop("tags")
         instance = super().create(validated_data)
         if drivers_of_displacements:
             instance.drivers_of_displacement.set(drivers_of_displacements)

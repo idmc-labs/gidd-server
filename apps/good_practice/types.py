@@ -4,7 +4,12 @@ from strawberry import auto
 from typing import List
 
 from .models import (
-    Faq, GoodPractice, Gallery, Tag, DriversOfDisplacement, FocusArea,
+    Faq,
+    GoodPractice,
+    Gallery,
+    Tag,
+    DriversOfDisplacement,
+    FocusArea,
 )
 from .gh_filters import GoodPracticeFilter, FaqFilter
 
@@ -41,7 +46,7 @@ class GalleryType:
 
     @strawberry.field
     async def image(self, info: Info) -> Optional[FileFieldType]:
-        return build_url(self.image, info.context['request'])
+        return build_url(self.image, info.context["request"])
 
 
 @strawberry.django.type(Tag)
@@ -76,13 +81,18 @@ class GoodPracticeType:
     end_year: auto
     page_viewed_count: auto
     implementing_entity: auto
+    contact_name: auto
+    contact_email: auto
+    what_makes_this_promising_practice: auto
+    description_of_key_lessons_learned: auto
+    under_review: auto
 
     is_translated: bool
 
     @strawberry.field
     async def image(self, info: Info) -> Optional[FileFieldType]:
         result = await info.context["good_practice_image_loader"].load(self.id)
-        return build_url(result, info.context['request'])
+        return build_url(result, info.context["request"])
 
     @strawberry.field
     async def gallery(self, info: Info) -> List[GalleryType]:
@@ -97,8 +107,12 @@ class GoodPracticeType:
         return await info.context["good_practice_tags_loader"].load(self.id)
 
     @strawberry.field
-    async def driver_of_displacement(self, info: Info) -> Optional[List[DriversOfDisplacementType]]:
-        return await info.context["good_practice_driver_of_displacement_loader"].load(self.id)
+    async def driver_of_displacement(
+        self, info: Info
+    ) -> Optional[List[DriversOfDisplacementType]]:
+        return await info.context["good_practice_driver_of_displacement_loader"].load(
+            self.id
+        )
 
     @strawberry.field
     async def focus_area(self, info: Info) -> Optional[List[FocusAreaType]]:
@@ -144,7 +158,9 @@ class GoodPracticeFilterChoiceType:
     end_year: int
 
 
-@strawberry.django.type(GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder)
+@strawberry.django.type(
+    GoodPractice, pagination=True, filters=GoodPracticeFilter, order=GoodPracticeOrder
+)
 class GoodPracticeListType(GoodPracticeType):
     pass
 

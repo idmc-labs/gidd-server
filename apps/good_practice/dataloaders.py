@@ -1,4 +1,3 @@
-
 from apps.good_practice.models import Gallery, GoodPractice
 from apps.country.models import Country
 from collections import defaultdict
@@ -19,9 +18,7 @@ def gallery_load(keys: List[int]):
 
 
 def good_practice_country_load(keys: List[int]):
-    qs = Country.objects.filter(
-        country_good_practice__in=keys
-    )
+    qs = Country.objects.filter(country_good_practice__in=keys)
 
     _map = defaultdict(list)
     for country in qs:
@@ -69,5 +66,7 @@ load_gallery = sync_to_async(gallery_load)
 load_good_practice_country = sync_to_async(good_practice_country_load)
 load_good_practice_image = sync_to_async(good_practice_image_load)
 load_good_practice_tags = sync_to_async(good_practice_tag_load)
-load_good_practice_driver_of_displacement = sync_to_async(good_practice_driver_of_displacement_load)
+load_good_practice_driver_of_displacement = sync_to_async(
+    good_practice_driver_of_displacement_load
+)
 load_good_practice_focus_area = sync_to_async(good_practice_focus_area_load)

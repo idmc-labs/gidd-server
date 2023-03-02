@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0012_alter_goodpractice_is_public'),
+        ("good_practice", "0012_alter_goodpractice_is_public"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='goodpractice',
-            name='image',
-            field=models.FileField(blank=True, null=True, upload_to='good_practice/', verbose_name='Good practice image'),
+            model_name="goodpractice",
+            name="image",
+            field=models.FileField(
+                blank=True,
+                null=True,
+                upload_to="good_practice/",
+                verbose_name="Good practice image",
+            ),
         ),
     ]
