@@ -1,6 +1,8 @@
 import json
 from django.core.files.temp import NamedTemporaryFile
 from config.tests import TestCase
+
+from apps.good_practice.models import GoodPractice
 from apps.good_practice.factories import (
     DriversOfDisplacementFactory,
     TagFactory,
@@ -83,8 +85,8 @@ class GoodPracticeMutation(TestCase):
                 contactEmail='rup@gmail.com',
                 startYear=2020,
                 endYear=2020,
-                type='',
-                stage='',
+                type=GoodPractice.Type.UNKNOWN.name,
+                stage=GoodPractice.StageType.UNKNOWN.name,
                 countries=[self.country1.id, self.country2.id],
                 driversOfDisplacement=[
                     self.drivers_of_displacement1.id,
@@ -102,7 +104,7 @@ class GoodPracticeMutation(TestCase):
                 implementingEntityFr="some text implementing entity fr",
                 mediaAndResourceLinksFr="some text media and resource links fr",
                 descriptionFr="some text description fr",
-                underReview=True,
+                underReview=False,
                 descriptionEn="""
                     <script>
                         function myFunction() {
@@ -138,6 +140,7 @@ class GoodPracticeMutation(TestCase):
             response = self.query_check(
                 create_mutation, variables={"input": input_variable}
             )
+            print(response)
             data = response["data"]["createGoodPractice"]["data"]
 
             # Test int fields

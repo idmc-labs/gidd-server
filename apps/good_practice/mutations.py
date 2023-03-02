@@ -7,6 +7,11 @@ from .serializers import GoodPracticeSerializer
 from strawberry_utils.error_types import mutation_is_not_valid
 from config.mutations import MutationResponse
 
+from .enums import (
+    TypeEnum,
+    StageTypeEnum,
+)
+
 
 @strawberry.type
 class GoodPracticePageViewCountType:
@@ -24,8 +29,11 @@ class GoodPracticeInputType:
     captcha: str
 
     # Enum fields
-    type: Optional[str]
-    stage: Optional[str]
+    # type: Optional[str]
+    # stage: Optional[str]
+
+    type: Optional[TypeEnum] = GoodPractice.Type.UNKNOWN
+    stage: Optional[StageTypeEnum] = GoodPractice.StageType.UNKNOWN
 
     # M2M fields
     countries: List[strawberry.ID]

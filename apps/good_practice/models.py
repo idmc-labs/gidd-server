@@ -71,11 +71,16 @@ class GoodPractice(models.Model):
             "displacement_monitoring",
             _("Displacement monitoring (data collection, analysis and systems)"),
         )
+        UNKNOWN = (
+            "unknown",
+            _("Unknown"),
+        )
 
     class StageType(models.TextChoices):
         PROMISING = "promising", _("Promising")
         ADVANCED = "advanced", _("Advanced")
         SUCCESSFUL = "successful", _("Successful")
+        UNKNOWN = "unknown", _("Unknown")
 
     title = models.CharField(max_length=255, verbose_name=_("Name of project"))
     description = models.TextField(
@@ -170,7 +175,7 @@ class GoodPractice(models.Model):
         null=True,
         max_length=2000,
     )
-    under_review = models.BooleanField(default=True)
+    under_review = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = _("PAGES - Good practices page")

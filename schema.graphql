@@ -359,8 +359,8 @@ input GoodPracticeInputType {
   startYear: Int!
   endYear: Int = null
   captcha: String!
-  type: String
-  stage: String
+  type: TypeEnum = UNKNOWN
+  stage: StageTypeEnum = UNKNOWN
   countries: [ID!]!
   driversOfDisplacement: [ID!]
   focusArea: [ID!]
@@ -545,6 +545,7 @@ enum StageTypeEnum {
   PROMISING
   ADVANCED
   SUCCESSFUL
+  UNKNOWN
 }
 
 type StageTypeEnumGenericEnumValue {
@@ -620,6 +621,7 @@ enum TypeEnum {
   STRENGTHENING_POLICY_AND_LEGAL_FRAMEWORKS
   GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP
   DISPLACEMENT_MONITORING
+  UNKNOWN
 }
 
 type TypeEnumGenericEnumValue {
