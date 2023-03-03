@@ -6,6 +6,8 @@ from apps.good_practice.types import GoodPracticeType
 from .serializers import GoodPracticeSerializer
 from strawberry_utils.error_types import mutation_is_not_valid
 from config.mutations import MutationResponse
+from config.utils.mail import send_good_practice_email
+from django.db import transaction
 
 from .enums import (
     TypeEnum,
@@ -81,4 +83,7 @@ class Mutation:
         if errors := mutation_is_not_valid(serializer):
             return MutationResponse(errors=errors, ok=False, data=None)
         instance = serializer.save()
+        transaction.on_commit(
+            lambda: send_good_practice_email(instance.id)
+        )
         return MutationResponse(errors=None, ok=True, data=instance)

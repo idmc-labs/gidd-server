@@ -1,6 +1,6 @@
 from django.conf import settings
 from django.template import loader
-
+from django.urls import reverse
 from django.core.mail import EmailMultiAlternatives
 
 
@@ -78,4 +78,19 @@ def send_password_reset_mail(user, context=None):
         'email/password_reset/body.txt',
         user,
         context,
+    )
+
+
+def send_good_practice_email(object_id):
+    url = reverse('admin:good_practice_goodpractice_change', args=[object_id])
+    context = {
+        "url": settings.APP_DOMAIN + url
+    }
+    base_send_mail(
+        'email/good_practice/subject.txt',
+        'email/good_practice/body.html',
+        'email/good_practice/body.txt',
+        context,
+        settings.DEFAULT_FROM_EMAIL,
+        settings.DEFAULT_GOOD_PRACTICE_TO_EMAIL,
     )
