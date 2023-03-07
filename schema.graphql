@@ -416,7 +416,7 @@ type GoodPracticeType {
   title: String!
   description: String
   type: String!
-  stage: String!
+  stage: String
   isPublished: Boolean!
   publishedDate: DateTime
   mediaAndResourceLinks: String
