@@ -147,7 +147,7 @@ class GoodPractice(models.Model):
     is_published = models.BooleanField(default=False, verbose_name=_("Is published?"))
     start_year = models.BigIntegerField(verbose_name=_("Project start year"))
     end_year = models.BigIntegerField(
-        blank=True, null=True, verbose_name=_("Project start year or ongoing")
+        blank=True, null=True, verbose_name=_("Project end year or ongoing")
     )
     page_viewed_count = models.BigIntegerField(
         default=0, verbose_name=_("Total page viewed count")
