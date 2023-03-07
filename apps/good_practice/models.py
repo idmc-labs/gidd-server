@@ -120,6 +120,7 @@ class GoodPractice(models.Model):
         max_length=255,
         verbose_name=_("Stage"),
         choices=StageType.choices,
+        null=True,
         blank=True,
     )
     focus_area = models.ManyToManyField(
@@ -159,8 +160,8 @@ class GoodPractice(models.Model):
             "It indicates if a good practice is submitted without authentication."
         ),
     )
-    contact_name = models.CharField(max_length=255, verbose_name=_("Contact name"))
-    contact_email = models.EmailField(max_length=255, verbose_name=_("Contact email"))
+    contact_name = models.CharField(max_length=255, verbose_name=_("Contact name"), blank=True)
+    contact_email = models.EmailField(max_length=255, verbose_name=_("Contact email"), blank=True)
     what_makes_this_promising_practice = models.TextField(
         verbose_name=_("What makes this a promising practice? (max 2,000 characters)"),
         blank=True,
