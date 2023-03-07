@@ -4,15 +4,19 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0011_alter_driversofdisplacement_options_and_more'),
+        ("good_practice", "0011_alter_driversofdisplacement_options_and_more"),
     ]
 
     operations = [
         migrations.AlterField(
-            model_name='goodpractice',
-            name='is_public',
-            field=models.BooleanField(default=False, editable=False, help_text='It indicates if a good practice is submitted without authentication.', verbose_name='Is public?'),
+            model_name="goodpractice",
+            name="is_public",
+            field=models.BooleanField(
+                default=False,
+                editable=False,
+                help_text="It indicates if a good practice is submitted without authentication.",
+                verbose_name="Is public?",
+            ),
         ),
     ]

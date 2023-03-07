@@ -4,59 +4,89 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0004_auto_20220601_0808'),
+        ("good_practice", "0004_auto_20220601_0808"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='DriversOfDisplacement',
+            name="DriversOfDisplacement",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='Name')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="Name")),
             ],
             options={
-                'verbose_name': 'Drivers of displacement',
-                'verbose_name_plural': 'Drivers of displacements',
+                "verbose_name": "Drivers of displacement",
+                "verbose_name_plural": "Drivers of displacements",
             },
         ),
         migrations.CreateModel(
-            name='FocusArea',
+            name="FocusArea",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('name', models.CharField(max_length=255, verbose_name='Name')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                ("name", models.CharField(max_length=255, verbose_name="Name")),
             ],
             options={
-                'verbose_name': 'Focus area',
-                'verbose_name_plural': 'Focus areas',
+                "verbose_name": "Focus area",
+                "verbose_name_plural": "Focus areas",
             },
         ),
         migrations.RemoveField(
-            model_name='goodpractice',
-            name='good_practice_form_url',
+            model_name="goodpractice",
+            name="good_practice_form_url",
         ),
         migrations.RemoveField(
-            model_name='goodpractice',
-            name='drivers_of_displacement',
+            model_name="goodpractice",
+            name="drivers_of_displacement",
         ),
         migrations.RemoveField(
-            model_name='goodpractice',
-            name='focus_area',
+            model_name="goodpractice",
+            name="focus_area",
         ),
         migrations.AlterField(
-            model_name='goodpractice',
-            name='tags',
-            field=models.ManyToManyField(blank=True, related_name='good_practice', to='good_practice.Tag', verbose_name='Tags'),
+            model_name="goodpractice",
+            name="tags",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="good_practice",
+                to="good_practice.Tag",
+                verbose_name="Tags",
+            ),
         ),
         migrations.AddField(
-            model_name='goodpractice',
-            name='drivers_of_displacement',
-            field=models.ManyToManyField(blank=True, related_name='good_practice', to='good_practice.DriversOfDisplacement', verbose_name='Drivers of displacement'),
+            model_name="goodpractice",
+            name="drivers_of_displacement",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="good_practice",
+                to="good_practice.DriversOfDisplacement",
+                verbose_name="Drivers of displacement",
+            ),
         ),
         migrations.AddField(
-            model_name='goodpractice',
-            name='focus_area',
-            field=models.ManyToManyField(blank=True, related_name='good_practice', to='good_practice.FocusArea', verbose_name='Focus area'),
+            model_name="goodpractice",
+            name="focus_area",
+            field=models.ManyToManyField(
+                blank=True,
+                related_name="good_practice",
+                to="good_practice.FocusArea",
+                verbose_name="Focus area",
+            ),
         ),
     ]

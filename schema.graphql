@@ -357,15 +357,14 @@ type GoodPracticeFilterCountryChoiceType {
 
 input GoodPracticeInputType {
   startYear: Int!
-  endYear: Int!
+  endYear: Int = null
   captcha: String!
-  type: TypeEnum!
-  stage: StageTypeEnum!
+  type: TypeEnum = UNKNOWN
+  stage: StageTypeEnum = UNKNOWN
   countries: [ID!]!
-  driversOfDisplacement: [ID!]!
-  focusArea: [ID!]!
-  tags: [ID!]!
-  image: Upload = null
+  driversOfDisplacement: [ID!]
+  focusArea: [ID!]
+  tags: [ID!]
   titleEn: String = null
   descriptionEn: String = null
   mediaAndResourceLinksEn: String = null
@@ -374,6 +373,11 @@ input GoodPracticeInputType {
   descriptionFr: String = null
   mediaAndResourceLinksFr: String = null
   implementingEntityFr: String = null
+  contactName: String!
+  contactEmail: String!
+  whatMakesThisPromisingPractice: String = null
+  descriptionOfKeyLessonsLearned: String = null
+  underReview: Boolean = true
 }
 
 input GoodPracticeOrder {
@@ -411,8 +415,8 @@ type GoodPracticeType {
   id: ID!
   title: String!
   description: String
-  type: TypeEnum!
-  stage: StageTypeEnum
+  type: String!
+  stage: String
   isPublished: Boolean!
   publishedDate: DateTime
   mediaAndResourceLinks: String
@@ -420,6 +424,11 @@ type GoodPracticeType {
   endYear: Int
   pageViewedCount: Int!
   implementingEntity: String!
+  contactName: String!
+  contactEmail: String!
+  whatMakesThisPromisingPractice: String
+  descriptionOfKeyLessonsLearned: String
+  underReview: Boolean!
   isTranslated: Boolean!
   countries: [CountryType!]!
   driverOfDisplacement: [DriversOfDisplacementType!]
@@ -483,7 +492,7 @@ enum IdmcRegionEnum {
 
 type Mutation {
   incrementPageViewedCount(id: ID!): GoodPracticePageViewCountType!
-  createGoodPractice(input: GoodPracticeInputType!): GoodPracticeTypeMutationResponse!
+  publicCreateGoodPractice(input: GoodPracticeInputType!): GoodPracticeTypeMutationResponse!
 }
 
 input OffsetPaginationInput {
@@ -536,6 +545,7 @@ enum StageTypeEnum {
   PROMISING
   ADVANCED
   SUCCESSFUL
+  UNKNOWN
 }
 
 type StageTypeEnumGenericEnumValue {
@@ -611,6 +621,7 @@ enum TypeEnum {
   STRENGTHENING_POLICY_AND_LEGAL_FRAMEWORKS
   GOVERNANCE_CAPACITY_AND_INSTITUTIONAL_SET_UP
   DISPLACEMENT_MONITORING
+  UNKNOWN
 }
 
 type TypeEnumGenericEnumValue {
@@ -640,8 +651,6 @@ enum UnitedNationsRegionEnum {
   EASTERN_ASIA
   NORTHERN_EUROPE
 }
-
-scalar Upload
 
 """An enumeration."""
 enum WbRegionEnum {

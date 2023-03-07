@@ -26,7 +26,11 @@ class GoodPracticeQueryTestCase(TestCase):
             }
         """
         good_practices = GoodPracticeFactory.create_batch(3, is_published=True)
-        text_lang_fields = ('title', 'description', 'media_and_resource_links',)
+        text_lang_fields = (
+            "title",
+            "description",
+            "media_and_resource_links",
+        )
         for good_practice in good_practices[:2]:
             for field in text_lang_fields:
                 for lang in self.TEST_LANGUAGES[1:]:
@@ -41,17 +45,18 @@ class GoodPracticeQueryTestCase(TestCase):
             resp = self.query_check(query, HTTP_ACCEPT_LANGUAGE=lang)
             with translation.override(lang):
                 assert {
-                    'totalCount': 3,
-                    'results': [
+                    "totalCount": 3,
+                    "results": [
                         dict(
                             id=str(gp.id),
                             title=gp.title,
                             description=gp.description,
                             mediaAndResourceLinks=gp.media_and_resource_links,
-                            type=GoodPractice.Type(gp.type).name,
+                            type=GoodPractice.Type(gp.type),
                             typeLabel=GoodPractice.Type(gp.type).label,
-                            stage=GoodPractice.StageType(gp.stage).name,
+                            stage=GoodPractice.StageType(gp.stage),
                             stageLabel=GoodPractice.StageType(gp.stage).label,
-                        ) for gp in good_practices
-                    ]
-                } == resp['data']['goodPractices']
+                        )
+                        for gp in good_practices
+                    ],
+                } == resp["data"]["goodPractices"]

@@ -2,7 +2,8 @@ from django.db.models import Q
 from strawberry import auto
 
 from .models import (
-    GoodPractice, Faq,
+    GoodPractice,
+    Faq,
 )
 import strawberry
 from .enums import (
@@ -31,8 +32,7 @@ class GoodPracticeFilter:
         if not self.search:
             return queryset
         return queryset.filter(
-            Q(title__icontains=self.search) |
-            Q(description__icontains=self.search)
+            Q(title__icontains=self.search) | Q(description__icontains=self.search)
         )
 
     def filter_types(self, queryset):
@@ -43,7 +43,9 @@ class GoodPracticeFilter:
     def filter_drivers_of_displacements(self, queryset):
         if not self.drivers_of_displacements:
             return queryset
-        return queryset.filter(drivers_of_displacement__in=self.drivers_of_displacements)
+        return queryset.filter(
+            drivers_of_displacement__in=self.drivers_of_displacements
+        )
 
     def filter_trigger_types(self, queryset):
         if not self.trigger_types:
@@ -63,7 +65,9 @@ class GoodPracticeFilter:
     def filter_regions(self, queryset):
         if not self.regions:
             return queryset
-        return queryset.filter(countries__good_practice_region__in=self.regions).distinct()
+        return queryset.filter(
+            countries__good_practice_region__in=self.regions
+        ).distinct()
 
     def filter_focus_area(self, queryset):
         if not self.focus_area:
@@ -79,19 +83,33 @@ class GoodPracticeFilter:
         return queryset.filter(
             Q(end_year__lte=self.end_year, start_year__gte=self.start_year) |
             Q(end_year__gte=self.start_year, start_year__lte=self.end_year) |
-            Q(start_year__gte=self.start_year, start_year__lte=self.end_year, end_year__isnull=True)
+            Q(
+                start_year__gte=self.start_year,
+                start_year__lte=self.end_year,
+                end_year__isnull=True,
+            )
         ).distinct()
 
     def filter_recommended_good_practice(self, queryset):
         if not self.recommended_good_practice:
             return queryset
-        good_practice_qs = GoodPractice.objects.filter(id=self.recommended_good_practice)
-        return queryset.filter(
-            Q(focus_area__in=good_practice_qs.values('focus_area')) |
-            Q(type__in=good_practice_qs.values('type')) |
-            Q(drivers_of_displacement__in=good_practice_qs.values('drivers_of_displacement')) |
-            Q(stage__in=good_practice_qs.values('stage'))
-        ).exclude(id=self.recommended_good_practice).distinct('id')
+        good_practice_qs = GoodPractice.objects.filter(
+            id=self.recommended_good_practice
+        )
+        return (
+            queryset.filter(
+                Q(focus_area__in=good_practice_qs.values("focus_area")) |
+                Q(type__in=good_practice_qs.values("type")) |
+                Q(
+                    drivers_of_displacement__in=good_practice_qs.values(
+                        "drivers_of_displacement"
+                    )
+                ) |
+                Q(stage__in=good_practice_qs.values("stage"))
+            )
+            .exclude(id=self.recommended_good_practice)
+            .distinct("id")
+        )
 
     @property
     def qs(self):

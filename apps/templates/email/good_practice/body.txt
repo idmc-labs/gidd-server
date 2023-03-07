@@ -1,0 +1,2 @@
+ A new good practice has been submitted. Please review it in the link below.
+    {{url}}

@@ -61,6 +61,7 @@ env = environ.Env(
     AWS_TRANSLATE_REGION=(str, None),
 
     DEFAULT_FROM_EMAIL=(str, None),
+    DEFAULT_GOOD_PRACTICE_TO_EMAIL=(str, None),
     USE_AWS_SES=(bool, False),
     # -- If not provided IAM Role will be used
     AWS_SES_REGION_NAME=(str, None),
@@ -211,7 +212,7 @@ LANGUAGES = (
 AVAILABLE_LANGUAGES = [lang for lang, _ in LANGUAGES]
 MODELTRANSLATION_DEBUG = DEBUG
 MODELTRANSLATION_DEFAULT_LANGUAGE = 'en'
-MODELTRANSLATION_FALLBACK_LANGUAGES = ('en',)
+MODELTRANSLATION_FALLBACK_LANGUAGES = ('en', 'fr')
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
@@ -331,6 +332,7 @@ AWS_TRANSLATE_REGION = env('AWS_TRANSLATE_REGION')
 
 
 DEFAULT_FROM_EMAIL = env("DEFAULT_FROM_EMAIL")
+DEFAULT_GOOD_PRACTICE_TO_EMAIL = env("DEFAULT_GOOD_PRACTICE_TO_EMAIL")
 if env('USE_AWS_SES'):
     EMAIL_BACKEND = 'django_ses.SESBackend'
     AWS_SES_REGION_NAME = env('AWS_SES_REGION_NAME')

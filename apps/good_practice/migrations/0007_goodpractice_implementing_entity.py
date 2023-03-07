@@ -4,15 +4,16 @@ from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
-
     dependencies = [
-        ('good_practice', '0006_alter_goodpractice_type'),
+        ("good_practice", "0006_alter_goodpractice_type"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='goodpractice',
-            name='implementing_entity',
-            field=models.CharField(blank=True, max_length=255, verbose_name='Implementing entity'),
+            model_name="goodpractice",
+            name="implementing_entity",
+            field=models.CharField(
+                blank=True, max_length=255, verbose_name="Implementing entity"
+            ),
         ),
     ]
