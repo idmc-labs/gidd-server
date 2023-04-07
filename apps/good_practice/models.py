@@ -55,9 +55,13 @@ class GoodPractice(models.Model):
             "risk_reduction_and_prevention",
             _("Risk Reduction and Prevention (DRR, CCA and peacebuilding)"),
         )
-        PROTECTION_AND_ASSISTANCE_AND_DURABLE_SOLUTIONS = (
-            "protection_and_assistance_and_durable_solutions",
-            _("Protection and assistance, and durable solutions"),
+        PROTECTION_AND_ASSISTANCE = (
+            "protection_and_assistance",
+            _("Protection and assistance"),
+        )
+        DURABLE_SOLUTIONS = (
+            "durable_solutions",
+            _("Durable solutions"),
         )
         STRENGTHENING_POLICY_AND_LEGAL_FRAMEWORKS = (
             "strengthening_policy_and_legal_frameworks",
