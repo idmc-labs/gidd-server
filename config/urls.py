@@ -25,8 +25,6 @@ from django.conf.urls.static import static
 from django.contrib.auth import views as auth_views
 from apps.country.views import (
     CountryViewSet,
-    ConflictViewSet,
-    DisasterViewSet,
     CountryAdditionalInfoViewSet
 )
 
@@ -36,8 +34,6 @@ router = DefaultRouter()
 router.register("countries", CountryViewSet, "countries-view")
 country_router = NestedDefaultRouter(router, "countries", lookup="id")
 country_router.register('addtional-info', CountryAdditionalInfoViewSet)
-router.register("conflicts", ConflictViewSet, "conflicts-view")
-router.register("disasters", DisasterViewSet, "diasters-view")
 
 # urls.py
 urlpatterns = [
