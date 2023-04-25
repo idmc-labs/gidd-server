@@ -18,8 +18,8 @@ def get_country_object(pk, iso3):
 
 @strawberry.type
 class Query:
-    gidd_countries: List[GiddCountryListType] = strawberry.django.field()
+    country_profiles: List[GiddCountryListType] = strawberry.django.field()
 
     @strawberry.field
-    def gidd_country(self, pk: Optional[strawberry.ID] = None, iso3: Optional[str] = None) -> GiddCountryType:
+    def country_profile(self, pk: Optional[strawberry.ID] = None, iso3: Optional[str] = None) -> GiddCountryType:
         return get_country_object(pk, iso3)

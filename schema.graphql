@@ -363,8 +363,8 @@ type PaginationBaseType {
 }
 
 type Query {
-  giddCountries(filters: CountryFilter, pagination: OffsetPaginationInput): [GiddCountryListType!]!
-  giddCountry(pk: ID = null, iso3: String = null): GiddCountryType!
+  countryProfiles(filters: CountryFilter, pagination: OffsetPaginationInput): [GiddCountryListType!]!
+  countryProfile(pk: ID = null, iso3: String = null): GiddCountryType!
   tags(pagination: OffsetPaginationInput): [TagType!]!
   driversOfDisplacements(pagination: OffsetPaginationInput): [DriversOfDisplacementType!]!
   focusAreas(pagination: OffsetPaginationInput): [FocusAreaType!]!
