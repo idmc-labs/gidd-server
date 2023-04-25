@@ -1,86 +1,3 @@
-type CategoryStatisticsType {
-  label: String!
-  total: Int!
-}
-
-input ConflictFilter {
-  id: IDFilterLookup
-}
-
-type ConflictListType {
-  id: ID!
-  year: Int!
-  totalDisplacement: Int
-  totalDisplacementSource: String
-  newDisplacement: Int
-  newDisplacementSource: String
-  returns: Int
-  returnsSource: String
-  localIntegration: Int
-  localIntegrationSource: String
-  resettlement: Int
-  resettlementSource: String
-  crossBorderFlight: Int
-  crossBorderFlightSource: String
-  childrenBornToIdps: Int
-  childrenBornToIdpsSource: String
-  idpDeaths: Int
-  idpDeathsSource: String
-  totalDisplacementSince: String
-  newDisplacementSince: String
-  returnsSince: String
-  resettlementSince: String
-  localIntegrationSince: String
-  crossBorderFlightSince: String
-  childrenBornToIdpsSince: String
-  idpDeathsSince: String
-  country(pagination: OffsetPaginationInput): CountryListType
-}
-
-input ConflictStatisticsFilter {
-  countries: [ID!]
-  startYear: Int
-  endYear: Int
-  countriesIso3: [String!]
-}
-
-type ConflictStatisticsType {
-  newDisplacements: Int!
-  totalIdps: Int!
-  newDisplacementTimeseries: [TimeSeriesStatisticsType!]!
-  idpsTimeseries: [TimeSeriesStatisticsType!]!
-}
-
-type ConflictType {
-  id: ID!
-  year: Int!
-  totalDisplacement: Int
-  totalDisplacementSource: String
-  newDisplacement: Int
-  newDisplacementSource: String
-  returns: Int
-  returnsSource: String
-  localIntegration: Int
-  localIntegrationSource: String
-  resettlement: Int
-  resettlementSource: String
-  crossBorderFlight: Int
-  crossBorderFlightSource: String
-  childrenBornToIdps: Int
-  childrenBornToIdpsSource: String
-  idpDeaths: Int
-  idpDeathsSource: String
-  totalDisplacementSince: String
-  newDisplacementSince: String
-  returnsSince: String
-  resettlementSince: String
-  localIntegrationSince: String
-  crossBorderFlightSince: String
-  childrenBornToIdpsSince: String
-  idpDeathsSince: String
-  country(pagination: OffsetPaginationInput): CountryListType
-}
-
 """An enumeration."""
 enum ContinentEnum {
   EUROPE
@@ -91,102 +8,12 @@ enum ContinentEnum {
   ANTARTICA
 }
 
-type CountryAdditionalInfoType {
-  id: ID!
-  year: Int
-  totalDisplacement: Int
-  totalDisplacementSince: String
-  totalDisplacementSource: String
-}
-
 input CountryFilter {
   id: IDFilterLookup
   iso3: StrFilterLookup
   name: StrFilterLookup
   idmcNames: StrFilterLookup
   search: String
-}
-
-type CountryListType {
-  id: ID!
-  iso3: String!
-  iso2: String!
-  name: String!
-  idmcNames: String
-  idmcContinent: ContinentEnum
-  idmcRegion: IdmcRegionEnum
-  idmcSubRegion: SubRegionEnum
-  wbRegion: WbRegionEnum
-  goodPracticeRegion: GoodPracticeRegion
-  unPopulationDivisionNames: String
-  unitedNationsRegion: UnitedNationsRegionEnum
-  isLeastDevelopedCountry: Boolean!
-  isSmallIslandDevelopingState: Boolean!
-  isIdmcGo2013: Boolean!
-  isConflictAffectedSince1970: Boolean!
-  isCountryOfficeNrc: Boolean!
-  isCountryOfficeIom: Boolean!
-  title: String!
-  description: String
-  essentialLinks: String
-  contactPersonDescription: String
-  internalDisplacementDescription: String
-  displacementDataDescription: String
-  boundingBox: [Float!]
-  centerPoint: [Float!]
-  backgroundImage: FileFieldType
-  contactPersonImage: FileFieldType
-  countryAdditonalInfo: [CountryAdditionalInfoType!]!
-  figureAnalysis: [FigureAnalysisType!]
-  goodPracticeRegionLabel: String!
-  goodPracticesCount: Int
-  idmcContinentLabel: String
-  idmcRegionLabel: String!
-  idmcSubRegionLabel: String!
-  overviews: [OverViewType!]!
-  unitedNationsRegionLabel: String!
-  wbRegionLabel: String!
-}
-
-type CountryType {
-  id: ID!
-  iso3: String!
-  iso2: String!
-  name: String!
-  idmcNames: String
-  idmcContinent: ContinentEnum
-  idmcRegion: IdmcRegionEnum
-  idmcSubRegion: SubRegionEnum
-  wbRegion: WbRegionEnum
-  goodPracticeRegion: GoodPracticeRegion
-  unPopulationDivisionNames: String
-  unitedNationsRegion: UnitedNationsRegionEnum
-  isLeastDevelopedCountry: Boolean!
-  isSmallIslandDevelopingState: Boolean!
-  isIdmcGo2013: Boolean!
-  isConflictAffectedSince1970: Boolean!
-  isCountryOfficeNrc: Boolean!
-  isCountryOfficeIom: Boolean!
-  title: String!
-  description: String
-  essentialLinks: String
-  contactPersonDescription: String
-  internalDisplacementDescription: String
-  displacementDataDescription: String
-  boundingBox: [Float!]
-  centerPoint: [Float!]
-  backgroundImage: FileFieldType
-  contactPersonImage: FileFieldType
-  countryAdditonalInfo: [CountryAdditionalInfoType!]!
-  figureAnalysis: [FigureAnalysisType!]
-  goodPracticeRegionLabel: String!
-  goodPracticesCount: Int
-  idmcContinentLabel: String
-  idmcRegionLabel: String!
-  idmcSubRegionLabel: String!
-  overviews: [OverViewType!]!
-  unitedNationsRegionLabel: String!
-  wbRegionLabel: String!
 }
 
 """An enumeration."""
@@ -203,78 +30,6 @@ scalar Date
 
 """Date with time (isoformat)"""
 scalar DateTime
-
-type DisasterCountryType {
-  id: ID!
-  iso3: String!
-  countryName: String!
-}
-
-input DisasterFilter {
-  id: IDFilterLookup
-}
-
-type DisasterListType {
-  id: ID!
-  year: Int!
-  glideNumber: String
-  eventName: String
-  locationText: String
-  startDate: Date
-  startDateAccuracy: String
-  endDate: Date
-  endDateAccuracy: String
-  hazardCategory: String
-  hazardSubCategory: String
-  hazardSubType: String
-  hazardType: String
-  newDisplacement: Int
-  newDisplacementSource: String
-  newDisplacementSince: String
-  country(pagination: OffsetPaginationInput): CountryListType
-}
-
-input DisasterStatisticsFilter {
-  categories: [String!]
-  countries: [ID!]
-  startYear: Int
-  endYear: Int
-  countriesIso3: [String!]
-  regions: [IdmcRegionEnum!]
-}
-
-type DisasterStatisticsType {
-  newDisplacements: Int!
-  totalEvents: Int!
-  timeseries: [DisasterTimeSeriesStatisticsType!]!
-  categories: [CategoryStatisticsType!]!
-}
-
-type DisasterTimeSeriesStatisticsType {
-  year: String!
-  total: Int!
-  country: DisasterCountryType!
-}
-
-type DisasterType {
-  id: ID!
-  year: Int!
-  glideNumber: String
-  eventName: String
-  locationText: String
-  startDate: Date
-  startDateAccuracy: String
-  endDate: Date
-  endDateAccuracy: String
-  hazardCategory: String
-  hazardSubCategory: String
-  hazardSubType: String
-  hazardType: String
-  newDisplacement: Int
-  newDisplacementSource: String
-  newDisplacementSince: String
-  country(pagination: OffsetPaginationInput): CountryListType
-}
 
 type DriversOfDisplacementType {
   id: ID!
@@ -293,20 +48,6 @@ type FaqType {
   answer: String!
 }
 
-type FigureAnalysisType {
-  id: ID!
-  year: Int!
-  crisisType: CrisisType!
-  ndFigures: Int!
-  ndMethodologyAndSources: String!
-  ndCaveatsAndChallenges: String!
-  idpFigures: Int!
-  idpMethodologyAndSources: String!
-  idpCaveatsAndChallenges: String!
-  createdAt: Date!
-  updatedAt: Date!
-}
-
 type FileFieldType {
   name: String!
   url: String!
@@ -322,6 +63,117 @@ type GalleryType {
   youtubeVideoUrl: String
   caption: String
   image: FileFieldType
+}
+
+type GiddCountryAdditionalInfoType {
+  id: ID!
+  year: Int
+  totalDisplacement: Int
+  totalDisplacementSince: String
+  totalDisplacementSource: String
+}
+
+type GiddCountryListType {
+  id: ID!
+  iso3: String!
+  iso2: String!
+  name: String!
+  idmcNames: String
+  idmcContinent: ContinentEnum
+  idmcRegion: IdmcRegionEnum
+  idmcSubRegion: SubRegionEnum
+  wbRegion: WbRegionEnum
+  goodPracticeRegion: GoodPracticeRegion
+  unPopulationDivisionNames: String
+  unitedNationsRegion: UnitedNationsRegionEnum
+  isLeastDevelopedCountry: Boolean!
+  isSmallIslandDevelopingState: Boolean!
+  isIdmcGo2013: Boolean!
+  isConflictAffectedSince1970: Boolean!
+  isCountryOfficeNrc: Boolean!
+  isCountryOfficeIom: Boolean!
+  title: String!
+  description: String
+  essentialLinks: String
+  contactPersonDescription: String
+  internalDisplacementDescription: String
+  displacementDataDescription: String
+  boundingBox: [Float!]
+  centerPoint: [Float!]
+  backgroundImage: FileFieldType
+  contactPersonImage: FileFieldType
+  countryAdditonalInfo: [GiddCountryAdditionalInfoType!]!
+  figureAnalysis: [GiddFigureAnalysisType!]
+  goodPracticeRegionLabel: String!
+  goodPracticesCount: Int
+  idmcContinentLabel: String
+  idmcRegionLabel: String!
+  idmcSubRegionLabel: String!
+  overviews: [GiddOverViewType!]!
+  unitedNationsRegionLabel: String!
+  wbRegionLabel: String!
+}
+
+type GiddCountryType {
+  id: ID!
+  iso3: String!
+  iso2: String!
+  name: String!
+  idmcNames: String
+  idmcContinent: ContinentEnum
+  idmcRegion: IdmcRegionEnum
+  idmcSubRegion: SubRegionEnum
+  wbRegion: WbRegionEnum
+  goodPracticeRegion: GoodPracticeRegion
+  unPopulationDivisionNames: String
+  unitedNationsRegion: UnitedNationsRegionEnum
+  isLeastDevelopedCountry: Boolean!
+  isSmallIslandDevelopingState: Boolean!
+  isIdmcGo2013: Boolean!
+  isConflictAffectedSince1970: Boolean!
+  isCountryOfficeNrc: Boolean!
+  isCountryOfficeIom: Boolean!
+  title: String!
+  description: String
+  essentialLinks: String
+  contactPersonDescription: String
+  internalDisplacementDescription: String
+  displacementDataDescription: String
+  boundingBox: [Float!]
+  centerPoint: [Float!]
+  backgroundImage: FileFieldType
+  contactPersonImage: FileFieldType
+  countryAdditonalInfo: [GiddCountryAdditionalInfoType!]!
+  figureAnalysis: [GiddFigureAnalysisType!]
+  goodPracticeRegionLabel: String!
+  goodPracticesCount: Int
+  idmcContinentLabel: String
+  idmcRegionLabel: String!
+  idmcSubRegionLabel: String!
+  overviews: [GiddOverViewType!]!
+  unitedNationsRegionLabel: String!
+  wbRegionLabel: String!
+}
+
+type GiddFigureAnalysisType {
+  id: ID!
+  year: Int!
+  crisisType: CrisisType!
+  ndFigures: Int!
+  ndMethodologyAndSources: String!
+  ndCaveatsAndChallenges: String!
+  idpFigures: Int!
+  idpMethodologyAndSources: String!
+  idpCaveatsAndChallenges: String!
+  createdAt: Date!
+  updatedAt: Date!
+}
+
+type GiddOverViewType {
+  id: ID!
+  description: String
+  year: Int!
+  updatedAt: DateTime!
 }
 
 input GoodPracticeFilter {
@@ -430,7 +282,7 @@ type GoodPracticeType {
   descriptionOfKeyLessonsLearned: String
   underReview: Boolean!
   isTranslated: Boolean!
-  countries: [CountryType!]!
+  countries: [GiddCountryType!]!
   driverOfDisplacement: [DriversOfDisplacementType!]
   focusArea: [FocusAreaType!]
   gallery: [GalleryType!]!
@@ -505,27 +357,14 @@ enum Ordering {
   DESC
 }
 
-type OverViewType {
-  id: ID!
-  description: String
-  year: Int!
-  updatedAt: DateTime!
-}
-
 type PaginationBaseType {
   results: [GoodPracticeType!]!
   totalCount: Int!
 }
 
 type Query {
-  conflicts(filters: ConflictFilter, pagination: OffsetPaginationInput): [ConflictListType!]!
-  disasters(filters: DisasterFilter, pagination: OffsetPaginationInput): [DisasterListType!]!
-  countries(filters: CountryFilter, pagination: OffsetPaginationInput): [CountryListType!]!
-  conflict(pk: ID): ConflictType!
-  disaster(pk: ID): DisasterType!
-  country(pk: ID = null, iso3: String = null): CountryType!
-  disasterStatistics(filters: DisasterStatisticsFilter!): DisasterStatisticsType!
-  conflictStatistics(filters: ConflictStatisticsFilter!): ConflictStatisticsType!
+  giddCountries(filters: CountryFilter, pagination: OffsetPaginationInput): [GiddCountryListType!]!
+  giddCountry(pk: ID = null, iso3: String = null): GiddCountryType!
   tags(pagination: OffsetPaginationInput): [TagType!]!
   driversOfDisplacements(pagination: OffsetPaginationInput): [DriversOfDisplacementType!]!
   focusAreas(pagination: OffsetPaginationInput): [FocusAreaType!]!
@@ -607,11 +446,6 @@ enum SubRegionEnum {
 type TagType {
   id: ID!
   name: String!
-}
-
-type TimeSeriesStatisticsType {
-  year: String!
-  total: Int!
 }
 
 """An enumeration."""
