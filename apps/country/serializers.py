@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Country, CountryAdditionalInfo, Conflict, Disaster
+from .models import Country, CountryAdditionalInfo
 
 
 class CountryAdditionalInfoSerializer(serializers.ModelSerializer):
@@ -14,23 +14,5 @@ class CountrySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Country
-        fields = '__all__'
-        lookup_field = 'id'
-
-
-class ConflictSerializer(serializers.ModelSerializer):
-    country = CountrySerializer(many=False)
-
-    class Meta:
-        model = Conflict
-        fields = '__all__'
-        lookup_field = 'id'
-
-
-class DisasterSerializer(serializers.ModelSerializer):
-    country = CountrySerializer(many=False)
-
-    class Meta:
-        model = Disaster
         fields = '__all__'
         lookup_field = 'id'

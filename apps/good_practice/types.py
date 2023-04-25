@@ -17,7 +17,7 @@ from .enums import (
     TypeEnum,
     StageTypeEnum,
 )
-from apps.country.types import CountryType
+from apps.country.types import GiddCountryType
 from apps.country.models import Country
 import strawberry_django
 from typing import Optional
@@ -99,7 +99,7 @@ class GoodPracticeType:
         return await info.context["gallery_loader"].load(self.id)
 
     @strawberry.field
-    async def countries(self, info: Info) -> List[CountryType]:
+    async def countries(self, info: Info) -> List[GiddCountryType]:
         return await info.context["good_practice_country_loader"].load(self.id)
 
     @strawberry.field
