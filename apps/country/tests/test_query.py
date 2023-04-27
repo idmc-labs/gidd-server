@@ -8,7 +8,7 @@ from config.tests import TestCase
 class CountryQueryTestCase(TestCase):
     COUNTRY_QUERY = """
         query MyQuery($pk: ID!) {
-            country(pk: $pk) {
+            countryProfile(pk: $pk) {
                 id
                 idmcContinent
                 idmcNames
@@ -30,7 +30,7 @@ class CountryQueryTestCase(TestCase):
 
     COUNTRIES_QUERY = """
         query MyQuery {
-            countries {
+            countryProfiles {
                 id
                 idmcNames
                 idmcRegion
@@ -79,8 +79,8 @@ class CountryQueryTestCase(TestCase):
         for lang in self.TEST_LANGUAGES:
             resp = self.query_check(self.COUNTRY_QUERY, variables={'pk': str(country.pk)}, HTTP_ACCEPT_LANGUAGE=lang)
             with translation.override(lang):
-                assert self._get_country_in_response_format(country) == resp['data']['country']
-                assert str(country.id) == resp['data']['country']['id']
+                assert self._get_country_in_response_format(country) == resp['data']['countryProfile']
+                assert str(country.id) == resp['data']['countryProfile']['id']
 
     def test_countries_query(self):
         countries = self.countries
@@ -90,4 +90,4 @@ class CountryQueryTestCase(TestCase):
                 assert [
                     self._get_country_in_response_format(country)
                     for country in countries
-                ] == resp['data']['countries']
+                ] == resp['data']['countryProfiles']
