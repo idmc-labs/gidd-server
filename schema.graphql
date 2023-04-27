@@ -16,17 +16,8 @@ input CountryFilter {
   search: String
 }
 
-"""An enumeration."""
-enum CrisisType {
-  CONFLICT
-  DISASTER
-}
-
 """A generic type to return error messages"""
 scalar CustomErrorType
-
-"""Date (isoformat)"""
-scalar Date
 
 """Date with time (isoformat)"""
 scalar DateTime
@@ -103,7 +94,6 @@ type GiddCountryListType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [GiddCountryAdditionalInfoType!]!
-  figureAnalysis: [GiddFigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -144,7 +134,6 @@ type GiddCountryType {
   backgroundImage: FileFieldType
   contactPersonImage: FileFieldType
   countryAdditonalInfo: [GiddCountryAdditionalInfoType!]!
-  figureAnalysis: [GiddFigureAnalysisType!]
   goodPracticeRegionLabel: String!
   goodPracticesCount: Int
   idmcContinentLabel: String
@@ -153,20 +142,6 @@ type GiddCountryType {
   overviews: [GiddOverViewType!]!
   unitedNationsRegionLabel: String!
   wbRegionLabel: String!
-}
-
-type GiddFigureAnalysisType {
-  id: ID!
-  year: Int!
-  crisisType: CrisisType!
-  ndFigures: Int!
-  ndMethodologyAndSources: String!
-  ndCaveatsAndChallenges: String!
-  idpFigures: Int!
-  idpMethodologyAndSources: String!
-  idpCaveatsAndChallenges: String!
-  createdAt: Date!
-  updatedAt: Date!
 }
 
 type GiddOverViewType {
