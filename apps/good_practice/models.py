@@ -89,9 +89,9 @@ class GoodPractice(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Name of project"))
     description = models.TextField(
         blank=True,
-        verbose_name=_("Description of the project (max 2,000 characters)"),
+        verbose_name=_("Description of the project (max 10,000 characters)"),
         null=True,
-        max_length=2000,
+        max_length=10000,
     )
     media_and_resource_links = models.TextField(
         blank=True,
