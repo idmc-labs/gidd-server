@@ -91,7 +91,7 @@ class GoodPractice(models.Model):
         blank=True,
         verbose_name=_("Description of the project (max 2,000 characters)"),
         null=True,
-        max_length=2000,
+        max_length=10000,
     )
     media_and_resource_links = models.TextField(
         blank=True,
