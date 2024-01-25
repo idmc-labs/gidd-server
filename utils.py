@@ -24,7 +24,7 @@ class FileFieldType:
 
 
 def build_url(file, request):
-    if type(file) == list:
+    if isinstance(file, list):
         file = file[0]
     file_name = file.name
     url = ''
