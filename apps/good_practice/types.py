@@ -10,6 +10,7 @@ from .models import (
     Tag,
     DriversOfDisplacement,
     FocusArea,
+    SuccessFactor,
 )
 from .gh_filters import GoodPracticeFilter, FaqFilter
 
@@ -63,6 +64,12 @@ class DriversOfDisplacementType:
 
 @strawberry.django.type(FocusArea)
 class FocusAreaType:
+    id: auto
+    name: auto
+
+
+@strawberry.django.type(SuccessFactor)
+class SuccessFactorType:
     id: auto
     name: auto
 
@@ -126,6 +133,14 @@ class GoodPracticeType:
     async def stage_label(self, info: Info) -> str:
         return get_enum_label(StageTypeEnum, self.stage)
 
+    @strawberry.field
+    async def success_factor(
+        self, info: Info
+    ) -> Optional[List[SuccessFactorType]]:
+        return await info.context["good_practice_success_factor_loader"].load(
+            self.id
+        )
+
 
 @strawberry_django.ordering.order(GoodPractice)
 class GoodPracticeOrder:
@@ -156,6 +171,7 @@ class GoodPracticeFilterChoiceType:
     tags: Optional[List[TagType]]
     start_year: int
     end_year: int
+    success_factor: Optional[List[SuccessFactorType]]
 
 
 @strawberry.django.type(

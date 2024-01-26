@@ -26,6 +26,7 @@ from .types import (
     DriversOfDisplacementType,
     FocusAreaType,
     TagType,
+    SuccessFactorType,
 )
 from config.enums import GenericEnumValue, generate_enum_name_and_label
 
@@ -151,6 +152,21 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             for id, name in Tag.objects.values_list(
                 "id",
                 f"{build_localized_fieldname('name', active_language)}",
+            )
+        ],
+        success_factor=[
+            SuccessFactorType(
+                id=_id,
+                name=name,
+            )
+            for _id, name in good_practice_qs.filter(
+                success_factor__isnull=False
+            )
+            .distinct("success_factor__name")
+            .order_by()
+            .values_list(
+                "success_factor__id",
+                f"success_factor__{build_localized_fieldname('name', active_language)}",
             )
         ],
     )

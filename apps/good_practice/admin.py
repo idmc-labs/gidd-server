@@ -7,6 +7,7 @@ from apps.good_practice.models import (
     Tag,
     FocusArea,
     DriversOfDisplacement,
+    SuccessFactor,
 )
 from apps.good_practice.forms import FaqForm, GoodPracticeForm, GalleryForm
 
@@ -45,9 +46,10 @@ class GoodPracticeAdmin(TranslationAdmin):
         "drivers_of_displacements",
         "start_year",
         "end_year",
+        "success_factor",
     ]
     inlines = [GalleryAdminInline]
-    autocomplete_fields = ["countries", "tags", "focus_area", "drivers_of_displacement"]
+    autocomplete_fields = ["countries", "tags", "focus_area", "drivers_of_displacement", "success_factor"]
 
     def drivers_of_displacements(self, obj):
         return ", ".join([item.name for item in obj.drivers_of_displacement.all()])
@@ -58,6 +60,9 @@ class GoodPracticeAdmin(TranslationAdmin):
     def country_names(self, obj):
         return ", ".join([item.name for item in obj.countries.all()])
 
+    def success_factor(self, obj):
+        return ", ".join([item.name for item in obj.success_factor.all()])
+
 
 @admin.register(DriversOfDisplacement)
 class DriversOfDisplacementAdmin(TranslationAdmin):
@@ -67,5 +72,11 @@ class DriversOfDisplacementAdmin(TranslationAdmin):
 
 @admin.register(FocusArea)
 class FocusAreaAdmin(TranslationAdmin):
+    search_fields = ["name"]
+    list_display = ["name"]
+
+
+@admin.register(SuccessFactor)
+class SuccessFactorAdmin(TranslationAdmin):
     search_fields = ["name"]
     list_display = ["name"]

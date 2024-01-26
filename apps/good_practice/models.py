@@ -49,6 +49,17 @@ class FocusArea(models.Model):
         return self.name
 
 
+class SuccessFactor(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_("Success factor"))
+
+    class Meta:
+        verbose_name = _("Success factor")
+        verbose_name_plural = _("Success factors")
+
+    def __str__(self):
+        return self.name
+
+
 class GoodPractice(models.Model):
     class Type(models.TextChoices):
         RISK_REDUCTION_AND_PREVENTION = (
@@ -180,6 +191,13 @@ class GoodPractice(models.Model):
         max_length=2000,
     )
     under_review = models.BooleanField(default=True)
+    success_factor = models.ManyToManyField(
+        SuccessFactor,
+        related_name="good_practice",
+        verbose_name=_("Success factor"),
+        blank=True,
+        null=True,
+    )
 
     class Meta:
         verbose_name = _("PAGES - Good practices page")
