@@ -63,11 +63,10 @@ def good_practice_focus_area_load(keys: List[int]):
 
 
 def good_practice_success_factor_load(keys: List[int]):
-    qs = GoodPractice.objects.filter(id__in=keys)
+    qs = GoodPractice.success_factor.through.objects.filter(goodpractice__in=keys).select_related('successfactor')
     _map = defaultdict(list)
-    for good_practice in qs:
-        for success_factor in good_practice.success_factor.all():
-            _map[good_practice.id].append(success_factor)
+    for instance in qs:
+        _map[instance.goodpractice_id].append(instance.successfactor)
     return [_map[key] for key in keys]
 
 

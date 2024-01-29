@@ -53,8 +53,8 @@ class SuccessFactor(models.Model):
     name = models.CharField(max_length=255, verbose_name=_("Success factor"))
 
     class Meta:
-        verbose_name = _("Success factor")
-        verbose_name_plural = _("Success factors")
+        verbose_name = _("Filters - Success factor")
+        verbose_name_plural = _("Filters - Success factors")
 
     def __str__(self):
         return self.name
@@ -149,6 +149,12 @@ class GoodPractice(models.Model):
         verbose_name=_("Tags"),
         blank=True,
     )
+    success_factor = models.ManyToManyField(
+        SuccessFactor,
+        related_name="good_practice",
+        verbose_name=_("Success factor"),
+        blank=True,
+    )
     published_date = models.DateTimeField(blank=True, null=True)
     image = models.FileField(
         upload_to="good_practice/",
@@ -191,13 +197,6 @@ class GoodPractice(models.Model):
         max_length=2000,
     )
     under_review = models.BooleanField(default=True)
-    success_factor = models.ManyToManyField(
-        SuccessFactor,
-        related_name="good_practice",
-        verbose_name=_("Success factor"),
-        blank=True,
-        null=True,
-    )
 
     class Meta:
         verbose_name = _("PAGES - Good practices page")

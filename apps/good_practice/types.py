@@ -136,7 +136,7 @@ class GoodPracticeType:
     @strawberry.field
     async def success_factor(
         self, info: Info
-    ) -> Optional[List[SuccessFactorType]]:
+    ) -> List[SuccessFactorType]:
         return await info.context["good_practice_success_factor_loader"].load(
             self.id
         )
@@ -171,7 +171,7 @@ class GoodPracticeFilterChoiceType:
     tags: Optional[List[TagType]]
     start_year: int
     end_year: int
-    success_factor: Optional[List[SuccessFactorType]]
+    success_factor: List[SuccessFactorType]
 
 
 @strawberry.django.type(

@@ -44,12 +44,16 @@ class GoodPracticeAdmin(TranslationAdmin):
         "focus_areas",
         "country_names",
         "drivers_of_displacements",
+        "success_factors",
         "start_year",
         "end_year",
-        "success_factor",
     ]
     inlines = [GalleryAdminInline]
     autocomplete_fields = ["countries", "tags", "focus_area", "drivers_of_displacement", "success_factor"]
+
+    def get_queryset(self, request):
+        qs = super().get_queryset(request)
+        return qs.prefetch_related('drivers_of_displacement', 'focus_area', 'countries', 'success_factor')
 
     def drivers_of_displacements(self, obj):
         return ", ".join([item.name for item in obj.drivers_of_displacement.all()])
@@ -60,7 +64,7 @@ class GoodPracticeAdmin(TranslationAdmin):
     def country_names(self, obj):
         return ", ".join([item.name for item in obj.countries.all()])
 
-    def success_factor(self, obj):
+    def success_factors(self, obj):
         return ", ".join([item.name for item in obj.success_factor.all()])
 
 

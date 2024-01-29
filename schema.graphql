@@ -176,7 +176,7 @@ type GoodPracticeFilterChoiceType {
   tags: [TagType!]
   startYear: Int!
   endYear: Int!
-  successFactor: [SuccessFactorType!]
+  successFactor: [SuccessFactorType!]!
 }
 
 type GoodPracticeFilterCountryChoiceType {
@@ -265,7 +265,7 @@ type GoodPracticeType {
   gallery: [GalleryType!]!
   image: FileFieldType
   stageLabel: String!
-  successFactor: [SuccessFactorType!]
+  successFactor: [SuccessFactorType!]!
   tags: [TagType!]
   typeLabel: String
 }

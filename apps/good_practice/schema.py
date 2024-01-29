@@ -162,7 +162,7 @@ def get_good_practice_filter_options() -> GoodPracticeFilterChoiceType:
             for _id, name in good_practice_qs.filter(
                 success_factor__isnull=False
             )
-            .distinct("success_factor__name")
+            .distinct("success_factor__id")
             .order_by()
             .values_list(
                 "success_factor__id",
