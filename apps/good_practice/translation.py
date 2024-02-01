@@ -7,6 +7,7 @@ from .models import (
     FocusArea,
     GoodPractice,
     Gallery,
+    SuccessFactor,
 )
 
 
@@ -46,3 +47,8 @@ class GoodPracticeTO(TranslationOptions):
 @register(Gallery)
 class GalleryTO(TranslationOptions):
     fields = ("caption",)
+
+
+@register(SuccessFactor)
+class SuccessFactorTO(TranslationOptions):
+    fields = ("name",)

@@ -8,3 +8,24 @@ staticfiles/
 *.swp
 
 coverage/
+
+.idea/
+
+*.sqlite3
+
+media/
+media-temp/
+external-media/
+
+static/
+schema.json
+
+secrets.yml
+celerybeat-schedule
+
+# testing
+/coverage
+.coverage
+coverage.xml
+htmlcov
+sitecus

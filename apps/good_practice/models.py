@@ -49,6 +49,17 @@ class FocusArea(models.Model):
         return self.name
 
 
+class SuccessFactor(models.Model):
+    name = models.CharField(max_length=255, verbose_name=_("Success factor"))
+
+    class Meta:
+        verbose_name = _("Filters - Success factor")
+        verbose_name_plural = _("Filters - Success factors")
+
+    def __str__(self):
+        return self.name
+
+
 class GoodPractice(models.Model):
     class Type(models.TextChoices):
         RISK_REDUCTION_AND_PREVENTION = (
@@ -89,9 +100,8 @@ class GoodPractice(models.Model):
     title = models.CharField(max_length=255, verbose_name=_("Name of project"))
     description = models.TextField(
         blank=True,
-        verbose_name=_("Description of the project (max 10,000 characters)"),
+        verbose_name=_("Description of the project"),
         null=True,
-        max_length=10000,
     )
     media_and_resource_links = models.TextField(
         blank=True,
@@ -137,6 +147,12 @@ class GoodPractice(models.Model):
         "good_practice.Tag",
         related_name="good_practice",
         verbose_name=_("Tags"),
+        blank=True,
+    )
+    success_factor = models.ManyToManyField(
+        SuccessFactor,
+        related_name="good_practice",
+        verbose_name=_("Success factor"),
         blank=True,
     )
     published_date = models.DateTimeField(blank=True, null=True)

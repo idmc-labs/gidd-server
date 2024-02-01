@@ -57,6 +57,16 @@ Download country background images zip file, extract it, and move to media or bu
 docker-compose exec server python manage.py save_country_images
 ```
 
+## Load Good Practice success factors.
+
+To add predefined `success_factor` dropdown options using the `load_success_factors` Django management command, follow these steps:
+
+**Run the Management Command:**
+
+   ```bash
+   docker-compose exec server python manage.py load_success_factors
+   ``` 
+
 ## Aws bucket setup
 Add these environment variables in .env file if aws IAM role is used
 ```bash
