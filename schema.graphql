@@ -155,6 +155,7 @@ input GoodPracticeFilter {
   search: String
   types: [TypeEnum!]
   driversOfDisplacements: [ID!]
+  successFactor: [ID!]
   stages: [StageTypeEnum!]
   countries: [ID!]
   regions: [GoodPracticeRegion!]
@@ -175,6 +176,7 @@ type GoodPracticeFilterChoiceType {
   tags: [TagType!]
   startYear: Int!
   endYear: Int!
+  successFactor: [SuccessFactorType!]!
 }
 
 type GoodPracticeFilterCountryChoiceType {
@@ -263,6 +265,7 @@ type GoodPracticeType {
   gallery: [GalleryType!]!
   image: FileFieldType
   stageLabel: String!
+  successFactor: [SuccessFactorType!]!
   tags: [TagType!]
   typeLabel: String
 }
@@ -416,6 +419,11 @@ enum SubRegionEnum {
   LATIN_AMERICA
   MIDDLE_EAST
   SOUTH_CAUCASUS
+}
+
+type SuccessFactorType {
+  id: ID!
+  name: String!
 }
 
 type TagType {

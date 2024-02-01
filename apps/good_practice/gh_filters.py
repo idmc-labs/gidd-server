@@ -19,6 +19,7 @@ class GoodPracticeFilter:
     search: str | None
     types: List[TypeEnum] | None
     drivers_of_displacements: List[strawberry.ID] | None
+    success_factor: List[strawberry.ID] | None
     stages: List[StageTypeEnum] | None
     countries: List[strawberry.ID] | None
     regions: List[GoodPracticeRegionEnum] | None
@@ -45,6 +46,13 @@ class GoodPracticeFilter:
             return queryset
         return queryset.filter(
             drivers_of_displacement__in=self.drivers_of_displacements
+        )
+
+    def filter_success_factor(self, queryset):
+        if not self.success_factor:
+            return queryset
+        return queryset.filter(
+            success_factor__in=self.success_factor
         )
 
     def filter_trigger_types(self, queryset):

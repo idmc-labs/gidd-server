@@ -10,7 +10,6 @@ staticfiles/
 coverage/
 
 .idea/
-typings/
 
 *.sqlite3
 
@@ -18,15 +17,8 @@ media/
 media-temp/
 external-media/
 
-pyrightconfig.json
-
 static/
 schema.json
-
-typings/
-
-pyrightconfig.json
-response.json
 
 secrets.yml
 celerybeat-schedule

@@ -62,6 +62,14 @@ def good_practice_focus_area_load(keys: List[int]):
     return [_map[key] for key in keys]
 
 
+def good_practice_success_factor_load(keys: List[int]):
+    qs = GoodPractice.success_factor.through.objects.filter(goodpractice__in=keys).select_related('successfactor')
+    _map = defaultdict(list)
+    for instance in qs:
+        _map[instance.goodpractice_id].append(instance.successfactor)
+    return [_map[key] for key in keys]
+
+
 load_gallery = sync_to_async(gallery_load)
 load_good_practice_country = sync_to_async(good_practice_country_load)
 load_good_practice_image = sync_to_async(good_practice_image_load)
@@ -70,3 +78,6 @@ load_good_practice_driver_of_displacement = sync_to_async(
     good_practice_driver_of_displacement_load
 )
 load_good_practice_focus_area = sync_to_async(good_practice_focus_area_load)
+load_good_practice_success_factor = sync_to_async(
+    good_practice_success_factor_load
+)
